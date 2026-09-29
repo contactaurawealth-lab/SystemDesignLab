@@ -28,13 +28,17 @@ import com.systemdesignlab.app.data.model.Lesson
 @Composable
 fun LessonScreen(
     lesson: Lesson,
+    lessonIndex: Int = 0,
+    totalLessons: Int = 56,
     onBack: () -> Unit,
-    onNextLesson: ((String) -> Unit)?,
+    onPreviousLesson: (() -> Unit)? = null,
+    onNextLesson: (() -> Unit)? = null,
     onCompleteLesson: () -> Unit,
     onAnswerExercise: (selectedOption: Int, isCorrect: Boolean) -> Unit,
     onOpenRepoSection: (String) -> Unit,
     onLaunchSim: (String) -> Unit,
     onOpenAiAssistant: () -> Unit,
+    onOpenTools: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     var technicalExpanded by remember { mutableStateOf(false) }
@@ -55,7 +59,7 @@ fun LessonScreen(
                             maxLines = 1
                         )
                         Text(
-                            text = "${lesson.difficulty} • ${lesson.estimatedMinutes} min",
+                            text = "${lesson.difficulty} • ${lesson.estimatedMinutes} min • Lesson ${lessonIndex + 1} of $totalLessons",
                             style = MaterialTheme.typography.labelSmall.copy(color = Slate400)
                         )
                     }
@@ -66,6 +70,9 @@ fun LessonScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { onOpenTools?.invoke() }) {
+                        Icon(imageVector = Icons.Default.Build, contentDescription = "Reader Tools", tint = AccentIndigo)
+                    }
                     IconButton(onClick = onOpenAiAssistant) {
                         Icon(imageVector = Icons.Default.SmartToy, contentDescription = "AI Assistant", tint = AccentIndigo)
                     }
@@ -85,35 +92,51 @@ fun LessonScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 12.dp),
+                        .padding(horizontal = 16.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    // Previous Lesson Button
+                    OutlinedButton(
+                        onClick = { onPreviousLesson?.invoke() },
+                        enabled = onPreviousLesson != null,
+                        shape = RoundedCornerShape(10.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                    ) {
+                        Icon(imageVector = Icons.Default.ArrowBackIosNew, contentDescription = "Previous", modifier = Modifier.size(14.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("Prev", fontSize = 12.sp)
+                    }
+
+                    // Center: Mark Complete or Lesson Index
                     if (lesson.isCompleted) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null, tint = AccentEmerald)
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text("Lesson Completed", color = AccentEmerald, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                            Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null, tint = AccentEmerald, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("${lessonIndex + 1}/$totalLessons", color = AccentEmerald, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         }
                     } else {
                         Button(
                             onClick = onCompleteLesson,
                             colors = ButtonDefaults.buttonColors(containerColor = AccentEmerald),
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(10.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
                         ) {
-                            Text("Mark Complete (+30 XP)")
+                            Text("+30 XP", fontSize = 11.sp, fontWeight = FontWeight.Bold)
                         }
                     }
 
-                    if (lesson.nextLessonId != null && onNextLesson != null) {
-                        OutlinedButton(
-                            onClick = { onNextLesson(lesson.nextLessonId) },
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Text("Next Lesson")
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp))
-                        }
+                    // Next Lesson Button
+                    Button(
+                        onClick = { onNextLesson?.invoke() },
+                        enabled = onNextLesson != null,
+                        colors = ButtonDefaults.buttonColors(containerColor = AccentIndigo),
+                        shape = RoundedCornerShape(10.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                    ) {
+                        Text("Next", fontSize = 12.sp)
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Icon(imageVector = Icons.Default.ArrowForwardIos, contentDescription = "Next", modifier = Modifier.size(14.dp))
                     }
                 }
             }
@@ -484,6 +507,55 @@ fun LessonScreen(
                             }
                             Icon(imageVector = Icons.Default.ChevronRight, contentDescription = null, tint = Slate400, modifier = Modifier.size(18.dp))
                         }
+                    }
+                }
+            }
+
+            // 10. Interactive Reader Engineering Tools Card
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onOpenTools?.invoke() },
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = CardDefaults.outlinedCardBorder()
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .size(42.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(AccentIndigo.copy(alpha = 0.15f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Build,
+                                    contentDescription = null,
+                                    tint = AccentIndigo,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                    text = "Interactive Reader Tools",
+                                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
+                                )
+                                Text(
+                                    text = "Fermi Sizing, Post-Mortems, Battle Arena & Exporter",
+                                    style = MaterialTheme.typography.bodySmall.copy(color = Slate400, fontSize = 11.sp)
+                                )
+                            }
+                        }
+                        Icon(imageVector = Icons.Default.ChevronRight, contentDescription = null, tint = Slate400)
                     }
                 }
             }

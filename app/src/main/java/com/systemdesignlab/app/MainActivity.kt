@@ -36,6 +36,7 @@ import com.systemdesignlab.app.feature.profile.ProfileScreen
 import com.systemdesignlab.app.feature.repository.RepositoryExplorerScreen
 import com.systemdesignlab.app.feature.settings.SettingsScreen
 import com.systemdesignlab.app.feature.simulation.SimulationScreen
+import com.systemdesignlab.app.feature.tools.ReaderToolsScreen
 import kotlinx.coroutines.launch
 
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
@@ -52,6 +53,7 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object InterviewMode : Screen("interviews", "Interview", Icons.Default.RecordVoiceOver)
     object Exercises : Screen("exercises", "Exercises", Icons.Default.Construction)
     object Settings : Screen("settings", "Settings", Icons.Default.Settings)
+    object Tools : Screen("tools", "Tools", Icons.Default.Build)
 }
 
 class MainActivity : ComponentActivity() {
@@ -180,6 +182,17 @@ fun MainContent(container: AppContainer) {
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
 
+                NavigationDrawerItem(
+                    icon = { Icon(Icons.Default.Build, contentDescription = null) },
+                    label = { Text("Reader Engineering Tools (10 Tools)") },
+                    selected = currentRoute == Screen.Tools.route,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        navController.navigate(Screen.Tools.route)
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+
                 Spacer(Modifier.weight(1f))
                 HorizontalDivider(color = Slate800)
 
@@ -213,6 +226,9 @@ fun MainContent(container: AppContainer) {
                             }
                         },
                         actions = {
+                            IconButton(onClick = { navController.navigate(Screen.Tools.route) }) {
+                                Icon(imageVector = Icons.Default.Build, contentDescription = "Reader Tools", tint = AccentIndigo)
+                            }
                             IconButton(onClick = { navController.navigate(Screen.RepositoryExplorer.route) }) {
                                 Icon(imageVector = Icons.Default.Folder, contentDescription = "Repo Explorer", tint = Slate400)
                             }
@@ -295,6 +311,9 @@ fun MainContent(container: AppContainer) {
                         },
                         onClaimDailyReward = {
                             scope.launch { container.progressRepository.claimDailyGoalReward() }
+                        },
+                        onOpenTools = {
+                            navController.navigate(Screen.Tools.route)
                         }
                     )
                 }
@@ -366,12 +385,27 @@ fun MainContent(container: AppContainer) {
                     val lesson = allLessons.find { it.id == lessonId }
 
                     if (lesson != null) {
+                        val currentIndex = allLessons.indexOfFirst { it.id == lessonId }
+                        val prevLesson = if (currentIndex > 0) allLessons[currentIndex - 1] else null
+                        val nextLesson = if (currentIndex in 0 until allLessons.size - 1) allLessons[currentIndex + 1] else null
+
                         LessonScreen(
                             lesson = lesson,
+                            lessonIndex = if (currentIndex >= 0) currentIndex else 0,
+                            totalLessons = allLessons.size,
                             onBack = { navController.popBackStack() },
-                            onNextLesson = { nextId ->
-                                navController.navigate("lesson/$nextId") {
-                                    popUpTo("lesson/$lessonId") { inclusive = true }
+                            onPreviousLesson = prevLesson?.let { prev ->
+                                {
+                                    navController.navigate("lesson/${prev.id}") {
+                                        popUpTo("lesson/$lessonId") { inclusive = true }
+                                    }
+                                }
+                            },
+                            onNextLesson = nextLesson?.let { next ->
+                                {
+                                    navController.navigate("lesson/${next.id}") {
+                                        popUpTo("lesson/$lessonId") { inclusive = true }
+                                    }
                                 }
                             },
                             onCompleteLesson = {
@@ -396,6 +430,9 @@ fun MainContent(container: AppContainer) {
                                     exerciseQuestion = lesson.exercise.question
                                 )
                                 showAiAssistantSheet = true
+                            },
+                            onOpenTools = {
+                                navController.navigate(Screen.Tools.route)
                             }
                         )
                     } else {
@@ -452,6 +489,13 @@ fun MainContent(container: AppContainer) {
                     SettingsScreen(
                         preferencesManager = container.preferencesManager,
                         aiAssistantRepository = container.aiAssistantRepository,
+                        onBack = { navController.popBackStack() }
+                    )
+                }
+
+                // Reader Engineering Tools Screen
+                composable(Screen.Tools.route) {
+                    ReaderToolsScreen(
                         onBack = { navController.popBackStack() }
                     )
                 }

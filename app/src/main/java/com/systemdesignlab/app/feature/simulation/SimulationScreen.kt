@@ -186,6 +186,7 @@ fun SimulationScreen(
                             onValueChange = {
                                 trafficValue = it
                                 engine.trafficQps = it.toInt()
+                                engine.update(0.016f)
                             },
                             valueRange = 100f..25000f,
                             colors = SliderDefaults.colors(thumbColor = AccentIndigo, activeTrackColor = AccentIndigo)

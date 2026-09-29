@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import kotlinx.coroutines.isActive
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -32,23 +33,23 @@ fun InteractiveSimulationCanvas(
     var cameraAngleX by remember { mutableStateOf(20f) }
     var zoomScale by remember { mutableStateOf(1.0f) }
 
-    // Animation ticker driving 60 FPS simulation updates
-    val infiniteTransition = rememberInfiniteTransition(label = "simTicker")
-    val ticker by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(16, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "ticker"
-    )
+    // Lightweight withFrameNanos loop driving smooth 60 FPS without Choreographer lag
+    var renderTick by remember { mutableLongStateOf(0L) }
 
-    LaunchedEffect(ticker) {
-        engine.update(0.016f)
+    LaunchedEffect(Unit) {
+        var lastTime = withFrameNanos { it }
+        while (isActive) {
+            withFrameNanos { now ->
+                val delta = ((now - lastTime) / 1_000_000_000f).coerceIn(0.001f, 0.05f)
+                lastTime = now
+                engine.update(delta)
+                renderTick = now
+            }
+        }
     }
 
     val textMeasurer = rememberTextMeasurer()
+    val textLayoutCache = remember { mutableMapOf<String, TextLayoutResult>() }
 
     Box(
         modifier = modifier
@@ -65,6 +66,7 @@ fun InteractiveSimulationCanvas(
             }
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
+            val _tick = renderTick
             val w = size.width
             val h = size.height
             val cx = w / 2f
@@ -188,32 +190,38 @@ fun InteractiveSimulationCanvas(
                     )
                 }
 
-                // Node text
-                val titleLayout = textMeasurer.measure(
-                    text = AnnotatedString(node.name),
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold
+                // Node text (cached layout to prevent 720 font measures/sec)
+                val titleKey = "t_${node.id}_${node.name}"
+                val titleLayout = textLayoutCache.getOrPut(titleKey) {
+                    textMeasurer.measure(
+                        text = AnnotatedString(node.name),
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     )
-                )
+                }
                 drawText(
                     textLayoutResult = titleLayout,
                     topLeft = Offset(nx - titleLayout.size.width / 2, ny - 14.dp.toPx())
                 )
 
-                val statusLayout = textMeasurer.measure(
-                    text = AnnotatedString(
-                        if (node.status == SimNodeStatus.FAILED) "OFFLINE"
-                        else if (node.type == SimNodeType.SERVER) "${(node.cpuLoad * 100).toInt()}% CPU"
-                        else "${node.type.name}"
-                    ),
-                    style = TextStyle(
-                        color = if (node.status == SimNodeStatus.FAILED) Color.Red else Color(0xFF94A3B8),
-                        fontSize = 8.sp,
-                        fontWeight = FontWeight.Medium
+                val statusText = if (node.status == SimNodeStatus.FAILED) "OFFLINE"
+                else if (node.type == SimNodeType.SERVER) "${(node.cpuLoad * 100).toInt()}% CPU"
+                else "${node.type.name}"
+                val statusKey = "s_${node.id}_${node.status}_$statusText"
+                val statusColor = if (node.status == SimNodeStatus.FAILED) Color.Red else Color(0xFF94A3B8)
+                val statusLayout = textLayoutCache.getOrPut(statusKey) {
+                    textMeasurer.measure(
+                        text = AnnotatedString(statusText),
+                        style = TextStyle(
+                            color = statusColor,
+                            fontSize = 8.sp,
+                            fontWeight = FontWeight.Medium
+                        )
                     )
-                )
+                }
                 drawText(
                     textLayoutResult = statusLayout,
                     topLeft = Offset(nx - statusLayout.size.width / 2, ny + 2.dp.toPx())

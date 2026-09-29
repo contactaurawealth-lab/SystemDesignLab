@@ -37,6 +37,7 @@ fun HomeScreen(
     onResumeAudiobook: () -> Unit,
     onOpenLearningMap: () -> Unit,
     onClaimDailyReward: () -> Unit,
+    onOpenTools: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     // Subtle pulsating animation for the streak flame
@@ -437,6 +438,58 @@ fun HomeScreen(
                             )
                             Text(
                                 text = "Visual concept roadmap with prerequisites",
+                                style = MaterialTheme.typography.bodySmall.copy(color = Slate400)
+                            )
+                        }
+                    }
+                    Icon(imageVector = Icons.Default.ChevronRight, contentDescription = null, tint = Slate400)
+                }
+            }
+        }
+
+        // Reader Engineering Tools card
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onOpenTools() },
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = CardDefaults.outlinedCardBorder()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(Color(0x266366F1)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Build,
+                                contentDescription = null,
+                                tint = AccentIndigo,
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column {
+                            Text(
+                                text = "Reader Engineering Tools",
+                                style = MaterialTheme.typography.titleSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            )
+                            Text(
+                                text = "Fermi sizing, scale slider, post-mortems & radar",
                                 style = MaterialTheme.typography.bodySmall.copy(color = Slate400)
                             )
                         }

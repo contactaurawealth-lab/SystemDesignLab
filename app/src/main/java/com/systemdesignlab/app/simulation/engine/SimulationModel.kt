@@ -1,5 +1,9 @@
 package com.systemdesignlab.app.simulation.engine
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
 enum class SimNodeType {
     CLIENT,
     LOAD_BALANCER,
@@ -80,7 +84,7 @@ class SystemSimulationEngine {
     private var packetIdCounter = 0L
     private var lastSpawnTime = 0L
 
-    var liveMetrics = SimLiveMetrics()
+    var liveMetrics by mutableStateOf(SimLiveMetrics())
         private set
 
     init {
@@ -102,6 +106,7 @@ class SystemSimulationEngine {
             "sim-failure-injection" -> setupFailureScenario()
             else -> setupPlaygroundScenario()
         }
+        update(0.016f)
     }
 
     private fun setupLoadBalancerScenario() {
@@ -183,6 +188,7 @@ class SystemSimulationEngine {
         if (scenarioId == "sim-load-balancer") {
             setupLoadBalancerScenario()
         }
+        update(0.016f)
     }
 
     fun setWorkers(count: Int) {
@@ -190,6 +196,7 @@ class SystemSimulationEngine {
         if (scenarioId == "sim-message-queue") {
             setupQueueScenario()
         }
+        update(0.016f)
     }
 
     fun toggleNodeFailure(nodeId: String) {
@@ -197,6 +204,7 @@ class SystemSimulationEngine {
             it.isFailed = !it.isFailed
             it.status = if (it.isFailed) SimNodeStatus.FAILED else SimNodeStatus.HEALTHY
         }
+        update(0.016f)
     }
 
     fun triggerFailover() {
@@ -209,6 +217,7 @@ class SystemSimulationEngine {
             replica.status = SimNodeStatus.HEALTHY
             replica.isFailed = false
         }
+        update(0.016f)
     }
 
     fun update(deltaSeconds: Float) {
