@@ -1,0 +1,58 @@
+{
+  "id": "sql-vs-nosql-databases",
+  "title": "SQL vs NoSQL databases",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 17,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to sql vs nosql databases.",
+  "simpleExplanation": "In the world of databases, there are two main types of solutions, SQL (relational) and NoSQL (non-relational) databases. Both of them differ in the way they were built, the kind of information they store, and how they store it. Relational databases are structured and have predefined schemas while non-relational databases are unstructured, distributed, and have a dynamic schema.",
+  "technicalExplanation": "High-level differences\n\nHere are some high-level differences between SQL and NoSQL:\n\n### Storage\n\nSQL stores data in tables, where each row represents an entity and each column represents a data point about that entity.\n\nNoSQL databases have different data storage models such as key-value, graph, document, etc.\n\n### Schema\n\nIn SQL, each record conforms to a fixed schema, meaning the columns must be decided and chosen before data entry and each row must have data for each column. The schema can be altered later, but it involves modifying the database using migrations.\n\nWhereas in NoSQL, schemas are dynamic. Fields can be added on the fly, and each _record_ (or equivalent) doesn't have to contain data for each _field_.\n\n### Querying\n\nSQL databases use SQL (structured query language) for defining and manipulating the data, which is very powerful.\n\nIn a NoSQL database, queries are focused on a collection of documents. Different databases have different syntax for querying.\n\n### Scalability\n\nIn most common situations, SQL databases are vertically scalable, which can get very expensive. It is possible to scale a relational database across multiple servers, but this is a challenging and time-consuming process.\n\nOn the other hand, NoSQL databases are horizontally scalable, meaning we can add more servers easily to our NoSQL database infrastructure to handle large traffic. Any cheap commodity hardware or cloud instances can host NoSQL databases, thus making it a lot more cost-effective than vertical scaling. A lot of NoSQL technologies also distribute data across servers automatically.\n\n### Reliability\n\nThe vast majority of relational databases are ACID compliant. So, when it comes to data reliability and a safe guarantee of performing transactions, SQL databases are still the better bet.\n\nMost of the NoSQL solutions sacrifice ACID compliance for performance and scalability.\n\n\n## Reasons\n\nAs always we should always pick the technology that fits the requirements better. So, let's look at some reasons for picking SQL or NoSQL based database:\n\n**For SQL**\n\n- Structured data with strict schema\n- Relational data\n- Need for complex joins\n- Transactions\n- Lookups by index are very fast\n\n**For NoSQL**\n\n- Dynamic or flexible schema\n- Non-relational data\n- No need for complex joins\n- Very data-intensive workload\n- Very high throughput for IOPS",
+  "visualExplanation": "Requests flow through the SQL vs NoSQL databases layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of sql vs nosql databases as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "db-dbms",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "SQL vs NoSQL databases",
+    "diagramFile": "db-dbms.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases.",
+  "relatedConcepts": [
+    "nosql-databases",
+    "database-replication"
+  ],
+  "prerequisites": [
+    "nosql-databases"
+  ],
+  "nextLessonId": "database-replication",
+  "interactiveQuestion": {
+    "id": "q-sql-vs-nosql-databases",
+    "question": "In production system design, what is the primary benefit of SQL vs NoSQL databases?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-sql-vs-nosql-databases",
+    "title": "Production Troubleshooting: SQL vs NoSQL databases",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sql vs nosql databases. Solving the scalability and reliability bottlenecks inherent to sql vs nosql databases.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SQL vs NoSQL databases best practices: Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "pacelc-theorem",
+  "title": "PACELC Theorem",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 23,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 5,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to pacelc theorem.",
+  "simpleExplanation": "The PACELC theorem is an extension of the CAP theorem. The CAP theorem states that in the case of network partitioning (P) in a distributed system, one has to choose between Availability (A) and Consistency (C).\n\nPACELC extends the CAP theorem by introducing latency (L) as an additional attribute of a distributed system. The theorem states that else (E), even when the system is running normally in the absence of partitions, one has to choose between latency (L) and consistency (C).\n\n_The PACELC theorem was first described by [Daniel J. Abadi](https://scholar.google.com/citations?user=zxeEF2gAAAAJ)._\n\n![pacelc-theorem](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/pacelc-theorem/pacelc-theorem.png)\n\nPACELC theorem was developed to address a key limitation of the CAP theorem as it makes no provision for performance or latency.\n\nFor example, according to the CAP theorem, a database can be considered available if a query returns a response after 30 days. Obviously, such latency would be unacceptable for any real-world application.",
+  "technicalExplanation": "The PACELC theorem is an extension of the CAP theorem. The CAP theorem states that in the case of network partitioning (P) in a distributed system, one has to choose between Availability (A) and Consistency (C).\n\nPACELC extends the CAP theorem by introducing latency (L) as an additional attribute of a distributed system. The theorem states that else (E), even when the system is running normally in the absence of partitions, one has to choose between latency (L) and consistency (C).\n\n_The PACELC theorem was first described by [Daniel J. Abadi](https://scholar.google.com/citations?user=zxeEF2gAAAAJ)._\n\n![pacelc-theorem](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/pacelc-theorem/pacelc-theorem.png)\n\nPACELC theorem was developed to address a key limitation of the CAP theorem as it makes no provision for performance or latency.\n\nFor example, according to the CAP theorem, a database can be considered available if a query returns a response after 30 days. Obviously, such latency would be unacceptable for any real-world application.",
+  "visualExplanation": "Requests flow through the PACELC Theorem layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of pacelc theorem as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "pacelc",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "PACELC Theorem",
+    "diagramFile": "pacelc.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem.",
+  "relatedConcepts": [
+    "cap-theorem",
+    "transactions"
+  ],
+  "prerequisites": [
+    "cap-theorem"
+  ],
+  "nextLessonId": "transactions",
+  "interactiveQuestion": {
+    "id": "q-pacelc-theorem",
+    "question": "In production system design, what is the primary benefit of PACELC Theorem?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-pacelc-theorem",
+    "title": "Production Troubleshooting: PACELC Theorem",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to pacelc theorem. Solving the scalability and reliability bottlenecks inherent to pacelc theorem.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply PACELC Theorem best practices: Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

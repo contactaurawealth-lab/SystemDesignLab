@@ -1,0 +1,842 @@
+[
+  {
+    "id": "ex-what-is-system-design",
+    "title": "Production Troubleshooting: What is system design?",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to what is system design?. Solving the scalability and reliability bottlenecks inherent to what is system design?.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply What is system design? best practices: Understand the architectural trade-offs, access patterns, and failure modes of what is system design?., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of what is system design?.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-ip",
+    "title": "Production Troubleshooting: IP",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to ip. Solving the scalability and reliability bottlenecks inherent to ip.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply IP best practices: Understand the architectural trade-offs, access patterns, and failure modes of ip., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of ip.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-osi-model",
+    "title": "Production Troubleshooting: OSI Model",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to osi model. Solving the scalability and reliability bottlenecks inherent to osi model.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply OSI Model best practices: Understand the architectural trade-offs, access patterns, and failure modes of osi model., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of osi model.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-tcp-and-udp",
+    "title": "Production Troubleshooting: TCP and UDP",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to tcp and udp. Solving the scalability and reliability bottlenecks inherent to tcp and udp.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply TCP and UDP best practices: Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-domain-name-system-dns",
+    "title": "Production Troubleshooting: Domain Name System (DNS)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to domain name system (dns). Solving the scalability and reliability bottlenecks inherent to domain name system (dns).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Domain Name System (DNS) best practices: Understand the architectural trade-offs, access patterns, and failure modes of domain name system (dns)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of domain name system (dns).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-load-balancing",
+    "title": "Production Troubleshooting: Load Balancing",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to load balancing. Traffic arrives unevenly; a single server crashes under sudden traffic spikes, leaving users stranded.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Load Balancing best practices: Distributing traffic across multiple server instances avoids single points of failure and prevents server overload., taking into account Adding a load balancer introduces network hops and a potential single point of failure if the LB itself isn't redundant (active-passive)..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Distributing traffic across multiple server instances avoids single points of failure and prevents server overload.. Remember: Adding a load balancer introduces network hops and a potential single point of failure if the LB itself isn't redundant (active-passive)."
+  },
+  {
+    "id": "ex-clustering",
+    "title": "Production Troubleshooting: Clustering",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to clustering. Solving the scalability and reliability bottlenecks inherent to clustering.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Clustering best practices: Understand the architectural trade-offs, access patterns, and failure modes of clustering., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of clustering.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-caching",
+    "title": "Production Troubleshooting: Caching",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to caching. Disks and databases are orders of magnitude slower than memory. Repeated identical queries choke the database.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Caching best practices: Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU)., taking into account High read throughput and low latency at the cost of eventual consistency, cache invalidation complexity, and RAM cost..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU).. Remember: High read throughput and low latency at the cost of eventual consistency, cache invalidation complexity, and RAM cost."
+  },
+  {
+    "id": "ex-content-delivery-network-cdn",
+    "title": "Production Troubleshooting: Content Delivery Network (CDN)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to content delivery network (cdn). Solving the scalability and reliability bottlenecks inherent to content delivery network (cdn).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Content Delivery Network (CDN) best practices: Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-proxy",
+    "title": "Production Troubleshooting: Proxy",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to proxy. Solving the scalability and reliability bottlenecks inherent to proxy.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Proxy best practices: Understand the architectural trade-offs, access patterns, and failure modes of proxy., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of proxy.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-availability",
+    "title": "Production Troubleshooting: Availability",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to availability. Solving the scalability and reliability bottlenecks inherent to availability.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Availability best practices: Understand the architectural trade-offs, access patterns, and failure modes of availability., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of availability.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-scalability",
+    "title": "Production Troubleshooting: Scalability",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to scalability. Solving the scalability and reliability bottlenecks inherent to scalability.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Scalability best practices: Understand the architectural trade-offs, access patterns, and failure modes of scalability., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of scalability.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-storage",
+    "title": "Production Troubleshooting: Storage",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to storage. Solving the scalability and reliability bottlenecks inherent to storage.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Storage best practices: Understand the architectural trade-offs, access patterns, and failure modes of storage., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of storage.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-databases-and-dbms",
+    "title": "Production Troubleshooting: Databases and DBMS",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to databases and dbms. Solving the scalability and reliability bottlenecks inherent to databases and dbms.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Databases and DBMS best practices: Understand the architectural trade-offs, access patterns, and failure modes of databases and dbms., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of databases and dbms.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-sql-databases",
+    "title": "Production Troubleshooting: SQL databases",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sql databases. Solving the scalability and reliability bottlenecks inherent to sql databases.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SQL databases best practices: Understand the architectural trade-offs, access patterns, and failure modes of sql databases., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of sql databases.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-nosql-databases",
+    "title": "Production Troubleshooting: NoSQL databases",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to nosql databases. Solving the scalability and reliability bottlenecks inherent to nosql databases.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply NoSQL databases best practices: Understand the architectural trade-offs, access patterns, and failure modes of nosql databases., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of nosql databases.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-sql-vs-nosql-databases",
+    "title": "Production Troubleshooting: SQL vs NoSQL databases",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sql vs nosql databases. Solving the scalability and reliability bottlenecks inherent to sql vs nosql databases.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SQL vs NoSQL databases best practices: Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-database-replication",
+    "title": "Production Troubleshooting: Database Replication",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to database replication. If your primary database disk fails or catches fire, your entire company loses all data and goes offline.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Database Replication best practices: Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover., taking into account High read scalability and fault tolerance at the cost of replication lag and consistency trade-offs (sync vs async)..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover.. Remember: High read scalability and fault tolerance at the cost of replication lag and consistency trade-offs (sync vs async)."
+  },
+  {
+    "id": "ex-indexes",
+    "title": "Production Troubleshooting: Indexes",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to indexes. Solving the scalability and reliability bottlenecks inherent to indexes.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Indexes best practices: Understand the architectural trade-offs, access patterns, and failure modes of indexes., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of indexes.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-normalization-and-denormalization",
+    "title": "Production Troubleshooting: Normalization and Denormalization",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to normalization and denormalization. Solving the scalability and reliability bottlenecks inherent to normalization and denormalization.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Normalization and Denormalization best practices: Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-acid-and-base-consistency-models",
+    "title": "Production Troubleshooting: ACID and BASE consistency models",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to acid and base consistency models. Solving the scalability and reliability bottlenecks inherent to acid and base consistency models.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply ACID and BASE consistency models best practices: Understand the architectural trade-offs, access patterns, and failure modes of acid and base consistency models., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of acid and base consistency models.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-cap-theorem",
+    "title": "Production Troubleshooting: CAP Theorem",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to cap theorem. Solving the scalability and reliability bottlenecks inherent to cap theorem.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply CAP Theorem best practices: Understand the architectural trade-offs, access patterns, and failure modes of cap theorem., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of cap theorem.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-pacelc-theorem",
+    "title": "Production Troubleshooting: PACELC Theorem",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to pacelc theorem. Solving the scalability and reliability bottlenecks inherent to pacelc theorem.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply PACELC Theorem best practices: Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-transactions",
+    "title": "Production Troubleshooting: Transactions",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to transactions. Solving the scalability and reliability bottlenecks inherent to transactions.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Transactions best practices: Understand the architectural trade-offs, access patterns, and failure modes of transactions., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of transactions.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-distributed-transactions",
+    "title": "Production Troubleshooting: Distributed Transactions",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to distributed transactions. Solving the scalability and reliability bottlenecks inherent to distributed transactions.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Distributed Transactions best practices: Understand the architectural trade-offs, access patterns, and failure modes of distributed transactions., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of distributed transactions.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-sharding",
+    "title": "Production Troubleshooting: Sharding",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sharding. A single database server reaches vertical scaling limits (RAM, CPU, disk IOPS) and can no longer store or index petabytes of data.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Sharding best practices: Partition database tables horizontally across distinct physical nodes based on a partition key., taking into account Infinite horizontal data capacity at the cost of cross-shard joins, distributed transactions, and complex resharding..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Partition database tables horizontally across distinct physical nodes based on a partition key.. Remember: Infinite horizontal data capacity at the cost of cross-shard joins, distributed transactions, and complex resharding."
+  },
+  {
+    "id": "ex-consistent-hashing",
+    "title": "Production Troubleshooting: Consistent Hashing",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to consistent hashing. Standard modulo hashing (hash(key) % N) invalidates almost all cached keys whenever a server is added or removed, causing a cache stampede.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Consistent Hashing best practices: Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1., taking into account Minimal key migration during topology changes at the cost of virtual node management and ring lookup complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1.. Remember: Minimal key migration during topology changes at the cost of virtual node management and ring lookup complexity."
+  },
+  {
+    "id": "ex-database-federation",
+    "title": "Production Troubleshooting: Database Federation",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to database federation. Solving the scalability and reliability bottlenecks inherent to database federation.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Database Federation best practices: Understand the architectural trade-offs, access patterns, and failure modes of database federation., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of database federation.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-n-tier-architecture",
+    "title": "Production Troubleshooting: N-tier architecture",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to n-tier architecture. Solving the scalability and reliability bottlenecks inherent to n-tier architecture.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply N-tier architecture best practices: Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-message-brokers",
+    "title": "Production Troubleshooting: Message Brokers",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to message brokers. Solving the scalability and reliability bottlenecks inherent to message brokers.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Message Brokers best practices: Understand the architectural trade-offs, access patterns, and failure modes of message brokers., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of message brokers.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-message-queues",
+    "title": "Production Troubleshooting: Message Queues",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to message queues. Synchronous HTTP requests block the caller and cause domino failures when downstream services are slow or temporarily down.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Message Queues best practices: Decouple producers from consumers to buffer traffic surges and protect downstream services with backpressure., taking into account Guaranteed message delivery and spike buffering at the cost of asynchronous complexity, ordering challenges, and duplicate handling..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Decouple producers from consumers to buffer traffic surges and protect downstream services with backpressure.. Remember: Guaranteed message delivery and spike buffering at the cost of asynchronous complexity, ordering challenges, and duplicate handling."
+  },
+  {
+    "id": "ex-publish-subscribe",
+    "title": "Production Troubleshooting: Publish-Subscribe",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to publish-subscribe. Solving the scalability and reliability bottlenecks inherent to publish-subscribe.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Publish-Subscribe best practices: Understand the architectural trade-offs, access patterns, and failure modes of publish-subscribe., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of publish-subscribe.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-enterprise-service-bus-esb",
+    "title": "Production Troubleshooting: Enterprise Service Bus (ESB)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to enterprise service bus (esb). Solving the scalability and reliability bottlenecks inherent to enterprise service bus (esb).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Enterprise Service Bus (ESB) best practices: Understand the architectural trade-offs, access patterns, and failure modes of enterprise service bus (esb)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of enterprise service bus (esb).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-monoliths-and-microservices",
+    "title": "Production Troubleshooting: Monoliths and Microservices",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to monoliths and microservices. Solving the scalability and reliability bottlenecks inherent to monoliths and microservices.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Monoliths and Microservices best practices: Understand the architectural trade-offs, access patterns, and failure modes of monoliths and microservices., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of monoliths and microservices.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-event-driven-architecture-eda",
+    "title": "Production Troubleshooting: Event-Driven Architecture (EDA)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to event-driven architecture (eda). Solving the scalability and reliability bottlenecks inherent to event-driven architecture (eda).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Event-Driven Architecture (EDA) best practices: Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-event-sourcing",
+    "title": "Production Troubleshooting: Event Sourcing",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to event sourcing. Solving the scalability and reliability bottlenecks inherent to event sourcing.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Event Sourcing best practices: Understand the architectural trade-offs, access patterns, and failure modes of event sourcing., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of event sourcing.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-command-and-query-responsibility-segregation-cqrs",
+    "title": "Production Troubleshooting: Command and Query Responsibility Segregation (CQRS)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to command and query responsibility segregation (cqrs). Solving the scalability and reliability bottlenecks inherent to command and query responsibility segregation (cqrs).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Command and Query Responsibility Segregation (CQRS) best practices: Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-api-gateway",
+    "title": "Production Troubleshooting: API Gateway",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to api gateway. Solving the scalability and reliability bottlenecks inherent to api gateway.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply API Gateway best practices: Understand the architectural trade-offs, access patterns, and failure modes of api gateway., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of api gateway.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-rest-graphql-grpc",
+    "title": "Production Troubleshooting: REST, GraphQL, gRPC",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to rest, graphql, grpc. Solving the scalability and reliability bottlenecks inherent to rest, graphql, grpc.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply REST, GraphQL, gRPC best practices: Understand the architectural trade-offs, access patterns, and failure modes of rest, graphql, grpc., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of rest, graphql, grpc.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-long-polling-websockets-server-sent-events-sse",
+    "title": "Production Troubleshooting: Long polling, WebSockets, Server-Sent Events (SSE)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to long polling, websockets, server-sent events (sse). Solving the scalability and reliability bottlenecks inherent to long polling, websockets, server-sent events (sse).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Long polling, WebSockets, Server-Sent Events (SSE) best practices: Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-geohashing-and-quadtrees",
+    "title": "Production Troubleshooting: Geohashing and Quadtrees",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to geohashing and quadtrees. Solving the scalability and reliability bottlenecks inherent to geohashing and quadtrees.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Geohashing and Quadtrees best practices: Understand the architectural trade-offs, access patterns, and failure modes of geohashing and quadtrees., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of geohashing and quadtrees.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-circuit-breaker",
+    "title": "Production Troubleshooting: Circuit breaker",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to circuit breaker. Solving the scalability and reliability bottlenecks inherent to circuit breaker.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Circuit breaker best practices: Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-rate-limiting",
+    "title": "Production Troubleshooting: Rate Limiting",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to rate limiting. Solving the scalability and reliability bottlenecks inherent to rate limiting.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Rate Limiting best practices: Understand the architectural trade-offs, access patterns, and failure modes of rate limiting., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of rate limiting.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-service-discovery",
+    "title": "Production Troubleshooting: Service Discovery",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to service discovery. Solving the scalability and reliability bottlenecks inherent to service discovery.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Service Discovery best practices: Understand the architectural trade-offs, access patterns, and failure modes of service discovery., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of service discovery.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-sla-slo-sli",
+    "title": "Production Troubleshooting: SLA, SLO, SLI",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sla, slo, sli. Solving the scalability and reliability bottlenecks inherent to sla, slo, sli.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SLA, SLO, SLI best practices: Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-disaster-recovery",
+    "title": "Production Troubleshooting: Disaster recovery",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to disaster recovery. Solving the scalability and reliability bottlenecks inherent to disaster recovery.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Disaster recovery best practices: Understand the architectural trade-offs, access patterns, and failure modes of disaster recovery., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of disaster recovery.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-virtual-machines-vms-and-containers",
+    "title": "Production Troubleshooting: Virtual Machines (VMs) and Containers",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to virtual machines (vms) and containers. Solving the scalability and reliability bottlenecks inherent to virtual machines (vms) and containers.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Virtual Machines (VMs) and Containers best practices: Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-oauth-20-and-openid-connect-oidc",
+    "title": "Production Troubleshooting: OAuth 2.0 and OpenID Connect (OIDC)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to oauth 2.0 and openid connect (oidc). Solving the scalability and reliability bottlenecks inherent to oauth 2.0 and openid connect (oidc).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply OAuth 2.0 and OpenID Connect (OIDC) best practices: Understand the architectural trade-offs, access patterns, and failure modes of oauth 2.0 and openid connect (oidc)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of oauth 2.0 and openid connect (oidc).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-single-sign-on-sso",
+    "title": "Production Troubleshooting: Single Sign-On (SSO)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to single sign-on (sso). Solving the scalability and reliability bottlenecks inherent to single sign-on (sso).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Single Sign-On (SSO) best practices: Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-ssl-tls-mtls",
+    "title": "Production Troubleshooting: SSL, TLS, mTLS",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to ssl, tls, mtls. Solving the scalability and reliability bottlenecks inherent to ssl, tls, mtls.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SSL, TLS, mTLS best practices: Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-system-design-interviews",
+    "title": "Production Troubleshooting: System Design Interviews",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to system design interviews. Solving the scalability and reliability bottlenecks inherent to system design interviews.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply System Design Interviews best practices: Understand the architectural trade-offs, access patterns, and failure modes of system design interviews., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of system design interviews.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-url-shortener",
+    "title": "Production Troubleshooting: URL Shortener",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to url shortener. Long, unwieldy URLs consume characters in SMS/tweets and expose internal routing paths.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply URL Shortener best practices: Use Base62 encoding on unique 64-bit IDs generated by a Key Generation Service (KGS) or snowflake algorithm, backed by distributed cache., taking into account Blazing 5ms redirect latency via aggressive caching at the cost of write-time key pre-generation..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Use Base62 encoding on unique 64-bit IDs generated by a Key Generation Service (KGS) or snowflake algorithm, backed by distributed cache.. Remember: Blazing 5ms redirect latency via aggressive caching at the cost of write-time key pre-generation."
+  },
+  {
+    "id": "ex-whatsapp",
+    "title": "Production Troubleshooting: WhatsApp",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to whatsapp. Solving the scalability and reliability bottlenecks inherent to whatsapp.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply WhatsApp best practices: Understand the architectural trade-offs, access patterns, and failure modes of whatsapp., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of whatsapp.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-twitter",
+    "title": "Production Troubleshooting: Twitter",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to twitter. Solving the scalability and reliability bottlenecks inherent to twitter.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Twitter best practices: Understand the architectural trade-offs, access patterns, and failure modes of twitter., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of twitter.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-netflix",
+    "title": "Production Troubleshooting: Netflix",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to netflix. Solving the scalability and reliability bottlenecks inherent to netflix.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Netflix best practices: Understand the architectural trade-offs, access patterns, and failure modes of netflix., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of netflix.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  },
+  {
+    "id": "ex-uber",
+    "title": "Production Troubleshooting: Uber",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to uber. Solving the scalability and reliability bottlenecks inherent to uber.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Uber best practices: Understand the architectural trade-offs, access patterns, and failure modes of uber., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of uber.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+]

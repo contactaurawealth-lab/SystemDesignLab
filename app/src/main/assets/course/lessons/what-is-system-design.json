@@ -1,0 +1,56 @@
+{
+  "id": "what-is-system-design",
+  "title": "What is system design?",
+  "moduleId": "mod-foundations",
+  "moduleName": "Foundations",
+  "order": 1,
+  "difficulty": "Beginner",
+  "estimatedMinutes": 5,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to what is system design?.",
+  "simpleExplanation": "Before we start this course, let's talk about what even is system design.\n\nSystem design is the process of defining the architecture, interfaces, and data\nfor a system that satisfies specific requirements. System design meets the needs\nof your business or organization through coherent and efficient systems. It requires\na systematic approach to building and engineering systems. A good system design requires\nus to think about everything, from infrastructure all the way down to the data and how it's stored.",
+  "technicalExplanation": "Why is System Design so important?\n\nSystem design helps us define a solution that meets the business requirements. It is\none of the earliest decisions we can make when building a system. Often it is essential\nto think from a high level as these decisions are very difficult to correct later. It\nalso makes it easier to reason about and manage architectural changes as the system evolves.",
+  "visualExplanation": "Requests flow through the What is system design? layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of what is system design? as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "what-is-system-design",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "What is system design?",
+    "diagramFile": null
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of what is system design?.",
+  "relatedConcepts": [
+    "what-is-system-design",
+    "ip"
+  ],
+  "prerequisites": [],
+  "nextLessonId": "ip",
+  "interactiveQuestion": {
+    "id": "q-what-is-system-design",
+    "question": "In production system design, what is the primary benefit of What is system design??",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of what is system design?.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of what is system design?. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-what-is-system-design",
+    "title": "Production Troubleshooting: What is system design?",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to what is system design?. Solving the scalability and reliability bottlenecks inherent to what is system design?.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply What is system design? best practices: Understand the architectural trade-offs, access patterns, and failure modes of what is system design?., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of what is system design?.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

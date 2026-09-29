@@ -1,0 +1,58 @@
+{
+  "id": "osi-model",
+  "title": "OSI Model",
+  "moduleId": "mod-foundations",
+  "moduleName": "Foundations",
+  "order": 3,
+  "difficulty": "Beginner",
+  "estimatedMinutes": 9,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to osi model.",
+  "simpleExplanation": "The OSI Model is a logical and conceptual model that defines network communication used by systems open to interconnection and communication with other systems. The Open System Interconnection (OSI Model) also defines a logical network and effectively describes computer packet transfer by using various layers of protocols.\n\nThe OSI Model can be seen as a universal language for computer networking. It's based on the concept of splitting up a communication system into seven abstract layers, each one stacked upon the last.",
+  "technicalExplanation": "Why does the OSI model matter?\n\nThe Open System Interconnection (OSI) model has defined the common terminology used in networking discussions and documentation. This allows us to take a very complex communications process apart and evaluate its components.\n\nWhile this model is not directly implemented in the TCP/IP networks that are most common today, it can still help us do so much more, such as:\n\n- Make troubleshooting easier and help identify threats across the entire stack.\n- Encourage hardware manufacturers to create networking products that can communicate with each other over the network.\n- Essential for developing a security-first mindset.\n- Separate a complex function into simpler components.\n\n\n## Layers\n\nThe seven abstraction layers of the OSI model can be defined as follows, from top to bottom:\n\n![osi-model](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/osi-model/osi-model.png)\n\n### Application\n\nThis is the only layer that directly interacts with data from the user. Software applications like web browsers and email clients rely on the application layer to initiate communication. But it should be made clear that client software applications are not part of the application layer, rather the application layer is responsible for the protocols and data manipulation that the software relies on to present meaningful data to the user. Application layer protocols include HTTP as well as SMTP.\n\n### Presentation\n\nThe presentation layer is also called the Translation layer. The data from the application layer is extracted here and manipulated as per the required format to transmit over the network. The functions of the presentation layer are translation, encryption/decryption, and compression.\n\n### Session\n\nThis is the layer responsible for opening and closing communication between the two devices. The time between when the communication is opened and closed is known as the session. The session layer ensures that the session stays open long enough to transfer all the data being exchanged, and then promptly closes the session in order to avoid wasting resources. The session layer also synchronizes data transfer with checkpoints.\n\n### Transport\n\nThe transport layer (also known as layer 4) is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called segments before sending it to the Network layer (layer 3). It is also responsible for reassembling the segments on the receiving device into data the session layer can consume.\n\n### Network\n\nThe network layer is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender's device, and reassembles these packets on the receiving device. The network layer also finds the best physical path for the data to reach its destination this is known as routing. If the two devices communicating are on the same network, then the network layer is unnecessary.\n\n### Data Link\n\nThe data link layer is very similar to the network layer, except the data link layer facilitates data transfer between two devices on the same network. The data link layer takes packets from the network layer and breaks them into smaller pieces called frames.\n\n### Physical\n\nThis layer includes the physical equipment involved in the data transfer, such as the cables and switches. This is also the layer where the data gets converted into a bit stream, which is a string of 1s and 0s. The physical layer of both devices must also agree on a signal convention so that the 1s can be distinguished from the 0s on both devices.",
+  "visualExplanation": "Requests flow through the OSI Model layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of osi model as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "osi",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "OSI Model",
+    "diagramFile": "osi.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of osi model.",
+  "relatedConcepts": [
+    "ip",
+    "tcp-and-udp"
+  ],
+  "prerequisites": [
+    "ip"
+  ],
+  "nextLessonId": "tcp-and-udp",
+  "interactiveQuestion": {
+    "id": "q-osi-model",
+    "question": "In production system design, what is the primary benefit of OSI Model?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of osi model.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of osi model. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-osi-model",
+    "title": "Production Troubleshooting: OSI Model",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to osi model. Solving the scalability and reliability bottlenecks inherent to osi model.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply OSI Model best practices: Understand the architectural trade-offs, access patterns, and failure modes of osi model., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of osi model.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

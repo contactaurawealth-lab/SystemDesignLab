@@ -1,0 +1,58 @@
+{
+  "id": "sla-slo-sli",
+  "title": "SLA, SLO, SLI",
+  "moduleId": "mod-advanced",
+  "moduleName": "Advanced Concepts & Reliability",
+  "order": 45,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 6,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to sla, slo, sli.",
+  "simpleExplanation": "Let's briefly discuss SLA, SLO, and SLI. These are mostly related to the business and site reliability side of things but good to know nonetheless.",
+  "technicalExplanation": "Why are they important?\n\nSLAs, SLOs, and SLIs allow companies to define, track and monitor the promises made for a service to its users. Together, SLAs, SLOs, and SLIs should help teams generate more user trust in their services with an added emphasis on continuous improvement to incident management and response processes.\n\n\n## SLA\n\nAn SLA, or Service Level Agreement, is an agreement made between a company and its users of a given service. The SLA defines the different promises that the company makes to users regarding specific metrics, such as service availability.\n\n_SLAs are often written by a company's business or legal team._\n\n\n## SLO\n\nAn SLO, or Service Level Objective, is the promise that a company makes to users regarding a specific metric such as incident response or uptime. SLOs exist within an SLA as individual promises contained within the full user agreement. The SLO is the specific goal that the service must meet in order to comply with the SLA. SLOs should always be simple, clearly defined, and easily measured to determine whether or not the objective is being fulfilled.\n\n\n## SLI\n\nAn SLI, or Service Level Indicator, is a key metric used to determine whether or not the SLO is being met. It is the measured value of the metric described within the SLO. In order to remain in compliance with the SLA, the SLI's value must always meet or exceed the value determined by the SLO.",
+  "visualExplanation": "Requests flow through the SLA, SLO, SLI layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of sla, slo, sli as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "sla-slo-sli",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "SLA, SLO, SLI",
+    "diagramFile": null
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli.",
+  "relatedConcepts": [
+    "service-discovery",
+    "disaster-recovery"
+  ],
+  "prerequisites": [
+    "service-discovery"
+  ],
+  "nextLessonId": "disaster-recovery",
+  "interactiveQuestion": {
+    "id": "q-sla-slo-sli",
+    "question": "In production system design, what is the primary benefit of SLA, SLO, SLI?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-sla-slo-sli",
+    "title": "Production Troubleshooting: SLA, SLO, SLI",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sla, slo, sli. Solving the scalability and reliability bottlenecks inherent to sla, slo, sli.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SLA, SLO, SLI best practices: Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "n-tier-architecture",
+  "title": "N-tier architecture",
+  "moduleId": "mod-distributed",
+  "moduleName": "Distributed Systems & Messaging",
+  "order": 29,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to n-tier architecture.",
+  "simpleExplanation": "N-tier architecture divides an application into logical layers and physical tiers. Layers are a way to separate responsibilities and manage dependencies. Each layer has a specific responsibility. A higher layer can use services in a lower layer, but not the other way around.\n\n![n-tier-architecture](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/n-tier-architecture/n-tier-architecture.png)\n\nTiers are physically separated, running on separate machines. A tier can call to another tier directly, or use asynchronous messaging. Although each layer might be hosted in its own tier, that's not required. Several layers might be hosted on the same tier. Physically separating the tiers improves scalability and resiliency and adds latency from the additional network communication.\n\nAn N-tier architecture can be of two types:\n\n- In a closed layer architecture, a layer can only call the next layer immediately down.\n- In an open layer architecture, a layer can call any of the layers below it.\n\nA closed-layer architecture limits the dependencies between layers. However, it might create unnecessary network traffic, if one layer simply passes requests along to the next layer.",
+  "technicalExplanation": "Types of N-Tier architectures\n\nLet's look at some examples of N-Tier architecture:\n\n### 3-Tier architecture\n\n3-Tier is widely used and consists of the following different layers:\n\n- **Presentation layer**: Handles user interactions with the application.\n- **Business Logic layer**: Accepts the data from the application layer, validates it as per business logic and passes it to the data layer.\n- **Data Access layer**: Receives the data from the business layer and performs the necessary operation on the database.\n\n### 2-Tier architecture\n\nIn this architecture, the presentation layer runs on the client and communicates with a data store. There is no business logic layer or immediate layer between client and server.\n\n### Single Tier or 1-Tier architecture\n\nIt is the simplest one as it is equivalent to running the application on a personal computer. All of the required components for an application to run are on a single application or server.\n\n\n## Advantages\n\nHere are some advantages of using N-tier architecture:\n\n- Can improve availability.\n- Better security as layers can behave like a firewall.\n- Separate tiers allow us to scale them as needed.\n- Improve maintenance as different people can manage different tiers.\n\n\n## Disadvantages\n\nBelow are some disadvantages of N-tier architecture:\n\n- Increased complexity of the system as a whole.\n- Increased network latency as the number of tiers increases.\n- Expensive as every tier will have its own hardware cost.\n- Difficult to manage network security.",
+  "visualExplanation": "Requests flow through the N-tier architecture layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of n-tier architecture as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "n-tier-architecture",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "N-tier architecture",
+    "diagramFile": "n-tier-architecture.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture.",
+  "relatedConcepts": [
+    "database-federation",
+    "message-brokers"
+  ],
+  "prerequisites": [
+    "database-federation"
+  ],
+  "nextLessonId": "message-brokers",
+  "interactiveQuestion": {
+    "id": "q-n-tier-architecture",
+    "question": "In production system design, what is the primary benefit of N-tier architecture?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-n-tier-architecture",
+    "title": "Production Troubleshooting: N-tier architecture",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to n-tier architecture. Solving the scalability and reliability bottlenecks inherent to n-tier architecture.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply N-tier architecture best practices: Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

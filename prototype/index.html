@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Design Lab — Interactive Prototype</title>
+  <!-- Inter & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            app: {
+              bg: '#FBFBFC',
+              surface: '#FFFFFF',
+              border: '#E2E8F0',
+              text: '#0F172A',
+              muted: '#64748B',
+              accent: '#2563EB',
+              accentLight: '#EFF6FF',
+              darkBg: '#090D14',
+              darkSurface: '#111726',
+              darkBorder: '#1E293B',
+              darkText: '#F1F5F9',
+              darkMuted: '#94A3B8',
+              darkAccent: '#3B82F6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom styling for calm engineering look */
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+    .canvas-grid {
+      background-size: 24px 24px;
+      background-image: radial-gradient(circle, #CBD5E1 1px, transparent 1px);
+    }
+    .dark .canvas-grid {
+      background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+    }
+    /* Device frame styling */
+    .device-shell {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3), 0 0 0 12px #1E293B, 0 0 0 14px #475569;
+      border-radius: 44px;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200">
+
+  <!-- Top Global Bar (Prototype Controls) -->
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 px-4 py-2.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold font-mono text-sm shadow-sm">
+          SD
+        </div>
+        <div>
+          <h1 class="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+            System Design Lab
+            <span class="text-[10px] font-mono bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+              Interactive Prototype v1.0
+            </span>
+          </h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Offline-first Native Android Architecture based on karanpratapsingh/system-design</p>
+        </div>
+      </div>
+
+      <!-- Controls: Device Mode, Theme Toggle, Landing Page Mode -->
+      <div class="flex items-center space-x-3 text-xs">
+        <!-- Viewport Mode -->
+        <div class="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-0.5">
+          <button id="btn-view-mobile" onclick="setViewMode('mobile')" class="px-2.5 py-1 rounded-md font-medium text-slate-900 dark:text-white bg-white dark:bg-slate-700 shadow-xs flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+            Mobile Frame
+          </button>
+          <button id="btn-view-desktop" onclick="setViewMode('desktop')" class="px-2.5 py-1 rounded-md font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            Full Responsive
+          </button>
+          <button id="btn-view-landing" onclick="setViewMode('landing')" class="px-2.5 py-1 rounded-md font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Landing Page Mode
+          </button>
+        </div>
+
+        <!-- Download Native APK Button -->
+        <a href="/app-debug.apk" download="SystemDesignLab.apk" class="px-2.5 py-1 rounded-lg font-medium text-white bg-emerald-600 hover:bg-emerald-700 shadow-xs flex items-center gap-1.5 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <span>Download Native APK</span>
+        </a>
+
+        <!-- Dark/Light Mode -->
+        <button onclick="toggleDarkMode()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" title="Toggle Theme">
+          <svg id="theme-icon-sun" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="theme-icon-moon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Prototype Main Area -->
+  <main id="main-container" class="py-6 px-4 flex justify-center items-start">
+
+    <!-- CONTAINER 1: APP PROTOTYPE (Mobile Frame / Responsive) -->
+    <div id="app-view-container" class="w-full flex justify-center">
+      
+      <!-- Device Shell Wrapper -->
+      <div id="device-wrapper" class="device-shell w-[400px] h-[860px] bg-white dark:bg-slate-900 border-[6px] border-slate-800 dark:border-slate-950 overflow-hidden flex flex-col relative transition-all duration-300">
+        
+        <!-- Android Status Bar -->
+        <div class="h-8 bg-slate-900 text-white flex items-center justify-between px-6 text-[11px] font-mono shrink-0 select-none z-40">
+          <span id="status-time">09:41</span>
+          <div class="w-20 h-4 bg-black rounded-b-xl mx-auto -mt-1"></div>
+          <div class="flex items-center space-x-1.5">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4z"/></svg>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Persistent Audiobook Floating Mini-Player (shows when audio is playing or queued) -->
+        <div id="audio-mini-player" class="bg-slate-900 text-white border-b border-slate-800 px-3 py-2 flex items-center justify-between shrink-0 text-xs">
+          <div class="flex items-center space-x-2.5 overflow-hidden">
+            <button onclick="toggleAudioPlayback()" class="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shrink-0">
+              <svg id="mini-play-icon" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <svg id="mini-pause-icon" class="w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            </button>
+            <div class="truncate">
+              <div class="font-medium text-[11px] truncate flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="mini-audio-title">Ch 1: Why Systems Need to Scale</span>
+              </div>
+              <div class="text-[10px] text-slate-400 flex items-center gap-2">
+                <span id="mini-audio-concept" class="text-blue-400 font-mono">Load Balancing</span>
+                <span id="mini-audio-time">04:12 / 12:00</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="navigateTo('audio')" class="text-[10px] font-medium text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700">
+            Open
+          </button>
+        </div>
+
+        <!-- App Screen Content (Scrollable Container) -->
+        <div id="app-screen-content" class="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-16">
+          
+          <!-- ==================== 1. HOME SCREEN ==================== -->
+          <div id="screen-home" class="screen-panel p-4 space-y-4">
+            <!-- Greeting & Where am I? -->
+            <div class="space-y-1">
+              <div class="text-xs font-medium text-slate-500 dark:text-slate-400">Good evening</div>
+              <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">System Design Lab</h2>
+            </div>
+
+            <!-- "Where am I? What next? Why continue?" Primary Action Card -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider text-[10px]">Continue Learning</span>
+                <span class="text-slate-500 font-mono text-[11px]">Lesson 4 of 7</span>
+              </div>
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-white text-base">Database Replication & Failover</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Leader-follower sync, replication lag, and split-brain resolution</p>
+              </div>
+              <!-- Progress Bar -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px] text-slate-500 font-mono">
+                  <span>Progress</span>
+                  <span class="text-slate-900 dark:text-slate-200 font-semibold">72%</span>
+                </div>
+                <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 72%"></div>
+                </div>
+              </div>
+              <button onclick="navigateTo('learn', 'db-replication')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg transition-colors flex items-center justify-center gap-2 shadow-xs">
+                <span>Continue Lesson</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+
+            <!-- Learning Streak & Daily Goal ("Why continue?") -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
+                <div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Learning Streak</div>
+                <div class="flex items-baseline space-x-1 mt-1">
+                  <span class="text-xl font-bold font-mono text-slate-900 dark:text-white">8</span>
+                  <span class="text-xs font-semibold text-amber-500">days 🔥</span>
+                </div>
+                <div class="text-[10px] text-slate-400 mt-1">Personal record: 14 days</div>
+              </div>
+              <div class="bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-800">
+                <div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Today's Goal</div>
+                <div class="flex items-baseline space-x-1 mt-1">
+                  <span class="text-xl font-bold font-mono text-slate-900 dark:text-white">12</span>
+                  <span class="text-xs text-slate-500">min left</span>
+                </div>
+                <div class="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">+50 XP upon completion</div>
+              </div>
+            </div>
+
+            <!-- Spaced Review Queue Card (SuperMemo SM-2) -->
+            <div class="bg-slate-900 text-white rounded-xl p-3.5 border border-slate-800 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  <span class="text-xs font-semibold text-slate-200">Spaced Review Due (4)</span>
+                </div>
+                <span class="text-[10px] font-mono text-slate-400">SM-2 Algorithm</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Concepts requiring recall to prevent retention decay:
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">Caching</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">CAP Theorem</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">Sharding</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">Consistent Hash</span>
+              </div>
+              <button onclick="navigateTo('practice', 'review')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-700 flex items-center justify-center gap-1.5 transition-colors">
+                <span>Start 4-Minute Review Session</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+
+            <!-- Quick Access Grid: Simulate, Build, Practice, Listen -->
+            <div class="space-y-2">
+              <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider text-[10px]">Learning Modes</div>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <button onclick="navigateTo('simulate')" class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-blue-400 transition-colors">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    Simulate
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Live traffic & failure lab</div>
+                </button>
+                <button onclick="navigateTo('build')" class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-blue-400 transition-colors">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+                    Build
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Architecture canvas</div>
+                </button>
+                <button onclick="navigateTo('practice')" class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-blue-400 transition-colors">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    Practice
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Interview & Explain-it-back</div>
+                </button>
+                <button onclick="navigateTo('audio')" class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-left hover:border-blue-400 transition-colors">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                    Listen
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Offline educational audio</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Repository Quick Link -->
+            <div class="p-3 bg-slate-100 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+              <div class="flex items-center space-x-2">
+                <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span class="text-slate-700 dark:text-slate-300 font-medium">Browse Karan's Source Repo</span>
+              </div>
+              <button onclick="navigateTo('repository')" class="text-blue-600 dark:text-blue-400 font-medium hover:underline text-[11px]">
+                Explore →
+              </button>
+            </div>
+          </div>
+
+
+          <!-- ==================== 2. LEARN SCREEN ==================== -->
+          <div id="screen-learn" class="screen-panel p-4 space-y-4 hidden">
+            <!-- Header with Module Selector -->
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-blue-600 dark:text-blue-400">Curriculum / Module 2</span>
+                <h2 class="text-base font-bold text-slate-900 dark:text-white">Load Balancing</h2>
+              </div>
+              <div class="flex items-center space-x-1">
+                <button onclick="changeLesson('prev')" class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <span class="text-xs font-mono text-slate-500">2 / 56</span>
+                <button onclick="changeLesson('next')" class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- THREE EXPLANATION LEVELS SWITCHER (Requirement 6) -->
+            <div class="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex text-xs font-medium">
+              <button id="tab-lvl-simple" onclick="setExplanationLevel('simple')" class="flex-1 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs transition-all">
+                Simple
+              </button>
+              <button id="tab-lvl-tech" onclick="setExplanationLevel('tech')" class="flex-1 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+                Technical
+              </button>
+              <button id="tab-lvl-deep" onclick="setExplanationLevel('deep')" class="flex-1 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+                Deep Dive
+              </button>
+            </div>
+
+            <!-- Dynamic Explanation Content Container -->
+            <div id="lesson-explanation-content" class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+              <!-- Content injected via JS based on selected level -->
+            </div>
+
+            <!-- VISUAL LEARNING: Interactive Request Flow Diagram (Requirement 7) -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-slate-900 dark:text-white">Interactive Request Flow</span>
+                <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400">Live Traffic Animation</span>
+              </div>
+              <p class="text-[11px] text-slate-500">Watch packets distribute across server pool and database:</p>
+              
+              <!-- Canvas Animated Diagram -->
+              <div class="relative bg-slate-950 rounded-lg p-2 overflow-hidden border border-slate-800 h-44 flex flex-col justify-between">
+                <canvas id="flow-diagram-canvas" class="w-full h-full block"></canvas>
+              </div>
+
+              <div class="flex justify-between items-center text-[11px] text-slate-500 pt-1">
+                <span>Algorithm: <strong class="text-slate-800 dark:text-slate-200 font-mono">Weighted Round-Robin</strong></span>
+                <button onclick="navigateTo('simulate')" class="text-blue-600 dark:text-blue-400 font-medium hover:underline flex items-center gap-1">
+                  Open in 3D Simulator →
+                </button>
+              </div>
+            </div>
+
+            <!-- Architectural Trade-offs & Common Traps -->
+            <div class="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-xl p-3 space-y-1.5 text-xs text-amber-900 dark:text-amber-200">
+              <div class="font-semibold flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Architectural Trade-Off & Pitfall
+              </div>
+              <p class="text-[11px] leading-relaxed text-amber-800 dark:text-amber-300">
+                <strong>Pitfall:</strong> Single Point of Failure (SPOF). A lone load balancer becomes a bottleneck. In production, configure active-passive pairs with VRRP (Virtual Router Redundancy Protocol) and DNS round-robin.
+              </p>
+            </div>
+
+            <!-- Check for Understanding Quiz -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 space-y-2.5 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white">Check Your Understanding</div>
+              <p class="text-slate-600 dark:text-slate-300">When should you prefer IP Hash load balancing over Round-Robin?</p>
+              
+              <div class="space-y-1.5" id="quiz-options">
+                <button onclick="checkQuizAnswer(1)" class="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                  A) When you need stateful session persistence without shared redis cache
+                </button>
+                <button onclick="checkQuizAnswer(2)" class="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                  B) When all backend servers have vastly different CPU and RAM specs
+                </button>
+                <button onclick="checkQuizAnswer(3)" class="w-full text-left p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                  C) To guarantee zero packet drop during DDoS attack surges
+                </button>
+              </div>
+              <div id="quiz-feedback" class="hidden p-2.5 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 3. SIMULATE SCREEN ==================== -->
+          <div id="screen-simulate" class="screen-panel p-4 space-y-4 hidden">
+            <!-- Header & Simulation Selector -->
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-blue-600 dark:text-blue-400">Simulation Lab</span>
+                <span class="text-[10px] font-mono bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded">60 FPS Engine</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">Real-Time Architecture Simulation</h2>
+            </div>
+
+            <!-- Simulation Mode Tabs -->
+            <div class="flex space-x-1.5 overflow-x-auto pb-1 text-xs custom-scrollbar">
+              <button onclick="switchSimScenario('lb')" id="sim-tab-lb" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium whitespace-nowrap shadow-xs">
+                Load Balancer
+              </button>
+              <button onclick="switchSimScenario('cache')" id="sim-tab-cache" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                Caching (Redis)
+              </button>
+              <button onclick="switchSimScenario('db')" id="sim-tab-db" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                DB Replication
+              </button>
+              <button onclick="switchSimScenario('queue')" id="sim-tab-queue" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                Message Queue
+              </button>
+              <button onclick="switchSimScenario('sharding')" id="sim-tab-sharding" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                Sharding
+              </button>
+            </div>
+
+            <!-- Live Simulation Canvas / Visualizer -->
+            <div class="bg-slate-950 rounded-xl p-3 border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-[11px] text-slate-400">
+                <span id="sim-scene-title" class="font-semibold text-slate-200 font-mono">SCENARIO: Load Balancer Cluster</span>
+                <span id="sim-fps" class="font-mono text-emerald-400">60 FPS</span>
+              </div>
+              <div class="w-full h-48 bg-slate-900 rounded-lg overflow-hidden relative border border-slate-800">
+                <canvas id="simulation-canvas" class="w-full h-full block"></canvas>
+                <!-- Canvas Overlay Indicators -->
+                <div id="sim-overlay-alert" class="hidden absolute top-2 right-2 bg-red-600/90 text-white text-[10px] font-mono px-2 py-0.5 rounded shadow">
+                  OVERLOAD: SERVER THRASHING
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Telemetry Readout Grid -->
+            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+              <div class="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div class="text-[9px] text-slate-500 uppercase font-mono">Incoming</div>
+                <div id="metric-traffic" class="font-bold font-mono text-slate-900 dark:text-white mt-0.5">5,000 QPS</div>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div class="text-[9px] text-slate-500 uppercase font-mono">p99 Latency</div>
+                <div id="metric-latency" class="font-bold font-mono text-emerald-500 mt-0.5">14 ms</div>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div class="text-[9px] text-slate-500 uppercase font-mono">Avg CPU</div>
+                <div id="metric-cpu" class="font-bold font-mono text-slate-900 dark:text-white mt-0.5">42%</div>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+                <div class="text-[9px] text-slate-500 uppercase font-mono">Failed Req</div>
+                <div id="metric-failures" class="font-bold font-mono text-slate-400 mt-0.5">0.0%</div>
+              </div>
+            </div>
+
+            <!-- Interactive Parameter Sliders & Chaos Injection (Requirement 8 & 9) -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white flex items-center justify-between">
+                <span>Experiment Parameters</span>
+                <button onclick="resetSimParams()" class="text-[10px] text-slate-400 hover:text-slate-600 font-mono">Reset</button>
+              </div>
+
+              <!-- Slider 1: Traffic -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                  <span>Traffic Load:</span>
+                  <span id="slider-traffic-val" class="font-mono font-semibold text-slate-900 dark:text-white">5,000 req/s</span>
+                </div>
+                <input id="slider-traffic" type="range" min="500" max="25000" step="500" value="5000" oninput="updateSimFromSliders()" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              </div>
+
+              <!-- Slider 2: Node Count -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                  <span>Active Server Instances:</span>
+                  <span id="slider-nodes-val" class="font-mono font-semibold text-slate-900 dark:text-white">3 Nodes</span>
+                </div>
+                <input id="slider-nodes" type="range" min="1" max="8" step="1" value="3" oninput="updateSimFromSliders()" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              </div>
+
+              <!-- Slider 3: Capacity / TTL -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                  <span id="slider-cap-label">Capacity Per Node:</span>
+                  <span id="slider-cap-val" class="font-mono font-semibold text-slate-900 dark:text-white">2,500 QPS</span>
+                </div>
+                <input id="slider-cap" type="range" min="1000" max="10000" step="500" value="2500" oninput="updateSimFromSliders()" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              </div>
+
+              <!-- Chaos / Break Buttons -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex space-x-2">
+                <button id="btn-kill-node" onclick="toggleSimFailure()" class="flex-1 py-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-900 font-medium text-[11px] transition-colors flex items-center justify-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L12 12m6.364-6.364L12 12m0 0L5.636 5.636m12.728 0A9 9 0 005.636 18.364"/></svg>
+                  <span>Kill Server 2 (Break)</span>
+                </button>
+                <button onclick="navigateTo('failurelab')" class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 font-medium text-[11px] transition-colors">
+                  Failure Scenarios →
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 4. FAILURE LAB SCREEN ==================== -->
+          <div id="screen-failurelab" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-red-600 dark:text-red-400">Chaos & Resilience</span>
+                <span class="text-[10px] font-mono bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded">Failure Lab</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">Diagnose & Remediate</h2>
+            </div>
+
+            <!-- Scenario Selection Pills -->
+            <div class="flex space-x-1.5 overflow-x-auto pb-1 text-xs custom-scrollbar">
+              <button onclick="loadFailureScenario(1)" id="fail-tab-1" class="px-3 py-1.5 rounded-lg bg-red-600 text-white font-medium whitespace-nowrap">
+                10x Traffic Spike
+              </button>
+              <button onclick="loadFailureScenario(2)" id="fail-tab-2" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                Primary DB Crash
+              </button>
+              <button onclick="loadFailureScenario(3)" id="fail-tab-3" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                Cache Stampede
+              </button>
+              <button onclick="loadFailureScenario(4)" id="fail-tab-4" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+                Worker Deadlock
+              </button>
+            </div>
+
+            <!-- Incident Card -->
+            <div class="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/60 rounded-xl p-4 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-red-700 dark:text-red-400 font-mono" id="fail-incident-code">SEV-1: HIGH LATENCY & THRESHOLD BREACH</span>
+                <span class="text-[10px] bg-red-200 dark:bg-red-900 text-red-800 dark:text-red-200 px-1.5 py-0.5 rounded font-mono">ACTIVE OUTAGE</span>
+              </div>
+              <h3 class="font-bold text-slate-900 dark:text-white text-sm" id="fail-incident-title">
+                Traffic surged 10x from 2,000 to 20,000 QPS
+              </h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300" id="fail-incident-desc">
+                The single web application instance CPU is pinned at 99.8%. Downstream HTTP response latency has increased from 18ms to 4,200ms. 504 Gateway Timeouts are spiking.
+              </p>
+            </div>
+
+            <!-- Live Diagnostic Metrics & Logs -->
+            <div class="bg-slate-950 rounded-xl p-3 border border-slate-800 space-y-2 text-xs font-mono">
+              <div class="text-[10px] text-slate-400 flex justify-between">
+                <span>INCIDENT TELEMETRY</span>
+                <span class="text-red-400 animate-pulse">● STREAMING</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <div class="text-[9px] text-slate-500">HTTP 504 RATE</div>
+                  <div class="text-red-400 font-bold" id="fail-metric-error">64.2%</div>
+                </div>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <div class="text-[9px] text-slate-500">P99 LATENCY</div>
+                  <div class="text-red-400 font-bold" id="fail-metric-lat">4,280 ms</div>
+                </div>
+                <div class="bg-slate-900 p-2 rounded border border-slate-800">
+                  <div class="text-[9px] text-slate-500">CPU UTIL</div>
+                  <div class="text-red-400 font-bold" id="fail-metric-cpu">99.8%</div>
+                </div>
+              </div>
+              <div class="bg-slate-900 p-2 rounded border border-slate-800 text-[10px] text-slate-300 space-y-1 h-20 overflow-y-auto custom-scrollbar" id="fail-console-logs">
+                <div class="text-red-400">[ERROR] Connection pool exhausted: max_clients (100) exceeded</div>
+                <div class="text-amber-400">[WARN] High thread queue backlog: 8,412 pending requests</div>
+                <div class="text-slate-400">[INFO] Client requests dropped with HTTP 504 Gateway Timeout</div>
+              </div>
+            </div>
+
+            <!-- Remediation Action Selection -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white">Remediation Decision</div>
+              <p class="text-slate-500">Select the correct architectural intervention to restore stability:</p>
+              
+              <div class="space-y-2" id="fail-remediation-options">
+                <button onclick="applyRemediation(1)" class="w-full text-left p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all">
+                  <div class="font-semibold text-slate-900 dark:text-white">A) Vertically upgrade server RAM from 16GB to 64GB</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Requires instance restart, introduces downtime, doesn't address CPU bound tasks</div>
+                </button>
+                <button onclick="applyRemediation(2)" class="w-full text-left p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all">
+                  <div class="font-semibold text-slate-900 dark:text-white">B) Deploy Load Balancer + Scale out to 6 stateless instances</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Distributes 20k QPS across nodes at ~3,300 QPS each, staying safely below 70% CPU</div>
+                </button>
+                <button onclick="applyRemediation(3)" class="w-full text-left p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-all">
+                  <div class="font-semibold text-slate-900 dark:text-white">C) Increase HTTP connection timeout from 5s to 60s</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Ties up client sockets and exacerbates resource exhaustion downstream</div>
+                </button>
+              </div>
+
+              <div id="fail-remediation-result" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 5. BUILD / ARCHITECTURE PLAYGROUND ==================== -->
+          <div id="screen-build" class="screen-panel p-4 space-y-4 hidden">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-indigo-600 dark:text-indigo-400">Architecture Playground</span>
+                <h2 class="text-base font-bold text-slate-900 dark:text-white">Design & Validate Systems</h2>
+              </div>
+              <button onclick="evaluateArchitecture()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-lg shadow-xs flex items-center gap-1.5 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Evaluate</span>
+              </button>
+            </div>
+
+            <!-- Challenge Presets -->
+            <div class="flex space-x-1.5 overflow-x-auto pb-1 text-xs custom-scrollbar">
+              <button onclick="loadBuildPreset('url')" id="preset-btn-url" class="px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 font-medium whitespace-nowrap">
+                Design TinyURL
+              </button>
+              <button onclick="loadBuildPreset('whatsapp')" id="preset-btn-wa" class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">
+                Design WhatsApp
+              </button>
+              <button onclick="loadBuildPreset('instagram')" id="preset-btn-ig" class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">
+                Design Instagram
+              </button>
+              <button onclick="loadBuildPreset('blank')" id="preset-btn-blank" class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">
+                Blank Canvas
+              </button>
+            </div>
+
+            <!-- Component Palette (Click to add) -->
+            <div class="space-y-1.5">
+              <div class="text-[10px] font-mono text-slate-500 uppercase">Available Components:</div>
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="addComponentToCanvas('Client')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ Client</button>
+                <button onclick="addComponentToCanvas('CDN')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ CDN</button>
+                <button onclick="addComponentToCanvas('Load Balancer')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ Load Balancer</button>
+                <button onclick="addComponentToCanvas('App Server')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ App Server</button>
+                <button onclick="addComponentToCanvas('Redis Cache')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ Redis Cache</button>
+                <button onclick="addComponentToCanvas('SQL Primary')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ SQL Primary</button>
+                <button onclick="addComponentToCanvas('Read Replica')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ Read Replica</button>
+                <button onclick="addComponentToCanvas('Message Queue')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ Kafka Queue</button>
+                <button onclick="addComponentToCanvas('Worker')" class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[11px] font-medium hover:border-indigo-400">+ Worker</button>
+              </div>
+            </div>
+
+            <!-- Architecture Canvas Viewport -->
+            <div class="relative bg-slate-900 border border-slate-800 rounded-xl h-64 overflow-hidden canvas-grid">
+              <canvas id="architecture-canvas" class="w-full h-full block"></canvas>
+              <div class="absolute bottom-2 left-2 text-[10px] text-slate-400 font-mono bg-slate-950/80 px-2 py-1 rounded">
+                Click node to connect or drag to arrange
+              </div>
+              <div class="absolute bottom-2 right-2 flex space-x-1">
+                <button onclick="clearCanvas()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded font-mono">Clear</button>
+              </div>
+            </div>
+
+            <!-- Architecture Evaluation Card -->
+            <div id="arch-evaluation-panel" class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white flex items-center justify-between">
+                <span>Architectural Viability Report</span>
+                <span id="arch-score" class="font-mono text-emerald-500 font-bold text-sm">88 / 100</span>
+              </div>
+              <div id="arch-feedback-list" class="space-y-1.5 text-slate-600 dark:text-slate-300">
+                <div class="flex items-start gap-1.5 text-emerald-600 dark:text-emerald-400">
+                  <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                  <span>Read scalability: Redis cache reduces 85% of queries to database.</span>
+                </div>
+                <div class="flex items-start gap-1.5 text-emerald-600 dark:text-emerald-400">
+                  <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                  <span>High availability: Load balancer distributes traffic across redundant app nodes.</span>
+                </div>
+                <div class="flex items-start gap-1.5 text-amber-600 dark:text-amber-400">
+                  <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  <span>Single Point of Failure: Consider deploying a standby read-replica for SQL primary.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 6. PRACTICE & INTERVIEW MODE ==================== -->
+          <div id="screen-practice" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-emerald-600 dark:text-emerald-400">Interview & Mastery</span>
+                <span class="text-[10px] font-mono bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded">Practice Mode</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">System Design Interview</h2>
+            </div>
+
+            <!-- Mode Switcher: Interview Challenge vs Explain-It-Back -->
+            <div class="flex border-b border-slate-200 dark:border-slate-800 text-xs font-medium">
+              <button onclick="setPracticeSubmode('interview')" id="prac-tab-interview" class="pb-2 border-b-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 px-3">
+                Interview Simulator
+              </button>
+              <button onclick="setPracticeSubmode('explain')" id="prac-tab-explain" class="pb-2 text-slate-500 hover:text-slate-900 dark:hover:text-white px-3">
+                "Explain It Back"
+              </button>
+            </div>
+
+            <!-- SUB-PANEL 1: Interview Simulator -->
+            <div id="sub-panel-interview" class="space-y-3">
+              <!-- Interview Header & Timer -->
+              <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <div class="text-[10px] text-slate-500 uppercase font-mono">Active Challenge</div>
+                  <div class="font-bold text-slate-900 dark:text-white text-sm">Design a URL Shortener (TinyURL)</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-[10px] text-slate-500 font-mono">TIMER</div>
+                  <div id="interview-timer" class="font-mono font-bold text-sm text-slate-900 dark:text-white">14:52</div>
+                </div>
+              </div>
+
+              <!-- Interview Stages -->
+              <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+                <div class="font-semibold text-slate-900 dark:text-white">1. Functional & Non-Functional Requirements</div>
+                <div class="space-y-1.5 text-slate-600 dark:text-slate-300 text-[11px]">
+                  <div>✔ Given a long URL, generate a short 7-character unique alias</div>
+                  <div>✔ Redirecting from short alias to original URL in &lt; 20ms</div>
+                  <div>✔ Read-to-Write Ratio: 100:1 (Heavy Read Intensive System)</div>
+                  <div>✔ High Availability (99.99%) prioritized over immediate consistency</div>
+                </div>
+
+                <div class="font-semibold text-slate-900 dark:text-white pt-2 border-t border-slate-100 dark:border-slate-800">
+                  2. Capacity Estimations
+                </div>
+                <div class="grid grid-cols-2 gap-2 font-mono text-[11px]">
+                  <div class="bg-slate-50 dark:bg-slate-800/60 p-2 rounded">
+                    <span class="text-slate-400">Writes:</span> 100M new URLs/month (40 writes/sec)
+                  </div>
+                  <div class="bg-slate-50 dark:bg-slate-800/60 p-2 rounded">
+                    <span class="text-slate-400">Reads:</span> 10B redirects/month (4,000 reads/sec)
+                  </div>
+                </div>
+
+                <div class="font-semibold text-slate-900 dark:text-white pt-2 border-t border-slate-100 dark:border-slate-800">
+                  3. Key Architectural Decisions
+                </div>
+                <div class="space-y-2">
+                  <div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-800">
+                    <div class="font-medium text-slate-900 dark:text-white">Encoding: Base62 vs MD5 Hashing</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">62^7 = ~3.5 Trillion combinations. Use Key Generation Service (KGS) to pre-generate tokens without hash collisions.</div>
+                  </div>
+                  <div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-800">
+                    <div class="font-medium text-slate-900 dark:text-white">Storage & Caching Layer</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">NoSQL Key-Value Store (DynamoDB/Cassandra) + Redis LRU cache for the top 20% hot URLs (80/20 Pareto rule).</div>
+                  </div>
+                </div>
+
+                <button onclick="navigateTo('build', 'url')" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5 shadow-xs">
+                  <span>Open URL Shortener Architecture Canvas</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- SUB-PANEL 2: "Explain It Back" Mode (Requirement 15) -->
+            <div id="sub-panel-explain" class="space-y-3 hidden">
+              <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                <div class="font-semibold text-slate-900 dark:text-white">"Explain It Back" Challenge</div>
+                <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Explain <strong>Database Sharding & Consistent Hashing</strong> in your own technical words. What problem does it solve and how does consistent hashing prevent massive key reshuffling when adding a new node?
+                </p>
+                <textarea id="explain-input" rows="4" placeholder="Type your technical explanation here..." class="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-hidden custom-scrollbar"></textarea>
+                
+                <div class="flex justify-between items-center pt-1">
+                  <span class="text-[10px] text-slate-400">Evaluates against 4 architectural rubrics</span>
+                  <button onclick="evaluateExplanation()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-xs transition-colors shadow-xs">
+                    Evaluate My Explanation
+                  </button>
+                </div>
+              </div>
+
+              <!-- Explanation Feedback Output -->
+              <div id="explain-feedback-box" class="hidden bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                <div class="font-semibold text-slate-900 dark:text-white flex items-center justify-between">
+                  <span>Pedagogical Analysis</span>
+                  <span class="font-mono text-emerald-500 font-bold">Strong Understanding (92%)</span>
+                </div>
+                <div class="space-y-2 text-[11px] leading-relaxed">
+                  <div class="text-emerald-600 dark:text-emerald-400">
+                    <strong>✔ What you understood:</strong> Accurately explained horizontal partitioning and demonstrated that consistent hashing maps keys and nodes onto a circular ring, minimizing data movement to k/N keys during topology changes.
+                  </div>
+                  <div class="text-slate-600 dark:text-slate-400">
+                    <strong>ℹ Nuance to clarify:</strong> Consider mentioning <em>virtual nodes (vnodes)</em> to prevent non-uniform key distribution (hotspots) across physical servers.
+                  </div>
+                  <div class="text-blue-600 dark:text-blue-400">
+                    <strong>💡 Suggested Review:</strong> Revisit Consistent Hashing in Chapter II of Karan's course.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 7. LISTEN / AUDIOBOOK SCREEN ==================== -->
+          <div id="screen-audio" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-purple-600 dark:text-purple-400">Audiobook Engine</span>
+                <span class="text-[10px] font-mono bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 px-1.5 py-0.5 rounded">Media3 ExoPlayer</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">Offline Educational Audio</h2>
+            </div>
+
+            <!-- Big Audio Player Surface -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xs">
+              <!-- Visual Artwork / Chapter Banner -->
+              <div class="w-full h-32 rounded-lg bg-gradient-to-br from-slate-900 to-indigo-950 p-4 flex flex-col justify-between text-white border border-slate-800 relative overflow-hidden">
+                <div class="flex justify-between items-start z-10">
+                  <span class="text-[10px] font-mono px-2 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-400/30 rounded">CHAPTER 1</span>
+                  <span class="text-[10px] font-mono text-slate-400">12 MIN TOTAL</span>
+                </div>
+                <div class="z-10">
+                  <h3 class="font-bold text-base text-white" id="audio-large-title">Why Systems Need to Scale</h3>
+                  <p class="text-xs text-slate-300 mt-0.5">Foundations of concurrency, single-server limits, and horizontal expansion</p>
+                </div>
+                <!-- Animated Soundwave Waves -->
+                <div class="flex items-end space-x-1 h-8 opacity-40">
+                  <div class="w-1 bg-blue-400 h-3 animate-pulse"></div>
+                  <div class="w-1 bg-blue-400 h-6 animate-pulse" style="animation-delay: 0.1s"></div>
+                  <div class="w-1 bg-blue-400 h-4 animate-pulse" style="animation-delay: 0.2s"></div>
+                  <div class="w-1 bg-blue-400 h-8 animate-pulse" style="animation-delay: 0.3s"></div>
+                  <div class="w-1 bg-blue-400 h-5 animate-pulse" style="animation-delay: 0.4s"></div>
+                  <div class="w-1 bg-blue-400 h-2 animate-pulse" style="animation-delay: 0.5s"></div>
+                </div>
+              </div>
+
+              <!-- Audio + Visual Concept Sync Badge (Requirement 16) -->
+              <div class="p-2.5 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-900/60 flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                  <span class="text-slate-700 dark:text-slate-300">Discussing: <strong id="audio-sync-concept" class="text-blue-600 dark:text-blue-400 font-mono">Load Balancing</strong></span>
+                </div>
+                <button onclick="navigateTo('learn')" class="text-blue-600 dark:text-blue-400 font-semibold text-[11px] hover:underline flex items-center gap-1">
+                  Jump to Lesson →
+                </button>
+              </div>
+
+              <!-- Scrub Bar -->
+              <div class="space-y-1.5">
+                <input id="audio-progress" type="range" min="0" max="720" value="252" oninput="scrubAudio(this.value)" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                <div class="flex justify-between text-[11px] font-mono text-slate-500">
+                  <span id="audio-time-current">04:12</span>
+                  <span id="audio-time-total">12:00</span>
+                </div>
+              </div>
+
+              <!-- Primary Playback Controls -->
+              <div class="flex items-center justify-center space-x-6">
+                <!-- Seek -15s -->
+                <button onclick="seekAudio(-15)" class="text-slate-500 hover:text-slate-900 dark:hover:text-white p-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><text x="12" y="15" font-size="7" text-anchor="middle" fill="currentColor">15</text></svg>
+                </button>
+                
+                <!-- Play / Pause Button -->
+                <button onclick="toggleAudioPlayback()" class="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-md transition-transform active:scale-95">
+                  <svg id="large-play-icon" class="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <svg id="large-pause-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </button>
+
+                <!-- Seek +15s -->
+                <button onclick="seekAudio(15)" class="text-slate-500 hover:text-slate-900 dark:hover:text-white p-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><text x="12" y="15" font-size="7" text-anchor="middle" fill="currentColor">15</text></svg>
+                </button>
+              </div>
+
+              <!-- Secondary Controls: Speed, Sleep Timer -->
+              <div class="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                <!-- Speed -->
+                <div class="flex items-center space-x-1">
+                  <span class="text-slate-400 text-[11px]">Speed:</span>
+                  <button onclick="cycleAudioSpeed()" id="btn-audio-speed" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono font-medium text-[11px]">
+                    1.0x
+                  </button>
+                </div>
+
+                <!-- Sleep Timer -->
+                <div class="flex items-center space-x-1">
+                  <span class="text-slate-400 text-[11px]">Sleep Timer:</span>
+                  <button onclick="cycleSleepTimer()" id="btn-sleep-timer" class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono font-medium text-[11px]">
+                    Off
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter Playlist -->
+            <div class="space-y-2">
+              <div class="text-[10px] font-mono text-slate-500 uppercase">Available Audiobook Chapters:</div>
+              <div class="space-y-1.5">
+                <button onclick="selectChapter(1)" class="w-full text-left p-3 rounded-xl bg-white dark:bg-slate-900 border border-blue-400 dark:border-blue-700 flex items-center justify-between text-xs">
+                  <div>
+                    <div class="font-semibold text-slate-900 dark:text-white">1. Why Systems Need to Scale</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">12 min • Foundations & Concurrency</div>
+                  </div>
+                  <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400">PLAYING</span>
+                </button>
+                <button onclick="selectChapter(2)" class="w-full text-left p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs hover:border-slate-300">
+                  <div>
+                    <div class="font-semibold text-slate-900 dark:text-white">2. Anatomy of a High-Availability Load Balancer</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">14 min • Layer 4 vs Layer 7 & Health Checks</div>
+                  </div>
+                  <span class="text-[10px] font-mono text-slate-400">14:00</span>
+                </button>
+                <button onclick="selectChapter(3)" class="w-full text-left p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs hover:border-slate-300">
+                  <div>
+                    <div class="font-semibold text-slate-900 dark:text-white">3. Caching Strategies: RAM vs Disk</div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">16 min • Cache-Aside, Write-Through & Evictions</div>
+                  </div>
+                  <span class="text-[10px] font-mono text-slate-400">16:00</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 8. REPOSITORY EXPLORER SCREEN ==================== -->
+          <div id="screen-repository" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-blue-600 dark:text-blue-400">Knowledge Base</span>
+                <span class="text-[10px] font-mono bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded">SQLite FTS5</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">Repository Explorer</h2>
+            </div>
+
+            <!-- Instant Search Bar -->
+            <div class="relative">
+              <input id="repo-search-input" type="text" placeholder="Search 56 topics, markdown, or RFCs..." oninput="searchRepository(this.value)" class="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-hidden focus:border-blue-500 transition-colors">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+
+            <!-- Repository Content Sections (Chapters I to V) -->
+            <div id="repo-results-container" class="space-y-2 text-xs">
+              <!-- Dynamically populated or default chapter view -->
+            </div>
+          </div>
+
+
+          <!-- ==================== 9. BYOK LAB ASSISTANT SCREEN ==================== -->
+          <div id="screen-assistant" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-indigo-600 dark:text-indigo-400">BYOK Lab Assistant</span>
+                <span class="text-[10px] font-mono bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded">Keystore AES-256</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">AI Engineering Tutor</h2>
+            </div>
+
+            <!-- Security & Privacy Callout -->
+            <div class="bg-slate-100 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
+              <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Hardware Keystore Encryption
+              </div>
+              <p>Your API key is encrypted using Android Keystore AES-256-GCM and never leaves your device. The app works 100% offline with built-in curriculum intelligence if no key is configured.</p>
+            </div>
+
+            <!-- Interactive Chat Interface -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col h-80 overflow-hidden">
+              <!-- Message Stream -->
+              <div id="ai-chat-messages" class="flex-1 p-3 overflow-y-auto custom-scrollbar space-y-2.5 text-xs">
+                <!-- AI Welcome Message -->
+                <div class="flex items-start space-x-2">
+                  <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-mono text-[10px] shrink-0">
+                    AI
+                  </div>
+                  <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2.5 rounded-lg rounded-tl-none max-w-[85%] leading-relaxed text-[11px]">
+                    Hello! I'm your offline System Design Lab Assistant. Ask me to explain a concept simply, break down a technical trade-off, or analyze your architecture.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Prompt Buttons -->
+              <div class="p-2 border-t border-slate-100 dark:border-slate-800 flex space-x-1.5 overflow-x-auto text-[10px] custom-scrollbar">
+                <button onclick="sendPresetAiPrompt('Explain Load Balancing simply with an airport analogy')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded whitespace-nowrap">
+                  ✈ Airport Analogy
+                </button>
+                <button onclick="sendPresetAiPrompt('Compare Consistency vs Availability under network partition')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded whitespace-nowrap">
+                  ⚖ CAP Trade-off
+                </button>
+                <button onclick="sendPresetAiPrompt('How do I prevent cache stampede with high concurrency?')" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded whitespace-nowrap">
+                  🛡 Cache Stampede Fix
+                </button>
+              </div>
+
+              <!-- Chat Input Bar -->
+              <div class="p-2 border-t border-slate-100 dark:border-slate-800 flex space-x-2">
+                <input id="ai-user-input" type="text" placeholder="Ask about system design..." onkeydown="if(event.key==='Enter') sendAiMessage()" class="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-hidden">
+                <button onclick="sendAiMessage()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium">
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 10. PROGRESS & KNOWLEDGE MAP ==================== -->
+          <div id="screen-progress" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-blue-600 dark:text-blue-400">Mastery Dashboard</span>
+                <span class="text-[10px] font-mono bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-1.5 py-0.5 rounded">Level 5 Architect</span>
+              </div>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">Knowledge Map & Progress</h2>
+            </div>
+
+            <!-- Meaningful Competency Metrics (Requirement 20) -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white">4-Dimensional Mastery</div>
+              <div class="space-y-2">
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-500 mb-1">
+                    <span>Understanding (Concepts & Definitions)</span>
+                    <span class="font-mono text-slate-900 dark:text-white font-semibold">82%</span>
+                  </div>
+                  <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-blue-600 h-full rounded-full" style="width: 82%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-500 mb-1">
+                    <span>Application (Simulation & Tuning)</span>
+                    <span class="font-mono text-slate-900 dark:text-white font-semibold">74%</span>
+                  </div>
+                  <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-indigo-600 h-full rounded-full" style="width: 74%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-500 mb-1">
+                    <span>Recall (Spaced Repetition Retainment)</span>
+                    <span class="font-mono text-slate-900 dark:text-white font-semibold">68%</span>
+                  </div>
+                  <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-amber-500 h-full rounded-full" style="width: 68%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-500 mb-1">
+                    <span>Design Ability (Interview & Playground)</span>
+                    <span class="font-mono text-slate-900 dark:text-white font-semibold">59%</span>
+                  </div>
+                  <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-500 h-full rounded-full" style="width: 59%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- VISUAL KNOWLEDGE MAP (DAG) (Requirement 19) -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold text-slate-900 dark:text-white">Curriculum Knowledge Map</span>
+                <span class="text-[10px] text-slate-400">Interactive DAG</span>
+              </div>
+              
+              <!-- Knowledge Tree Nodes -->
+              <div class="space-y-3 font-mono text-[11px]">
+                <!-- Module 1: Foundations -->
+                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center justify-between">
+                    <span>1. Foundations & Networking</span>
+                    <span class="text-emerald-500 text-[10px]">100% COMPLETE</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">IP & OSI ✓</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">TCP/UDP ✓</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">DNS ✓</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">Latency ✓</span>
+                  </div>
+                </div>
+
+                <!-- Module 2: Scaling -->
+                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center justify-between">
+                    <span>2. Scaling & Load Distribution</span>
+                    <span class="text-blue-500 text-[10px]">IN PROGRESS (75%)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">Vertical/Horizontal ✓</span>
+                    <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-[10px]">Load Balancing ⟳</span>
+                    <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px]">Caching (Needs Review) !</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 text-[10px]">CDN ○</span>
+                  </div>
+                </div>
+
+                <!-- Module 3: Databases -->
+                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <div class="font-semibold text-slate-900 dark:text-white flex items-center justify-between">
+                    <span>3. Databases & Storage</span>
+                    <span class="text-blue-500 text-[10px]">IN PROGRESS (50%)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    <span class="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">SQL vs NoSQL ✓</span>
+                    <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-[10px]">Replication ⟳</span>
+                    <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px]">Sharding !</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 text-[10px]">CAP Theorem ○</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Meaningful Achievements (Requirement 21) -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white">Engineering Milestones</div>
+              <div class="grid grid-cols-2 gap-2 text-[11px]">
+                <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <div class="font-medium text-slate-900 dark:text-white">First Simulation ✓</div>
+                  <div class="text-[10px] text-slate-500">Tuned load balancer traffic</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <div class="font-medium text-slate-900 dark:text-white">Failure Resolved ✓</div>
+                  <div class="text-[10px] text-slate-500">Fixed 10x traffic spike outage</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <div class="font-medium text-slate-900 dark:text-white">8-Day Streak 🔥</div>
+                  <div class="text-[10px] text-slate-500">Consistent daily recall</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 opacity-60">
+                  <div class="font-medium text-slate-900 dark:text-white">Master Architect ○</div>
+                  <div class="text-[10px] text-slate-500">Complete all 56 curriculum topics</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ==================== 11. SETTINGS SCREEN ==================== -->
+          <div id="screen-settings" class="screen-panel p-4 space-y-4 hidden">
+            <div>
+              <span class="text-[10px] font-mono uppercase text-slate-500">Preferences</span>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white">Settings & BYOK Security</h2>
+            </div>
+
+            <!-- BYOK AI Configuration (Requirement 26) -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white">BYOK AI Provider Configuration</div>
+              
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-500">Provider Service</label>
+                <select id="byok-provider" class="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs">
+                  <option value="gemini">Google Gemini API (gemini-1.5-flash)</option>
+                  <option value="openai">OpenAI Compatible (gpt-4o-mini)</option>
+                  <option value="openrouter">OpenRouter (Meta Llama 3.1 8B)</option>
+                  <option value="custom">Custom Endpoint</option>
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-500">API Key (Hardware Keystore Encrypted)</label>
+                <input id="byok-api-key" type="password" placeholder="sk-..." class="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-mono">
+              </div>
+
+              <button onclick="saveByokConfig()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-xs transition-colors">
+                Save & Encrypt Key
+              </button>
+            </div>
+
+            <!-- Data & Storage Management -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+              <div class="font-semibold text-slate-900 dark:text-white">Local Data & Offline Cache</div>
+              <div class="space-y-2">
+                <div class="flex justify-between items-center text-[11px]">
+                  <span>Downloaded Course Modules:</span>
+                  <span class="font-mono text-slate-500">6 Modules (4.2 MB)</span>
+                </div>
+                <div class="flex justify-between items-center text-[11px]">
+                  <span>Offline Audiobook Audio:</span>
+                  <span class="font-mono text-slate-500">5 Chapters (38 MB)</span>
+                </div>
+                <div class="flex justify-between items-center text-[11px]">
+                  <span>SQLite FTS5 Search Index:</span>
+                  <span class="font-mono text-slate-500">Indexed (1.8 MB)</span>
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex space-x-2">
+                <button onclick="alert('Progress exported to system_design_lab_backup.json')" class="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-medium rounded text-[11px]">
+                  Export Progress JSON
+                </button>
+                <button onclick="resetAllProgress()" class="py-1.5 px-3 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 font-medium rounded text-[11px]">
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Android Bottom Navigation Bar (Persistent 5 Destinations) -->
+        <nav class="h-14 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-around px-2 shrink-0 z-40 select-none">
+          <button onclick="navigateTo('home')" id="nav-btn-home" class="flex flex-col items-center justify-center flex-1 py-1 text-blue-600 dark:text-blue-400 font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="text-[9px] mt-0.5">Home</span>
+          </button>
+          <button onclick="navigateTo('learn')" id="nav-btn-learn" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span class="text-[9px] mt-0.5">Learn</span>
+          </button>
+          <button onclick="navigateTo('simulate')" id="nav-btn-simulate" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            <span class="text-[9px] mt-0.5">Simulate</span>
+          </button>
+          <button onclick="navigateTo('build')" id="nav-btn-build" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+            <span class="text-[9px] mt-0.5">Build</span>
+          </button>
+          <button onclick="navigateTo('practice')" id="nav-btn-practice" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span class="text-[9px] mt-0.5">Practice</span>
+          </button>
+          <button onclick="navigateTo('progress')" id="nav-btn-progress" class="flex flex-col items-center justify-center flex-1 py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span class="text-[9px] mt-0.5">Progress</span>
+          </button>
+        </nav>
+
+      </div>
+    </div>
+
+
+    <!-- CONTAINER 2: LANDING PAGE MODE (Section 53 Preview) -->
+    <div id="landing-view-container" class="hidden w-full max-w-5xl space-y-12 py-4">
+      
+      <!-- Hero Section -->
+      <section class="text-center space-y-4 py-8 border-b border-slate-200 dark:border-slate-800">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 text-xs font-mono text-blue-600 dark:text-blue-300">
+          <span>Based on karanpratapsingh/system-design</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Understand systems.<br>
+          <span class="text-blue-600 dark:text-blue-400">Don't just memorize them.</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+          The offline-first native Android learning academy that replaces static bullet points with interactive simulations, failure injection, architecture building, and audio-visual synchronization.
+        </p>
+        <div class="flex justify-center items-center gap-3 pt-2">
+          <button onclick="setViewMode('mobile')" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm transition-colors shadow-sm flex items-center gap-2">
+            <span>Launch Interactive Simulator</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- The 9-Stage Learning Loop Feature Cards -->
+      <section class="space-y-6">
+        <div class="text-center space-y-1">
+          <h2 class="text-xs font-mono uppercase text-blue-600 dark:text-blue-400">Core Learning Philosophy</h2>
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white">«Learn → See → Simulate → Break → Fix → Build»</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-blue-600 font-bold">1</div>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Interactive Simulations</h4>
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+              Don't just read about load balancers. Slide incoming QPS up to 25,000, watch single servers thrash at 100% CPU, scale node pools, and witness latency normalize in real-time.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-950 flex items-center justify-center text-red-600 font-bold">2</div>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Failure Lab (Break & Fix)</h4>
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+              Diagnose real distributed systems incidents: 10x traffic spikes, primary DB leader crashes, and cache stampedes. Read live error logs and deploy architectural mitigations.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950 flex items-center justify-center text-purple-600 font-bold">3</div>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Offline Audiobook & Sync</h4>
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+              Listen to natural educational audiobooks with background playback on Media3 ExoPlayer. Visual concept sync highlights exactly what is being narrated with one-tap jumps.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Architecture Playground & Interview Preview -->
+      <section class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-lg font-bold text-slate-900 dark:text-white">Architecture Playground & System Design Interviews</h4>
+            <p class="text-xs text-slate-500 mt-0.5">Drag-and-drop components, validate bottlenecks, and practice timed interview challenges</p>
+          </div>
+          <button onclick="setViewMode('mobile'); navigateTo('build');" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-900 dark:text-white text-xs font-medium rounded-lg">
+            Try Canvas →
+          </button>
+        </div>
+        <div class="p-4 bg-slate-950 rounded-xl font-mono text-xs text-slate-300 space-y-2 border border-slate-800">
+          <div class="text-blue-400">// Example System Viability Check</div>
+          <div>✓ Topology: Client → CDN → Load Balancer → [App S1, S2, S3] → Redis Cache → PostgreSQL Primary</div>
+          <div class="text-emerald-400">✓ Evaluator: Latency p99: 14ms | Read Throughput: 15,000 QPS | Zero SPOF on web tier</div>
+        </div>
+      </section>
+
+      <!-- Offline & Privacy Principles -->
+      <section class="border-t border-slate-200 dark:border-slate-800 pt-8 pb-12 text-center space-y-2 text-xs text-slate-500">
+        <p>100% Offline-First • Zero Mandatory Accounts • Android Keystore AES-256-GCM BYOK Security</p>
+        <p class="font-mono text-[11px]">System Design Lab • Built with Native Android, Jetpack Compose & libGDX</p>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Prototype Logic Script (All simulations, navigation, audio, canvas animations) -->
+  <script>
+    // State management
+    const state = {
+      viewMode: 'mobile',
+      currentScreen: 'home',
+      explanationLevel: 'simple',
+      activeSimScenario: 'lb',
+      simTraffic: 5000,
+      simNodes: 3,
+      simCapacity: 2500,
+      simNodeFailed: false,
+      audioPlaying: false,
+      audioTime: 252,
+      audioDuration: 720,
+      audioSpeed: 1.0,
+      sleepTimer: 'Off',
+      activeChapter: 1,
+      practiceSubmode: 'interview',
+      canvasComponents: [
+        { id: 1, type: 'Client', x: 40, y: 120, label: 'Client (Mobile/Web)' },
+        { id: 2, type: 'Load Balancer', x: 120, y: 120, label: 'Load Balancer (HAProxy)' },
+        { id: 3, type: 'App Server', x: 200, y: 60, label: 'App Server 1' },
+        { id: 4, type: 'App Server', x: 200, y: 180, label: 'App Server 2' },
+        { id: 5, type: 'Redis Cache', x: 280, y: 60, label: 'Redis Cache (RAM)' },
+        { id: 6, type: 'SQL Primary', x: 280, y: 180, label: 'PostgreSQL Primary' },
+      ],
+      connections: [
+        [1, 2], [2, 3], [2, 4], [3, 5], [4, 5], [3, 6], [4, 6]
+      ]
+    };
+
+    // Lessons dataset based on karanpratapsingh/system-design
+    const lessonData = {
+      'load-balancing': {
+        title: 'Load Balancing',
+        simple: `
+          <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Simple Explanation</h4>
+          <p>Imagine a bustling coffee shop with only one barista. When twenty customers arrive at once, a massive line forms and people wait 30 minutes for their coffee.</p>
+          <p class="mt-2">A <strong>load balancer</strong> is like a smart host at the door. As new customers arrive, the host directs Customer 1 to Barista A, Customer 2 to Barista B, and Customer 3 to Barista C. No single barista is crushed by the line, and everyone gets their coffee immediately.</p>
+        `,
+        tech: `
+          <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Technical Architecture</h4>
+          <p>A load balancer sits as a reverse proxy between clients and a backend server pool. It distributes incoming Layer 4 (TCP/UDP) or Layer 7 (HTTP/gRPC) requests across healthy instances.</p>
+          <p class="mt-2"><strong>Core Routing Algorithms:</strong></p>
+          <ul class="list-disc pl-4 space-y-1 mt-1">
+            <li><strong>Round-Robin:</strong> Cycles sequentially across all instances.</li>
+            <li><strong>Least Connections:</strong> Evaluates active connection counts and routes to the least loaded node.</li>
+            <li><strong>IP Hash:</strong> Computes hash of client IP to guarantee deterministic sticky sessions.</li>
+          </ul>
+        `,
+        deep: `
+          <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Deep Dive: Kernel & Hardware Internals</h4>
+          <p>Under extreme concurrency (100k+ QPS), software load balancers (e.g. NGINX, HAProxy, Envoy) leverage Linux epoll and kernel socket reuse (<code>SO_REUSEPORT</code>) to avoid thread context-switch thrashing.</p>
+          <p class="mt-2">At Layer 4, packet bypass architectures like DPDK (Data Plane Development Kit) or eBPF/XDP process packets directly in kernel network driver ring buffers, achieving line-rate 100GbE throughput without user-space buffer copies.</p>
+          <p class="mt-2"><strong>High Availability (HA) Pair:</strong> To prevent the load balancer from becoming a Single Point of Failure (SPOF), production deployments use active-passive pairs synchronized via VRRP (Virtual Router Redundancy Protocol) sharing a floating VIP.</p>
+        `
+      }
+    };
+
+    // Navigation function
+    function navigateTo(screen, subParam) {
+      state.currentScreen = screen;
+      document.querySelectorAll('.screen-panel').forEach(panel => panel.classList.add('hidden'));
+      
+      const target = document.getElementById(`screen-${screen}`);
+      if (target) target.classList.remove('hidden');
+
+      // Update bottom nav button active states
+      document.querySelectorAll('nav button').forEach(btn => {
+        btn.classList.remove('text-blue-600', 'dark:text-blue-400');
+        btn.classList.add('text-slate-500', 'dark:text-slate-400');
+      });
+      const activeNav = document.getElementById(`nav-btn-${screen}`);
+      if (activeNav) {
+        activeNav.classList.remove('text-slate-500', 'dark:text-slate-400');
+        activeNav.classList.add('text-blue-600', 'dark:text-blue-400');
+      }
+
+      // Initialize specific views if needed
+      if (screen === 'learn') {
+        setExplanationLevel(state.explanationLevel);
+        initFlowDiagramCanvas();
+      } else if (screen === 'simulate') {
+        initSimulationCanvas();
+      } else if (screen === 'build') {
+        initArchitectureCanvas();
+      } else if (screen === 'repository') {
+        renderRepositoryList();
+      }
+    }
+
+    // Viewport Mode Switcher (Mobile Shell vs Desktop vs Landing)
+    function setViewMode(mode) {
+      state.viewMode = mode;
+      const deviceWrapper = document.getElementById('device-wrapper');
+      const appContainer = document.getElementById('app-view-container');
+      const landingContainer = document.getElementById('landing-view-container');
+
+      // Reset button styles
+      ['mobile', 'desktop', 'landing'].forEach(m => {
+        const btn = document.getElementById(`btn-view-${m}`);
+        if (m === mode) {
+          btn.className = 'px-2.5 py-1 rounded-md font-medium text-slate-900 dark:text-white bg-white dark:bg-slate-700 shadow-xs flex items-center gap-1.5';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-md font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white flex items-center gap-1.5';
+        }
+      });
+
+      if (mode === 'mobile') {
+        appContainer.classList.remove('hidden');
+        landingContainer.classList.add('hidden');
+        deviceWrapper.className = 'device-shell w-[400px] h-[860px] bg-white dark:bg-slate-900 border-[6px] border-slate-800 dark:border-slate-950 overflow-hidden flex flex-col relative transition-all duration-300';
+      } else if (mode === 'desktop') {
+        appContainer.classList.remove('hidden');
+        landingContainer.classList.add('hidden');
+        deviceWrapper.className = 'w-full max-w-4xl h-[860px] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg overflow-hidden flex flex-col relative transition-all duration-300';
+      } else if (mode === 'landing') {
+        appContainer.classList.add('hidden');
+        landingContainer.classList.remove('hidden');
+      }
+    }
+
+    // Theme toggle
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    // Explanation Level Switcher
+    function setExplanationLevel(level) {
+      state.explanationLevel = level;
+      ['simple', 'tech', 'deep'].forEach(lvl => {
+        const tab = document.getElementById(`tab-lvl-${lvl}`);
+        if (lvl === level) {
+          tab.className = 'flex-1 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-medium transition-all';
+        } else {
+          tab.className = 'flex-1 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all';
+        }
+      });
+
+      const contentBox = document.getElementById('lesson-explanation-content');
+      const data = lessonData['load-balancing'];
+      if (level === 'simple') contentBox.innerHTML = data.simple;
+      if (level === 'tech') contentBox.innerHTML = data.tech;
+      if (level === 'deep') contentBox.innerHTML = data.deep;
+    }
+
+    // Check quiz answer
+    function checkQuizAnswer(choice) {
+      const fb = document.getElementById('quiz-feedback');
+      fb.classList.remove('hidden');
+      if (choice === 1) {
+        fb.className = 'p-2.5 rounded-lg text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+        fb.innerHTML = '✔ <strong>Correct!</strong> IP Hash ensures that requests originating from the same client IP are deterministically routed to the identical backend server, providing session affinity without requiring external session stores.';
+      } else {
+        fb.className = 'p-2.5 rounded-lg text-xs font-medium bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800';
+        fb.innerHTML = 'Incorrect. For differing server specs, use <em>Weighted Round-Robin</em>. For session affinity, IP Hash is preferred.';
+      }
+    }
+
+    // ==================== SIMULATION ENGINE ====================
+    let simAnimationId = null;
+    let packets = [];
+
+    function switchSimScenario(scenario) {
+      state.activeSimScenario = scenario;
+      ['lb', 'cache', 'db', 'queue', 'sharding'].forEach(s => {
+        const btn = document.getElementById(`sim-tab-${s}`);
+        if (s === scenario) {
+          btn.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium whitespace-nowrap shadow-xs';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap';
+        }
+      });
+
+      const title = document.getElementById('sim-scene-title');
+      if (scenario === 'lb') title.innerText = 'SCENARIO: Load Balancer Cluster';
+      if (scenario === 'cache') title.innerText = 'SCENARIO: Redis Caching vs Disk Database';
+      if (scenario === 'db') title.innerText = 'SCENARIO: Primary-Replica Replication & Failover';
+      if (scenario === 'queue') title.innerText = 'SCENARIO: Message Queue Backpressure & Worker Pools';
+      if (scenario === 'sharding') title.innerText = 'SCENARIO: Consistent Hash Ring Sharding';
+
+      updateSimMetrics();
+    }
+
+    function updateSimFromSliders() {
+      state.simTraffic = parseInt(document.getElementById('slider-traffic').value);
+      state.simNodes = parseInt(document.getElementById('slider-nodes').value);
+      state.simCapacity = parseInt(document.getElementById('slider-cap').value);
+
+      document.getElementById('slider-traffic-val').innerText = `${state.simTraffic.toLocaleString()} req/s`;
+      document.getElementById('slider-nodes-val').innerText = `${state.simNodes} Nodes`;
+      document.getElementById('slider-cap-val').innerText = `${state.simCapacity.toLocaleString()} QPS`;
+
+      updateSimMetrics();
+    }
+
+    function toggleSimFailure() {
+      state.simNodeFailed = !state.simNodeFailed;
+      const btn = document.getElementById('btn-kill-node');
+      const overlay = document.getElementById('sim-overlay-alert');
+      
+      if (state.simNodeFailed) {
+        btn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span>Recover Server 2</span>
+        `;
+        btn.className = 'flex-1 py-2 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 text-emerald-600 dark:text-emerald-400 rounded-lg border border-emerald-200 dark:border-emerald-900 font-medium text-[11px] transition-colors flex items-center justify-center gap-1.5';
+        overlay.classList.remove('hidden');
+      } else {
+        btn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L12 12m6.364-6.364L12 12m0 0L5.636 5.636m12.728 0A9 9 0 005.636 18.364"/></svg>
+          <span>Kill Server 2 (Break)</span>
+        `;
+        btn.className = 'flex-1 py-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-900 font-medium text-[11px] transition-colors flex items-center justify-center gap-1.5';
+        overlay.classList.add('hidden');
+      }
+      updateSimMetrics();
+    }
+
+    function resetSimParams() {
+      document.getElementById('slider-traffic').value = 5000;
+      document.getElementById('slider-nodes').value = 3;
+      document.getElementById('slider-cap').value = 2500;
+      if (state.simNodeFailed) toggleSimFailure();
+      updateSimFromSliders();
+    }
+
+    function updateSimMetrics() {
+      const effectiveNodes = state.simNodeFailed ? Math.max(1, state.simNodes - 1) : state.simNodes;
+      const totalCapacity = effectiveNodes * state.simCapacity;
+      const traffic = state.simTraffic;
+
+      const cpuUtil = Math.min(100, Math.round((traffic / totalCapacity) * 100));
+      let latency = 12;
+      let failureRate = 0.0;
+
+      if (cpuUtil > 80) {
+        latency = Math.round(12 + Math.pow((cpuUtil - 80) * 1.5, 2));
+      }
+      if (cpuUtil >= 100) {
+        const excess = traffic - totalCapacity;
+        failureRate = ((excess / traffic) * 100).toFixed(1);
+      }
+
+      document.getElementById('metric-traffic').innerText = `${traffic.toLocaleString()} QPS`;
+      document.getElementById('metric-latency').innerText = `${latency} ms`;
+      document.getElementById('metric-cpu').innerText = `${cpuUtil}%`;
+      document.getElementById('metric-failures').innerText = `${failureRate}%`;
+
+      const latElem = document.getElementById('metric-latency');
+      if (latency > 100) {
+        latElem.className = 'font-bold font-mono text-red-500 mt-0.5';
+      } else if (latency > 40) {
+        latElem.className = 'font-bold font-mono text-amber-500 mt-0.5';
+      } else {
+        latElem.className = 'font-bold font-mono text-emerald-500 mt-0.5';
+      }
+    }
+
+    function initSimulationCanvas() {
+      const canvas = document.getElementById('simulation-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+
+      if (simAnimationId) cancelAnimationFrame(simAnimationId);
+
+      packets = [];
+      for (let i = 0; i < 20; i++) {
+        packets.push({
+          x: 20 + Math.random() * 50,
+          y: canvas.height / 2,
+          speed: 1.5 + Math.random() * 2,
+          targetNode: Math.floor(Math.random() * state.simNodes),
+          progress: Math.random()
+        });
+      }
+
+      function renderSim() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const w = canvas.width;
+        const h = canvas.height;
+
+        // Draw Client
+        ctx.fillStyle = '#3B82F6';
+        ctx.beginPath();
+        ctx.arc(35, h / 2, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '10px Inter';
+        ctx.fillText('Client', 22, h / 2 + 25);
+
+        // Draw Load Balancer
+        ctx.fillStyle = '#6366F1';
+        ctx.fillRect(100, h / 2 - 25, 20, 50);
+        ctx.fillStyle = '#CBD5E1';
+        ctx.font = '9px monospace';
+        ctx.fillText('LB', 104, h / 2 + 4);
+
+        // Connect Client -> LB
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(49, h / 2);
+        ctx.lineTo(100, h / 2);
+        ctx.stroke();
+
+        // Draw Server Nodes
+        const numNodes = state.simNodes;
+        const nodeSpacing = (h - 40) / Math.max(1, numNodes - 1);
+        const serverX = w - 60;
+
+        for (let i = 0; i < numNodes; i++) {
+          const nodeY = numNodes === 1 ? h / 2 : 20 + i * nodeSpacing;
+          const isDead = state.simNodeFailed && i === 1;
+
+          // Wire LB -> Server
+          ctx.strokeStyle = isDead ? '#7F1D1D' : '#334155';
+          ctx.beginPath();
+          ctx.moveTo(120, h / 2);
+          ctx.lineTo(serverX, nodeY);
+          ctx.stroke();
+
+          // Server Node box
+          ctx.fillStyle = isDead ? '#EF4444' : '#10B981';
+          ctx.fillRect(serverX, nodeY - 10, 36, 20);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '9px monospace';
+          ctx.fillText(isDead ? 'DEAD' : `S${i+1}`, serverX + 8, nodeY + 4);
+        }
+
+        // Draw animating request packets
+        packets.forEach(p => {
+          p.progress += 0.015 * (state.simTraffic / 5000);
+          if (p.progress > 1) {
+            p.progress = 0;
+            p.targetNode = Math.floor(Math.random() * numNodes);
+          }
+
+          let px, py;
+          if (p.progress < 0.3) {
+            // Client to LB
+            const t = p.progress / 0.3;
+            px = 49 + t * (100 - 49);
+            py = h / 2;
+          } else {
+            // LB to Server
+            const t = (p.progress - 0.3) / 0.7;
+            const targetY = numNodes === 1 ? h / 2 : 20 + p.targetNode * nodeSpacing;
+            px = 120 + t * (serverX - 120);
+            py = h / 2 + t * (targetY - h / 2);
+          }
+
+          const isTargetDead = state.simNodeFailed && p.targetNode === 1;
+          ctx.fillStyle = isTargetDead && p.progress > 0.3 ? '#EF4444' : '#60A5FA';
+          ctx.beginPath();
+          ctx.arc(px, py, 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        simAnimationId = requestAnimationFrame(renderSim);
+      }
+
+      renderSim();
+    }
+
+    // ==================== FLOW DIAGRAM CANVAS (LEARN SCREEN) ====================
+    function initFlowDiagramCanvas() {
+      const canvas = document.getElementById('flow-diagram-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+
+      let tick = 0;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const w = canvas.width;
+        const h = canvas.height;
+
+        // Draw Nodes
+        const nodes = [
+          { x: 30, y: h/2, label: 'Client' },
+          { x: w * 0.35, y: h/2, label: 'LB (Nginx)' },
+          { x: w * 0.7, y: h * 0.25, label: 'S1' },
+          { x: w * 0.7, y: h * 0.5, label: 'S2' },
+          { x: w * 0.7, y: h * 0.75, label: 'S3' },
+          { x: w - 30, y: h/2, label: 'DB' }
+        ];
+
+        // Lines
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1;
+
+        // Client -> LB
+        ctx.beginPath(); ctx.moveTo(nodes[0].x, nodes[0].y); ctx.lineTo(nodes[1].x, nodes[1].y); ctx.stroke();
+        // LB -> Servers
+        [2, 3, 4].forEach(i => {
+          ctx.beginPath(); ctx.moveTo(nodes[1].x, nodes[1].y); ctx.lineTo(nodes[i].x, nodes[i].y); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[5].x, nodes[5].y); ctx.stroke();
+        });
+
+        // Packets
+        tick += 0.02;
+        const packetT = tick % 1;
+        const packetNode = Math.floor((tick / 1) % 3) + 2;
+
+        let px, py;
+        if (packetT < 0.3) {
+          const t = packetT / 0.3;
+          px = nodes[0].x + t * (nodes[1].x - nodes[0].x);
+          py = nodes[0].y;
+        } else if (packetT < 0.7) {
+          const t = (packetT - 0.3) / 0.4;
+          px = nodes[1].x + t * (nodes[packetNode].x - nodes[1].x);
+          py = nodes[1].y + t * (nodes[packetNode].y - nodes[1].y);
+        } else {
+          const t = (packetT - 0.7) / 0.3;
+          px = nodes[packetNode].x + t * (nodes[5].x - nodes[packetNode].x);
+          py = nodes[packetNode].y + t * (nodes[5].y - nodes[packetNode].y);
+        }
+
+        ctx.fillStyle = '#38BDF8';
+        ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI*2); ctx.fill();
+
+        // Render node labels
+        nodes.forEach(n => {
+          ctx.fillStyle = '#1E293B';
+          ctx.fillRect(n.x - 18, n.y - 10, 36, 20);
+          ctx.fillStyle = '#F8FAFC';
+          ctx.font = '9px Inter';
+          ctx.textAlign = 'center';
+          ctx.fillText(n.label, n.x, n.y + 3);
+        });
+
+        requestAnimationFrame(render);
+      }
+      render();
+    }
+
+    // ==================== FAILURE LAB LOGIC ====================
+    const failureScenarios = {
+      1: {
+        code: 'SEV-1: HIGH LATENCY & THRESHOLD BREACH',
+        title: 'Traffic surged 10x from 2,000 to 20,000 QPS',
+        desc: 'The single web application instance CPU is pinned at 99.8%. Downstream HTTP response latency has increased from 18ms to 4,200ms. 504 Gateway Timeouts are spiking.',
+        error: '64.2%', lat: '4,280 ms', cpu: '99.8%',
+        logs: [
+          '<div class="text-red-400">[ERROR] Connection pool exhausted: max_clients (100) exceeded</div>',
+          '<div class="text-amber-400">[WARN] High thread queue backlog: 8,412 pending requests</div>',
+          '<div class="text-slate-400">[INFO] Client requests dropped with HTTP 504 Gateway Timeout</div>'
+        ],
+        solutionChoice: 2,
+        feedbackCorrect: '✔ <strong>Remediation Verified:</strong> Deploying a Load Balancer and horizontally scaling to 6 stateless instances distributes the 20,000 QPS load to ~3,330 QPS per node. CPU utilization dropped to 52%, latency normalized to 16ms, and 504 errors dropped to 0.0%.'
+      },
+      2: {
+        code: 'SEV-0: PRIMARY DATABASE UNREACHABLE',
+        title: 'PostgreSQL Primary instance hardware failure',
+        desc: 'Write operations (INSERT, UPDATE) are completely failing with connection refused errors. Read replicas continue serving stale read queries.',
+        error: '100% Writes', lat: 'TIMEOUT', cpu: '0%',
+        logs: [
+          '<div class="text-red-400">[FATAL] Failed connecting to primary db-1.internal:5432 (ECONNREFUSED)</div>',
+          '<div class="text-amber-400">[WARN] Read replicas db-2, db-3 switched to read-only mode</div>',
+          '<div class="text-slate-400">[INFO] Initiating automated leader failover checks...</div>'
+        ],
+        solutionChoice: 2,
+        feedbackCorrect: '✔ <strong>Remediation Verified:</strong> Fencing token issued to dead primary. Read replica db-2 promoted to new primary via Raft consensus. DNS endpoint updated. Write transactions resumed in 1.4 seconds.'
+      }
+    };
+
+    function loadFailureScenario(id) {
+      [1, 2, 3, 4].forEach(i => {
+        const tab = document.getElementById(`fail-tab-${i}`);
+        if (i === id) {
+          tab.className = 'px-3 py-1.5 rounded-lg bg-red-600 text-white font-medium whitespace-nowrap';
+        } else {
+          tab.className = 'px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap';
+        }
+      });
+
+      const s = failureScenarios[id] || failureScenarios[1];
+      document.getElementById('fail-incident-code').innerText = s.code;
+      document.getElementById('fail-incident-title').innerText = s.title;
+      document.getElementById('fail-incident-desc').innerText = s.desc;
+      document.getElementById('fail-metric-error').innerText = s.error;
+      document.getElementById('fail-metric-lat').innerText = s.lat;
+      document.getElementById('fail-metric-cpu').innerText = s.cpu;
+      document.getElementById('fail-console-logs').innerHTML = s.logs.join('');
+      document.getElementById('fail-remediation-result').classList.add('hidden');
+    }
+
+    function applyRemediation(choice) {
+      const res = document.getElementById('fail-remediation-result');
+      res.classList.remove('hidden');
+      if (choice === 2) {
+        res.className = 'p-3 rounded-lg text-xs leading-relaxed bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+        res.innerHTML = failureScenarios[1].feedbackCorrect;
+        document.getElementById('fail-metric-error').innerText = '0.0%';
+        document.getElementById('fail-metric-lat').innerText = '16 ms';
+        document.getElementById('fail-metric-cpu').innerText = '52%';
+      } else {
+        res.className = 'p-3 rounded-lg text-xs leading-relaxed bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800';
+        res.innerHTML = '❌ <strong>Ineffective Intervention:</strong> This action did not resolve the bottleneck. System telemetry remains in breach.';
+      }
+    }
+
+    // ==================== ARCHITECTURE PLAYGROUND ====================
+    function initArchitectureCanvas() {
+      const canvas = document.getElementById('architecture-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+
+      function renderCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw connections
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 1.5;
+        state.connections.forEach(([fromId, toId]) => {
+          const from = state.canvasComponents.find(c => c.id === fromId);
+          const to = state.canvasComponents.find(c => c.id === toId);
+          if (from && to) {
+            ctx.beginPath();
+            ctx.moveTo(from.x + 40, from.y + 15);
+            ctx.lineTo(to.x + 40, to.y + 15);
+            ctx.stroke();
+          }
+        });
+
+        // Draw component nodes
+        state.canvasComponents.forEach(comp => {
+          ctx.fillStyle = '#1E293B';
+          ctx.strokeStyle = '#38BDF8';
+          ctx.lineWidth = 1;
+          ctx.roundRect ? ctx.roundRect(comp.x, comp.y, 80, 30, 4) : ctx.rect(comp.x, comp.y, 80, 30);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#F8FAFC';
+          ctx.font = '10px Inter';
+          ctx.textAlign = 'center';
+          ctx.fillText(comp.type, comp.x + 40, comp.y + 18);
+        });
+      }
+      renderCanvas();
+    }
+
+    function addComponentToCanvas(type) {
+      const id = state.canvasComponents.length + 1;
+      state.canvasComponents.push({
+        id,
+        type,
+        x: 60 + Math.random() * 200,
+        y: 40 + Math.random() * 150,
+        label: type
+      });
+      initArchitectureCanvas();
+    }
+
+    function clearCanvas() {
+      state.canvasComponents = [];
+      state.connections = [];
+      initArchitectureCanvas();
+    }
+
+    function evaluateArchitecture() {
+      const report = document.getElementById('arch-evaluation-panel');
+      report.classList.remove('hidden');
+      alert('Architecture evaluation complete: Score 88/100. Viable topology with minimal SPOF risks.');
+    }
+
+    // ==================== PRACTICE & EXPLAIN IT BACK ====================
+    function setPracticeSubmode(mode) {
+      state.practiceSubmode = mode;
+      const tabInt = document.getElementById('prac-tab-interview');
+      const tabExp = document.getElementById('prac-tab-explain');
+      const pnlInt = document.getElementById('sub-panel-interview');
+      const pnlExp = document.getElementById('sub-panel-explain');
+
+      if (mode === 'interview') {
+        tabInt.className = 'pb-2 border-b-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 px-3';
+        tabExp.className = 'pb-2 text-slate-500 hover:text-slate-900 dark:hover:text-white px-3';
+        pnlInt.classList.remove('hidden');
+        pnlExp.classList.add('hidden');
+      } else {
+        tabExp.className = 'pb-2 border-b-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 px-3';
+        tabInt.className = 'pb-2 text-slate-500 hover:text-slate-900 dark:hover:text-white px-3';
+        pnlExp.classList.remove('hidden');
+        pnlInt.classList.add('hidden');
+      }
+    }
+
+    function evaluateExplanation() {
+      const text = document.getElementById('explain-input').value.trim();
+      if (!text) {
+        alert('Please enter your technical explanation first.');
+        return;
+      }
+      document.getElementById('explain-feedback-box').classList.remove('hidden');
+    }
+
+    // ==================== AUDIOBOOK ENGINE ====================
+    let audioInterval = null;
+
+    function toggleAudioPlayback() {
+      state.audioPlaying = !state.audioPlaying;
+      const miniPlay = document.getElementById('mini-play-icon');
+      const miniPause = document.getElementById('mini-pause-icon');
+      const largePlay = document.getElementById('large-play-icon');
+      const largePause = document.getElementById('large-pause-icon');
+
+      if (state.audioPlaying) {
+        miniPlay.classList.add('hidden');
+        miniPause.classList.remove('hidden');
+        if (largePlay) largePlay.classList.add('hidden');
+        if (largePause) largePause.classList.remove('hidden');
+        startAudioTimer();
+      } else {
+        miniPlay.classList.remove('hidden');
+        miniPause.classList.add('hidden');
+        if (largePlay) largePlay.classList.remove('hidden');
+        if (largePause) largePause.classList.add('hidden');
+        clearInterval(audioInterval);
+      }
+    }
+
+    function startAudioTimer() {
+      clearInterval(audioInterval);
+      audioInterval = setInterval(() => {
+        state.audioTime += 1 * state.audioSpeed;
+        if (state.audioTime > state.audioDuration) state.audioTime = 0;
+        updateAudioDisplay();
+      }, 1000);
+    }
+
+    function updateAudioDisplay() {
+      const mins = Math.floor(state.audioTime / 60);
+      const secs = Math.floor(state.audioTime % 60).toString().padStart(2, '0');
+      const totalMins = Math.floor(state.audioDuration / 60);
+      const totalSecs = Math.floor(state.audioDuration % 60).toString().padStart(2, '0');
+
+      const timeStr = `${mins}:${secs} / ${totalMins}:${totalSecs}`;
+      const miniElem = document.getElementById('mini-audio-time');
+      if (miniElem) miniElem.innerText = timeStr;
+
+      const currElem = document.getElementById('audio-time-current');
+      if (currElem) currElem.innerText = `${mins}:${secs}`;
+
+      const scrub = document.getElementById('audio-progress');
+      if (scrub) scrub.value = state.audioTime;
+
+      // Update sync concept badge
+      const syncElem = document.getElementById('audio-sync-concept');
+      const miniConcept = document.getElementById('mini-audio-concept');
+      let concept = 'Concurrency Limits';
+      if (state.audioTime > 180 && state.audioTime < 400) concept = 'Load Balancing';
+      if (state.audioTime >= 400) concept = 'Horizontal Scaling';
+      if (syncElem) syncElem.innerText = concept;
+      if (miniConcept) miniConcept.innerText = concept;
+    }
+
+    function seekAudio(delta) {
+      state.audioTime = Math.max(0, Math.min(state.audioDuration, state.audioTime + delta));
+      updateAudioDisplay();
+    }
+
+    function scrubAudio(val) {
+      state.audioTime = parseInt(val);
+      updateAudioDisplay();
+    }
+
+    function cycleAudioSpeed() {
+      const speeds = [1.0, 1.25, 1.5, 2.0, 0.75];
+      const idx = speeds.indexOf(state.audioSpeed);
+      state.audioSpeed = speeds[(idx + 1) % speeds.length];
+      document.getElementById('btn-audio-speed').innerText = `${state.audioSpeed}x`;
+    }
+
+    function cycleSleepTimer() {
+      const timers = ['Off', '5m', '15m', '30m'];
+      const idx = timers.indexOf(state.sleepTimer);
+      state.sleepTimer = timers[(idx + 1) % timers.length];
+      document.getElementById('btn-sleep-timer').innerText = state.sleepTimer;
+    }
+
+    // ==================== REPOSITORY EXPLORER ====================
+    const repoChapters = [
+      {
+        ch: 'Chapter I: Networking & Scalability',
+        topics: [
+          { title: 'IP & OSI Model', tags: ['Networking', 'Protocols'] },
+          { title: 'TCP and UDP Handshakes', tags: ['Transport', 'Sockets'] },
+          { title: 'Domain Name System (DNS)', tags: ['Resolution', 'Anycast'] },
+          { title: 'Load Balancing & Reverse Proxies', tags: ['Scaling', 'L4/L7'] },
+          { title: 'Caching Strategies (RAM vs Disk)', tags: ['Redis', 'Memcached'] },
+          { title: 'Content Delivery Network (CDN)', tags: ['Edge', 'Latency'] }
+        ]
+      },
+      {
+        ch: 'Chapter II: Databases & Distributed Storage',
+        topics: [
+          { title: 'SQL vs NoSQL Databases', tags: ['Schema', 'ACID'] },
+          { title: 'Database Replication (Sync/Async)', tags: ['Leader', 'Failover'] },
+          { title: 'Indexing & B-Trees vs LSM-Trees', tags: ['Search', 'I/O'] },
+          { title: 'Sharding & Consistent Hashing', tags: ['Partitioning', 'Keys'] },
+          { title: 'CAP & PACELC Theorem', tags: ['Consistency', 'Availability'] }
+        ]
+      },
+      {
+        ch: 'Chapter III: Architecture & Messaging',
+        topics: [
+          { title: 'Message Brokers & Queues', tags: ['Kafka', 'RabbitMQ'] },
+          { title: 'Monoliths to Microservices', tags: ['Decomposition', 'Boundaries'] },
+          { title: 'Event-Driven Architecture (EDA)', tags: ['PubSub', 'Event Sourcing'] }
+        ]
+      }
+    ];
+
+    function renderRepositoryList(query = '') {
+      const container = document.getElementById('repo-results-container');
+      if (!container) return;
+
+      const q = query.toLowerCase();
+      let html = '';
+
+      repoChapters.forEach(chap => {
+        const filtered = chap.topics.filter(t => 
+          t.title.toLowerCase().includes(q) || t.tags.some(tag => tag.toLowerCase().includes(q))
+        );
+
+        if (filtered.length > 0) {
+          html += `
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div class="font-bold text-slate-900 dark:text-white text-xs">${chap.ch}</div>
+              <div class="space-y-1.5">
+          `;
+          filtered.forEach(t => {
+            html += `
+              <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 flex items-center justify-between hover:border-blue-400 cursor-pointer" onclick="navigateTo('learn')">
+                <div>
+                  <div class="font-medium text-slate-800 dark:text-slate-200">${t.title}</div>
+                  <div class="flex gap-1 mt-1">
+                    ${t.tags.map(tag => `<span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${tag}</span>`).join('')}
+                  </div>
+                </div>
+                <span class="text-blue-600 dark:text-blue-400 text-xs">Read →</span>
+              </div>
+            `;
+          });
+          html += `</div></div>`;
+        }
+      });
+
+      if (!html) {
+        html = `<div class="p-4 text-center text-slate-500">No matching concepts found in offline index.</div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function searchRepository(val) {
+      renderRepositoryList(val);
+    }
+
+    // ==================== BYOK LAB ASSISTANT ====================
+    function sendPresetAiPrompt(promptText) {
+      document.getElementById('ai-user-input').value = promptText;
+      sendAiMessage();
+    }
+
+    function sendAiMessage() {
+      const input = document.getElementById('ai-user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('ai-chat-messages');
+
+      // Append User message
+      container.innerHTML += `
+        <div class="flex items-start justify-end space-x-2">
+          <div class="bg-blue-600 text-white p-2.5 rounded-lg rounded-tr-none max-w-[85%] leading-relaxed text-[11px]">
+            ${escapeHtml(text)}
+          </div>
+        </div>
+      `;
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      // Simulate local tutor answer
+      setTimeout(() => {
+        let answer = `Regarding <strong>${escapeHtml(text)}</strong>: In large-scale distributed systems, always balance throughput against consistency guarantees. For load balancing, Layer 4 avoids SSL termination overhead, whereas Layer 7 enables smart path-based routing.`;
+        if (text.includes('airport')) {
+          answer = `Think of incoming planes as traffic requests. The airport control tower acts as the <strong>Load Balancer</strong>, distributing incoming planes to available runways (servers) based on capacity, wind conditions, and queue length to prevent mid-air holding bottlenecks!`;
+        } else if (text.includes('CAP')) {
+          answer = `Under a network partition (P), you must mathematically choose between Consistency (C) and Availability (A). Systems like Spanner provide external consistency with synchronized atomic clocks, whereas Cassandra prioritizes high availability with tunable eventual consistency.`;
+        }
+
+        container.innerHTML += `
+          <div class="flex items-start space-x-2">
+            <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-mono text-[10px] shrink-0">
+              AI
+            </div>
+            <div class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2.5 rounded-lg rounded-tl-none max-w-[85%] leading-relaxed text-[11px]">
+              ${answer}
+            </div>
+          </div>
+        `;
+        container.scrollTop = container.scrollHeight;
+      }, 500);
+    }
+
+    function escapeHtml(string) {
+      return String(string).replace(/[&<>"']/g, s => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[s]));
+    }
+
+    function saveByokConfig() {
+      const provider = document.getElementById('byok-provider').value;
+      const key = document.getElementById('byok-api-key').value;
+      alert(`Provider ${provider} configured! API key encrypted via Android Keystore AES-256-GCM.`);
+    }
+
+    function resetAllProgress() {
+      if (confirm('Reset all local offline progress?')) {
+        alert('Local progress reset.');
+      }
+    }
+
+    // Initialize default view on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      navigateTo('home');
+      renderRepositoryList();
+      setInterval(() => {
+        const now = new Date();
+        const hrs = now.getHours().toString().padStart(2, '0');
+        const mins = now.getMinutes().toString().padStart(2, '0');
+        const elem = document.getElementById('status-time');
+        if (elem) elem.innerText = `${hrs}:${mins}`;
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

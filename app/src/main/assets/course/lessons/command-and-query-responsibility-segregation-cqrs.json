@@ -1,0 +1,58 @@
+{
+  "id": "command-and-query-responsibility-segregation-cqrs",
+  "title": "Command and Query Responsibility Segregation (CQRS)",
+  "moduleId": "mod-distributed",
+  "moduleName": "Distributed Systems & Messaging",
+  "order": 37,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to command and query responsibility segregation (cqrs).",
+  "simpleExplanation": "Command Query Responsibility Segregation (CQRS) is an architectural pattern that divides a system's actions into commands and queries. It was first described by [Greg Young](https://twitter.com/gregyoung).\n\nIn CQRS, a _command_ is an instruction, a directive to perform a specific task. It is an intention to change something and doesn't return a value, only an indication of success or failure. And, a _query_ is a request for information that doesn't change the system's state or cause any side effects.\n\n![command-and-query-responsibility-segregation](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/command-and-query-responsibility-segregation/command-and-query-responsibility-segregation.png)\n\nThe core principle of CQRS is the separation of commands and queries. They perform fundamentally different roles within a system, and separating them means that each can be optimized as needed, which distributed systems can really benefit from.",
+  "technicalExplanation": "CQRS with Event Sourcing\n\nThe CQRS pattern is often used along with the Event Sourcing pattern. CQRS-based systems use separate read and write data models, each tailored to relevant tasks and often located in physically separate stores.\n\nWhen used with the Event Sourcing pattern, the store of events is the write model and is the official source of information. The read model of a CQRS-based system provides materialized views of the data, typically as highly denormalized views.\n\n\n## Advantages\n\nLet's discuss some advantages of CQRS:\n\n- Allows independent scaling of read and write workloads.\n- Easier scaling, optimizations, and architectural changes.\n- Closer to business logic with loose coupling.\n- The application can avoid complex joins when querying.\n- Clear boundaries between the system behavior.\n\n\n## Disadvantages\n\nBelow are some disadvantages of CQRS:\n\n- More complex application design.\n- Message failures or duplicate messages can occur.\n- Dealing with eventual consistency is a challenge.\n- Increased system maintenance efforts.\n\n\n## Use cases\n\nHere are some scenarios where CQRS will be helpful:\n\n- The performance of data reads must be fine-tuned separately from the performance of data writes.\n- The system is expected to evolve over time and might contain multiple versions of the model, or where business rules change regularly.\n- Integration with other systems, especially in combination with event sourcing, where the temporal failure of one subsystem shouldn't affect the availability of the others.\n- Better security to ensure that only the right domain entities are performing writes on the data.",
+  "visualExplanation": "Requests flow through the Command and Query Responsibility Segregation (CQRS) layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of command and query responsibility segregation (cqrs) as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "cqrs",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Command and Query Responsibility Segregation (CQRS)",
+    "diagramFile": "cqrs.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs).",
+  "relatedConcepts": [
+    "event-sourcing",
+    "api-gateway"
+  ],
+  "prerequisites": [
+    "event-sourcing"
+  ],
+  "nextLessonId": "api-gateway",
+  "interactiveQuestion": {
+    "id": "q-command-and-query-responsibility-segregation-cqrs",
+    "question": "In production system design, what is the primary benefit of Command and Query Responsibility Segregation (CQRS)?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs).",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs). Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-command-and-query-responsibility-segregation-cqrs",
+    "title": "Production Troubleshooting: Command and Query Responsibility Segregation (CQRS)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to command and query responsibility segregation (cqrs). Solving the scalability and reliability bottlenecks inherent to command and query responsibility segregation (cqrs).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Command and Query Responsibility Segregation (CQRS) best practices: Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

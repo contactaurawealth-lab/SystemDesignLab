@@ -1,0 +1,58 @@
+{
+  "id": "single-sign-on-sso",
+  "title": "Single Sign-On (SSO)",
+  "moduleId": "mod-advanced",
+  "moduleName": "Advanced Concepts & Reliability",
+  "order": 49,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 10,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to single sign-on (sso).",
+  "simpleExplanation": "Single Sign-On (SSO) is an authentication process in which a user is provided access to multiple applications or websites by using only a single set of login credentials. This prevents the need for the user to log separately into the different applications.\n\nThe user credentials and other identifying information are stored and managed by a centralized system called Identity Provider (IdP). The Identity Provider is a trusted system that provides access to other websites and applications.\n\nSingle Sign-On (SSO) based authentication systems are commonly used in enterprise environments where employees require access to multiple applications of their organizations.",
+  "technicalExplanation": "Components\n\nLet's discuss some key components of Single Sign-On (SSO).\n\n### Identity Provider (IdP)\n\nUser Identity information is stored and managed by a centralized system called Identity Provider (IdP). The Identity Provider authenticates the user and provides access to the service provider.\n\nThe identity provider can directly authenticate the user by validating a username and password or by validating an assertion about the user's identity as presented by a separate identity provider. The identity provider handles the management of user identities in order to free the service provider from this responsibility.\n\n### Service Provider\n\nA service provider provides services to the end-user. They rely on identity providers to assert the identity of a user, and typically certain attributes about the user are managed by the identity provider. Service providers may also maintain a local account for the user along with attributes that are unique to their service.\n\n### Identity Broker\n\nAn identity broker acts as an intermediary that connects multiple service providers with various different identity providers. Using Identity Broker, we can perform single sign-on over any application without the hassle of the protocol it follows.\n\n\n## SAML\n\nSecurity Assertion Markup Language is an open standard that allows clients to share security information about identity, authentication, and permission across different systems. SAML is implemented with the Extensible Markup Language (XML) standard for sharing data.\n\nSAML specifically enables identity federation, making it possible for identity providers (IdPs) to seamlessly and securely pass authenticated identities and their attributes to service providers.\n\n\n## How does SSO work?\n\nNow, let's discuss how Single Sign-On works:\n\n![sso](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/single-sign-on/sso.png)\n\n1. The user requests a resource from their desired application.\n2. The application redirects the user to the Identity Provider (IdP) for authentication.\n3. The user signs in with their credentials (usually, username and password).\n4. Identity Provider (IdP) sends a Single Sign-On response back to the client application.\n5. The application grants access to the user.\n\n\n## SAML vs OAuth 2.0 and OpenID Connect (OIDC)\n\nThere are many differences between SAML, OAuth, and OIDC. SAML uses XML to pass messages, while OAuth and OIDC use JSON. OAuth provides a simpler experience, while SAML is geared towards enterprise security.\n\nOAuth and OIDC use RESTful communication extensively, which is why mobile, and modern web applications find OAuth and OIDC a better experience for the user. SAML, on the other hand, drops a session cookie in a browser that allows a user to access certain web pages. This is great for short-lived workloads.\n\nOIDC is developer-friendly and simpler to implement, which broadens the use cases for which it might be implemented. It can be implemented from scratch pretty fast, via freely available libraries in all common programming languages. SAML can be complex to install and maintain, which only enterprise-size companies can handle well.\n\nOpenID Connect is essentially a layer on top of the OAuth framework. Therefore, it can offer a built-in layer of permission that asks a user to agree to what the service provider might access. Although SAML is also capable of allowing consent flow, it achieves this by hard-coding carried out by a developer and not as part of its protocol.\n\n_Both of these authentication protocols are good at what they do. As always, a lot depends on our specific use cases and target audience._\n\n\n## Advantages\n\nFollowing are the benefits of using Single Sign-On:\n\n- Ease of use as users only need to remember one set of credentials.\n- Ease of access without having to go through a lengthy authorization process.\n- Enforced security and compliance to protect sensitive data.\n- Simplifying the management with reduced IT support cost and admin time.\n\n\n## Disadvantages\n\nHere are some disadvantages of Single Sign-On:\n\n- Single Password Vulnerability, if the main SSO password gets compromised, all the supported applications get compromised.\n- The authentication process using Single Sign-On is slower than traditional authentication as every application has to request the SSO provider for verification.\n\n\n## Examples\n\nThese are some commonly used Identity Providers (IdP):\n\n- [Okta](https://www.okta.com)\n- [Google](https://cloud.google.com/architecture/identity/single-sign-on)\n- [Auth0](https://auth0.com)\n- [OneLogin](https://www.onelogin.com)",
+  "visualExplanation": "Requests flow through the Single Sign-On (SSO) layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of single sign-on (sso) as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "sso",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Single Sign-On (SSO)",
+    "diagramFile": "sso.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso).",
+  "relatedConcepts": [
+    "oauth-20-and-openid-connect-oidc",
+    "ssl-tls-mtls"
+  ],
+  "prerequisites": [
+    "oauth-20-and-openid-connect-oidc"
+  ],
+  "nextLessonId": "ssl-tls-mtls",
+  "interactiveQuestion": {
+    "id": "q-single-sign-on-sso",
+    "question": "In production system design, what is the primary benefit of Single Sign-On (SSO)?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso).",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso). Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-single-sign-on-sso",
+    "title": "Production Troubleshooting: Single Sign-On (SSO)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to single sign-on (sso). Solving the scalability and reliability bottlenecks inherent to single sign-on (sso).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Single Sign-On (SSO) best practices: Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

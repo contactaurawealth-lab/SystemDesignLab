@@ -1,0 +1,58 @@
+{
+  "id": "scalability",
+  "title": "Scalability",
+  "moduleId": "mod-networking",
+  "moduleName": "Networking & Scalability",
+  "order": 12,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 5,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to scalability.",
+  "simpleExplanation": "Scalability is the measure of how well a system responds to changes by adding or removing resources to meet demands.\n\n![scalability](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/scalability/scalability.png)\n\nLet's discuss different types of scaling:",
+  "technicalExplanation": "Vertical scaling\n\nVertical scaling (also known as scaling up) expands a system's scalability by adding more power to an existing machine. In other words, vertical scaling refers to improving an application's capability via increasing hardware capacity.\n\n### Advantages\n\n- Simple to implement\n- Easier to manage\n- Data consistent\n\n### Disadvantages\n\n- Risk of high downtime\n- Harder to upgrade\n- Can be a single point of failure\n\n\n## Horizontal scaling\n\nHorizontal scaling (also known as scaling out) expands a system's scale by adding more machines. It improves the performance of the server by adding more instances to the existing pool of servers, allowing the load to be distributed more evenly.\n\n### Advantages\n\n- Increased redundancy\n- Better fault tolerance\n- Flexible and efficient\n- Easier to upgrade\n\n### Disadvantages\n\n- Increased complexity\n- Data inconsistency\n- Increased load on downstream services",
+  "visualExplanation": "Requests flow through the Scalability layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of scalability as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "scaling",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Scalability",
+    "diagramFile": "scaling.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of scalability.",
+  "relatedConcepts": [
+    "availability",
+    "storage"
+  ],
+  "prerequisites": [
+    "availability"
+  ],
+  "nextLessonId": "storage",
+  "interactiveQuestion": {
+    "id": "q-scalability",
+    "question": "In production system design, what is the primary benefit of Scalability?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of scalability.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of scalability. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-scalability",
+    "title": "Production Troubleshooting: Scalability",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to scalability. Solving the scalability and reliability bottlenecks inherent to scalability.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Scalability best practices: Understand the architectural trade-offs, access patterns, and failure modes of scalability., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of scalability.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

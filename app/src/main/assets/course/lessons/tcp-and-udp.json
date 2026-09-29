@@ -1,0 +1,58 @@
+{
+  "id": "tcp-and-udp",
+  "title": "TCP and UDP",
+  "moduleId": "mod-foundations",
+  "moduleName": "Foundations",
+  "order": 4,
+  "difficulty": "Beginner",
+  "estimatedMinutes": 6,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to tcp and udp.",
+  "simpleExplanation": "## TCP\n\nTransmission Control Protocol (TCP) is connection-oriented, meaning once a connection has been established, data can be transmitted in both directions. TCP has built-in systems to check for errors and to guarantee data will be delivered in the order it was sent, making it the perfect protocol for transferring information like still images, data files, and web pages.\n\n![tcp](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/tcp-and-udp/tcp.png)\n\nBut while TCP is instinctively reliable, its feedback mechanisms also result in a larger overhead, translating to greater use of the available bandwidth on the network.",
+  "technicalExplanation": "UDP\n\nUser Datagram Protocol (UDP) is a simpler, connectionless internet protocol in which error-checking and recovery services are not required. With UDP, there is no overhead for opening a connection, maintaining a connection, or terminating a connection. Data is continuously sent to the recipient, whether or not they receive it.\n\n![udp](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/tcp-and-udp/udp.png)\n\nIt is largely preferred for real-time communications like broadcast or multicast network transmission. We should use UDP over TCP when we need the lowest latency and late data is worse than the loss of data.\n\n\n## TCP vs UDP\n\nTCP is a connection-oriented protocol, whereas UDP is a connectionless protocol. A key difference between TCP and UDP is speed, as TCP is comparatively slower than UDP. Overall, UDP is a much faster, simpler, and more efficient protocol, however, retransmission of lost data packets is only possible with TCP.\n\nTCP provides ordered delivery of data from user to server (and vice versa), whereas UDP is not dedicated to end-to-end communications, nor does it check the readiness of the receiver.\n\n| Feature             | TCP                                         | UDP                                |\n| ------------------- | ------------------------------------------- | ---------------------------------- |\n| Connection          | Requires an established connection          | Connectionless protocol            |\n| Guaranteed delivery | Can guarantee delivery of data              | Cannot guarantee delivery of data  |\n| Re-transmission     | Re-transmission of lost packets is possible | No re-transmission of lost packets |\n| Speed               | Slower than UDP                             | Faster than TCP                    |\n| Broadcasting        | Does not support broadcasting               | Supports broadcasting              |\n| Use cases           | HTTPS, HTTP, SMTP, POP, FTP, etc            | Video streaming, DNS, VoIP, etc    |",
+  "visualExplanation": "Requests flow through the TCP and UDP layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of tcp and udp as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "tcp-udp",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "TCP and UDP",
+    "diagramFile": "tcp-udp.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp.",
+  "relatedConcepts": [
+    "osi-model",
+    "domain-name-system-dns"
+  ],
+  "prerequisites": [
+    "osi-model"
+  ],
+  "nextLessonId": "domain-name-system-dns",
+  "interactiveQuestion": {
+    "id": "q-tcp-and-udp",
+    "question": "In production system design, what is the primary benefit of TCP and UDP?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-tcp-and-udp",
+    "title": "Production Troubleshooting: TCP and UDP",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to tcp and udp. Solving the scalability and reliability bottlenecks inherent to tcp and udp.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply TCP and UDP best practices: Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

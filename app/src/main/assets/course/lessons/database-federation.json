@@ -1,0 +1,58 @@
+{
+  "id": "database-federation",
+  "title": "Database Federation",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 28,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 6,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to database federation.",
+  "simpleExplanation": "Federation (or functional partitioning) splits up databases by function. The federation architecture makes several distinct physical databases appear as one logical database to end-users.\n\nAll of the components in a federation are tied together by one or more federal schemas that express the commonality of data throughout the federation. These federated schemas are used to specify the information that can be shared by the federation components and to provide a common basis for communication among them.\n\n![database-federation](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/database-federation/database-federation.png)\n\nFederation also provides a cohesive, unified view of data derived from multiple sources. The data sources for federated systems can include databases and various other forms of structured and unstructured data.",
+  "technicalExplanation": "Characteristics\n\nLet's look at some key characteristics of a federated database:\n\n- **Transparency**: Federated database masks user differences and implementations of underlying data sources. Therefore, the users do not need to be aware of where the data is stored.\n- **Heterogeneity**: Data sources can differ in many ways. A federated database system can handle different hardware, network protocols, data models, etc.\n- **Extensibility**: New sources may be needed to meet the changing needs of the business. A good federated database system needs to make it easy to add new sources.\n- **Autonomy**: A Federated database does not change existing data sources, interfaces should remain the same.\n- **Data integration**: A federated database can integrate data from different protocols, database management systems, etc.\n\n\n## Advantages\n\nHere are some advantages of federated databases:\n\n- Flexible data sharing.\n- Autonomy among the database components.\n- Access heterogeneous data in a unified way.\n- No tight coupling of applications with legacy databases.\n\n\n## Disadvantages\n\nBelow are some disadvantages of federated databases:\n\n- Adds more hardware and additional complexity.\n- Joining data from two databases is complex.\n- Dependence on autonomous data sources.\n- Query performance and scalability.",
+  "visualExplanation": "Requests flow through the Database Federation layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of database federation as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "federated-database",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Database Federation",
+    "diagramFile": "federated-database.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of database federation.",
+  "relatedConcepts": [
+    "consistent-hashing",
+    "n-tier-architecture"
+  ],
+  "prerequisites": [
+    "consistent-hashing"
+  ],
+  "nextLessonId": "n-tier-architecture",
+  "interactiveQuestion": {
+    "id": "q-database-federation",
+    "question": "In production system design, what is the primary benefit of Database Federation?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of database federation.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of database federation. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-database-federation",
+    "title": "Production Troubleshooting: Database Federation",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to database federation. Solving the scalability and reliability bottlenecks inherent to database federation.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Database Federation best practices: Understand the architectural trade-offs, access patterns, and failure modes of database federation., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of database federation.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

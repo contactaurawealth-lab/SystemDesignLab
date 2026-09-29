@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Design Lab — Understand systems. Don't just memorize them.</title>
+  <meta name="description" content="A serious, offline-first native Android learning academy based on karanpratapsingh/system-design. Interactive simulations, failure injection, architecture building, and audio-visual learning.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            slate: {
+              850: '#151E2E',
+              925: '#0B0F17',
+              950: '#070A0F',
+            },
+            accent: {
+              blue: '#2563EB',
+              blueDark: '#1D4ED8',
+              emerald: '#10B981',
+              amber: '#F59E0B',
+              red: '#EF4444',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    .grid-bg {
+      background-size: 32px 32px;
+      background-image: radial-gradient(circle, #E2E8F0 1px, transparent 1px);
+    }
+    .dark .grid-bg {
+      background-image: radial-gradient(circle, #1E293B 1px, transparent 1px);
+    }
+    /* Subtle fade-in animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-[#FBFBFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
+
+  <!-- ==================== NAVIGATION BAR ==================== -->
+  <nav class="sticky top-0 z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 px-4 sm:px-8 py-3 transition-colors">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="#hero" class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-mono font-bold text-sm shadow-xs">
+            SD
+          </div>
+          <span class="font-semibold text-slate-900 dark:text-white tracking-tight text-sm sm:text-base">
+            System Design Lab
+          </span>
+        </a>
+        <span class="hidden md:inline-flex text-[11px] font-mono px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900">
+          Native Android
+        </span>
+      </div>
+
+      <!-- Links & Actions -->
+      <div class="flex items-center space-x-4 sm:space-x-6 text-xs sm:text-sm font-medium">
+        <a href="#learning-loop" class="hidden lg:inline-block text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">Philosophy</a>
+        <a href="#simulate" class="hidden sm:inline-block text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">Simulations</a>
+        <a href="#failure-lab" class="hidden sm:inline-block text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">Failure Lab</a>
+        <a href="#audiobook" class="hidden md:inline-block text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">Audiobook</a>
+        <a href="#curriculum" class="hidden md:inline-block text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">Curriculum</a>
+        
+        <!-- Dark Mode Toggle -->
+        <button onclick="toggleTheme()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white" title="Toggle Theme">
+          <svg id="theme-sun" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="theme-moon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <!-- Primary Download Button -->
+        <a href="./app-debug.apk" download="SystemDesignLab.apk" class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs sm:text-sm transition-all shadow-xs flex items-center gap-1.5 active:scale-98">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <span>Download APK</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO SECTION (Section 53) ==================== -->
+  <section id="hero" class="relative pt-12 pb-16 sm:pt-20 sm:pb-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 grid-bg overflow-hidden">
+    <div class="max-w-5xl mx-auto text-center space-y-6">
+      
+      <!-- Source Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-600 dark:text-slate-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Based on Karan Pratap Singh's system-design (56 Lessons • 43 Diagrams)</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+        Understand systems.<br>
+        <span class="text-blue-600 dark:text-blue-400">Don't just memorize them.</span>
+      </h1>
+
+      <!-- Editorial Subtitle -->
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+        The serious, offline-first native Android academy that transforms system-design learning into an interactive engineering lab: 
+        <span class="font-medium text-slate-900 dark:text-white">«Learn → See → Simulate → Break → Fix → Build → Recall»</span>.
+      </p>
+
+      <!-- Primary Action CTAs -->
+      <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <!-- Direct APK Download CTA -->
+        <a href="./app-debug.apk" download="SystemDesignLab.apk" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-md flex items-center justify-center gap-2 group">
+          <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <span>Download Native Android APK (36.6 MB)</span>
+        </a>
+        <a href="#simulate" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 font-medium text-sm transition-colors flex items-center justify-center gap-2">
+          <span>Explore Live Simulator</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+
+      <!-- Release Metadata -->
+      <div class="text-[11px] font-mono text-slate-500 dark:text-slate-400 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-1">
+        <span>v1.0.0 Stable</span>
+        <span>•</span>
+        <span>100% Offline-First</span>
+        <span>•</span>
+        <span>Min SDK 26 (Android 8.0+)</span>
+        <span>•</span>
+        <span>Zero Mandatory Cloud</span>
+      </div>
+
+      <!-- SUBTLE ARCHITECTURE ANIMATION (Canvas 60 FPS) -->
+      <div class="pt-6 max-w-4xl mx-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-2">
+          <div class="flex items-center justify-between text-xs px-2 text-slate-500 font-mono">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              LIVE DATA FLOW: Client → Load Balancer → Servers → Cache → Database
+            </span>
+            <span id="hero-flow-qps" class="text-blue-600 dark:text-blue-400 font-semibold">12,500 req/s • p99: 14ms</span>
+          </div>
+
+          <div class="w-full h-44 bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800">
+            <canvas id="hero-architecture-canvas" class="w-full h-full block"></canvas>
+          </div>
+          <div class="text-[11px] text-slate-400 dark:text-slate-500 text-center font-mono">
+            Animated data flow demonstrates real-time routing, active connection balancing, and RAM cache hits.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 2: CORE LEARNING LOOP ==================== -->
+  <section id="learning-loop" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-6xl mx-auto space-y-12">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400">Pedagogical Philosophy</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        The 9-Stage Learning Engine
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        Stop reading dry lists of bullet points. Every architectural concept in System Design Lab takes you through an intentional engineering feedback loop.
+      </p>
+    </div>
+
+    <!-- 9-Stage Process Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+      <!-- 1-3 -->
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 font-semibold">STAGE 1 — 3</span>
+        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Discover → Learn → See</h4>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Encounter the real problem first (e.g. single server memory exhaustion). Read three progressively disclosure tiers (Simple, Technical, Deep Dive), and observe packet flow animations.
+        </p>
+      </div>
+
+      <!-- 4-6 -->
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 font-semibold">STAGE 4 — 6</span>
+        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Simulate → Experiment → Break</h4>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Interact with a 60 FPS mathematical simulation. Slide traffic up to 50k QPS, tweak server capacities, intentionally crash instances, and observe live latency spikes.
+        </p>
+      </div>
+
+      <!-- 7-9 -->
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 font-semibold">STAGE 7 — 9</span>
+        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Fix → Explain → Build & Recall</h4>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Deploy architectural mitigations to restore SLA. Explain the concept in your own words with automated rubric feedback, wire components in Build Mode, and lock in retention with SuperMemo SM-2.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 3: THREE EXPLANATION LEVELS ==================== -->
+  <section id="learn-levels" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-5xl mx-auto space-y-8">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400">Progressive Disclosure</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        Three Explanation Levels for Every Concept
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        Switch between intuitive analogies, standard engineering definitions, and kernel-level deep dives without losing your place.
+      </p>
+    </div>
+
+    <!-- Interactive Level Switcher Container -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div>
+          <span class="text-[10px] font-mono uppercase text-slate-400">Curriculum Topic</span>
+          <h4 class="font-bold text-slate-900 dark:text-white text-base">Load Balancing Algorithms</h4>
+        </div>
+        
+        <!-- Toggle Tabs -->
+        <div class="inline-flex rounded-lg bg-slate-100 dark:bg-slate-800 p-1 text-xs font-medium">
+          <button id="lvl-tab-simple" onclick="setLandingLevel('simple')" class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-semibold transition-all">
+            Simple
+          </button>
+          <button id="lvl-tab-tech" onclick="setLandingLevel('tech')" class="px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all">
+            Technical
+          </button>
+          <button id="lvl-tab-deep" onclick="setLandingLevel('deep')" class="px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all">
+            Deep Dive
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Content Area -->
+      <div id="landing-level-content" class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-2 min-h-36">
+        <!-- Content injected by JS -->
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs text-slate-500 font-mono">
+        <span>56 lessons feature all 3 levels</span>
+        <span class="text-blue-600 dark:text-blue-400">Offline Room DB Cached</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 4: SIMULATION CENTERPIECE ==================== -->
+  <section id="simulate" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-6xl mx-auto space-y-10">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400">Interactive Simulation Engine</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        Simulate Before You Deploy
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        Experience system dynamics in real time. Adjust sliders, induce failures, and watch how distributed architectures react under load.
+      </p>
+    </div>
+
+    <!-- Simulator Shell -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-6">
+      
+      <!-- Simulation Scenario Selector -->
+      <div class="flex space-x-2 overflow-x-auto pb-1 text-xs custom-scrollbar">
+        <button onclick="setLandingSimScenario('lb')" id="l-sim-btn-lb" class="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white font-medium shadow-xs whitespace-nowrap">
+          Load Balancer Cluster
+        </button>
+        <button onclick="setLandingSimScenario('cache')" id="l-sim-btn-cache" class="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+          Redis Caching vs DB
+        </button>
+        <button onclick="setLandingSimScenario('replication')" id="l-sim-btn-rep" class="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+          Replication & Failover
+        </button>
+        <button onclick="setLandingSimScenario('queue')" id="l-sim-btn-q" class="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap">
+          Message Queue Backpressure
+        </button>
+      </div>
+
+      <!-- Live Canvas Screen -->
+      <div class="w-full h-56 bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800">
+        <canvas id="landing-sim-canvas" class="w-full h-full block"></canvas>
+        <div id="landing-sim-alert" class="hidden absolute top-3 right-3 bg-red-600 text-white font-mono text-[10px] px-2.5 py-1 rounded shadow">
+          WARNING: SERVER 2 COLLAPSED (FAILOVER ACTIVE)
+        </div>
+      </div>
+
+      <!-- Telemetry Readouts -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs">
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+          <div class="text-[10px] text-slate-400 uppercase font-mono">Incoming Traffic</div>
+          <div id="l-metric-traffic" class="font-bold text-base font-mono text-slate-900 dark:text-white mt-1">6,000 QPS</div>
+        </div>
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+          <div class="text-[10px] text-slate-400 uppercase font-mono">p99 Latency</div>
+          <div id="l-metric-latency" class="font-bold text-base font-mono text-emerald-500 mt-1">12 ms</div>
+        </div>
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+          <div class="text-[10px] text-slate-400 uppercase font-mono">Average CPU Load</div>
+          <div id="l-metric-cpu" class="font-bold text-base font-mono text-slate-900 dark:text-white mt-1">48%</div>
+        </div>
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+          <div class="text-[10px] text-slate-400 uppercase font-mono">Error Rate</div>
+          <div id="l-metric-errors" class="font-bold text-base font-mono text-slate-400 mt-1">0.0%</div>
+        </div>
+      </div>
+
+      <!-- Sliders & Chaos Controls -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+        <div class="space-y-1.5">
+          <div class="flex justify-between font-mono">
+            <span class="text-slate-500">Traffic QPS:</span>
+            <span id="l-val-traffic" class="font-semibold text-slate-900 dark:text-white">6,000</span>
+          </div>
+          <input id="l-range-traffic" type="range" min="1000" max="30000" step="1000" value="6000" oninput="updateLandingSim()" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="flex justify-between font-mono">
+            <span class="text-slate-500">Server Nodes:</span>
+            <span id="l-val-nodes" class="font-semibold text-slate-900 dark:text-white">3 Nodes</span>
+          </div>
+          <input id="l-range-nodes" type="range" min="1" max="6" step="1" value="3" oninput="updateLandingSim()" class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <div class="flex items-end">
+          <button id="l-btn-kill" onclick="toggleLandingSimKill()" class="w-full py-2 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 rounded-lg font-medium transition-colors">
+            Kill Server 2 (Break)
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 5: FAILURE LAB ==================== -->
+  <section id="failure-lab" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-6xl mx-auto space-y-10">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-red-600 dark:text-red-400">Resilience Engineering</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        The Failure Lab: Break, Diagnose, and Fix
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        You don't understand an architecture until you have watched it fail. Diagnose production incidents with streaming telemetry and deploy verified architectural mitigations.
+      </p>
+    </div>
+
+    <!-- Failure Scenarios Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-[10px] font-mono text-red-600 dark:text-red-400 font-bold">INCIDENT #1 • SEV-1</span>
+          <span class="text-[10px] font-mono bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 px-2 py-0.5 rounded">CPU THRASH</span>
+        </div>
+        <h4 class="font-bold text-slate-900 dark:text-white text-base">Black Friday 10x Traffic Spike</h4>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Traffic unexpectedly surges from 2,000 to 20,000 QPS. The single application instance hits 100% CPU, socket queues exhaust, and clients receive HTTP 504 Gateway Timeouts.
+        </p>
+        <div class="bg-slate-950 p-2.5 rounded-lg font-mono text-[10px] text-slate-300 space-y-1 border border-slate-800">
+          <div class="text-red-400">[CRITICAL] Thread pool queue overflow: 8,400 pending requests</div>
+          <div class="text-amber-400">[WARN] P99 latency degraded to 4,200 ms</div>
+          <div class="text-emerald-400">[FIX] Deployed Layer 7 Load Balancer + Scaled to 6 nodes</div>
+        </div>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-[10px] font-mono text-red-600 dark:text-red-400 font-bold">INCIDENT #2 • SEV-0</span>
+          <span class="text-[10px] font-mono bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 px-2 py-0.5 rounded">PRIMARY FAILURE</span>
+        </div>
+        <h4 class="font-bold text-slate-900 dark:text-white text-base">PostgreSQL Primary Crash & Split-Brain</h4>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Database primary hardware crashes during high-volume checkout writes. Read replicas enter read-only state. How do you elect a new leader without split-brain corruption?
+        </p>
+        <div class="bg-slate-950 p-2.5 rounded-lg font-mono text-[10px] text-slate-300 space-y-1 border border-slate-800">
+          <div class="text-red-400">[FATAL] Connection refused to db-primary.internal:5432</div>
+          <div class="text-amber-400">[WARN] Quorum check initiated: 2 of 3 replicas reachable</div>
+          <div class="text-emerald-400">[FIX] Fencing token issued; replica-1 promoted to primary</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 6: ARCHITECTURE PLAYGROUND & INTERVIEW MODE ==================== -->
+  <section id="playground" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-6xl mx-auto space-y-10">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Design Systems</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        Architecture Playground & Interview Simulator
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        Design complete end-to-end architectures on an interactive canvas, test them against simulated traffic, and practice real-world engineering interviews under realistic timed conditions.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+      <!-- Build Mode Canvas Card -->
+      <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 dark:text-white text-base">Build Mode: Architecture Canvas</span>
+          <span class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400">Automated Viability Check</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Place components: Client, CDN, DNS, API Gateway, Load Balancer, Microservice, Redis Cache, PostgreSQL Primary, Read Replicas, Kafka Queue, and Worker.
+        </p>
+        <div class="p-3 bg-slate-950 rounded-xl font-mono text-[11px] text-slate-300 space-y-1.5 border border-slate-800">
+          <div class="text-indigo-400">// Viability Engine Report</div>
+          <div class="text-emerald-400">✓ Redundant web tier: 0 Single Point of Failure</div>
+          <div class="text-emerald-400">✓ Redis Cache absorbs 85% of read operations</div>
+          <div class="text-amber-400">⚠ Recommendation: Add replica to SQL primary for failover</div>
+        </div>
+      </div>
+
+      <!-- Interview Mode Card -->
+      <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 dark:text-white text-base">Interview Mode & "Explain It Back"</span>
+          <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400">15-Min Timer</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Walk through the complete 4-step interview framework: Scope Requirements → Capacity Estimations → High-Level Design → Deep Dives & Trade-offs.
+        </p>
+        <div class="space-y-1.5">
+          <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800 flex justify-between font-mono text-[11px]">
+            <span>1. Design TinyURL (URL Shortener)</span>
+            <span class="text-slate-400">Medium</span>
+          </div>
+          <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800 flex justify-between font-mono text-[11px]">
+            <span>2. Design WhatsApp (Chat Service)</span>
+            <span class="text-slate-400">Hard</span>
+          </div>
+          <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800 flex justify-between font-mono text-[11px]">
+            <span>3. Design Netflix (Video CDN Streaming)</span>
+            <span class="text-slate-400">Hard</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 7: AUDIOBOOK & AUDIO-VISUAL SYNC ==================== -->
+  <section id="audiobook" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-5xl mx-auto space-y-8">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-purple-600 dark:text-purple-400">Multi-Modal Audio</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        Offline Audiobook with Audio + Visual Sync
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        Turn your commute into system-design study. 5 structured audio chapters with natural narration, background playback via Media3 ExoPlayer, and real-time concept badges that link directly to simulations.
+      </p>
+    </div>
+
+    <!-- Audio Player Preview Box -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4 max-w-3xl mx-auto">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white font-bold">
+            🎧
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Chapter 1: Why Systems Need to Scale</h4>
+            <div class="text-[11px] text-slate-500 font-mono">12 min • Concurrency limits & horizontal tiers</div>
+          </div>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 font-semibold">
+          MediaSessionService
+        </span>
+      </div>
+
+      <!-- Live Sync Badge -->
+      <div class="p-3 bg-purple-50 dark:bg-purple-950/40 rounded-xl border border-purple-200 dark:border-purple-900/60 flex items-center justify-between text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></span>
+          <span class="text-slate-700 dark:text-slate-300">Currently Explaining: <strong class="font-mono text-purple-600 dark:text-purple-400">Load Balancing & VIP Failover</strong></span>
+        </div>
+        <span class="text-[11px] font-medium text-purple-600 dark:text-purple-400">1-Tap Jump to Simulator</span>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="space-y-1">
+        <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div class="bg-purple-600 h-full rounded-full" style="width: 38%"></div>
+        </div>
+        <div class="flex justify-between text-[11px] font-mono text-slate-500">
+          <span>04:32</span>
+          <span>12:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 8: BYOK AI TUTOR & PRIVACY ==================== -->
+  <section id="ai-assistant" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-6xl mx-auto space-y-10">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400">Local-First Architecture</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        BYOK AI Assistant with Android Keystore Security
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        Optional AI tutoring that respects your privacy. Bring your own API key (Gemini, OpenAI, OpenRouter) or use the app 100% offline without any keys.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+      <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Hardware Keystore AES-256
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Keys are encrypted inside the hardware-backed Android Keystore using AES-256-GCM. They are never stored in Room, DataStore, or Logcat.
+        </p>
+      </div>
+
+      <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Compact Context Injection
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Only the active lesson problem statement, current trade-offs, and simulation metrics are packaged into prompts. Zero token waste.
+        </p>
+      </div>
+
+      <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          100% Offline Capability
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          No key? No problem. The app contains a built-in rule-based curriculum engine that answers common architectural questions completely offline.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 9: CURRICULUM & KNOWLEDGE MAP ==================== -->
+  <section id="curriculum" class="py-16 sm:py-24 px-4 sm:px-8 border-b border-slate-200 dark:border-slate-800 max-w-6xl mx-auto space-y-10">
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <h2 class="text-xs font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400">Curriculum Map</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+        56 Lessons. 6 Core Modules.
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        Directly integrated from Karan Pratap Singh's repository. Track your learning on an interactive DAG with SuperMemo SM-2 spaced repetition.
+      </p>
+    </div>
+
+    <!-- Modules List -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono">
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm">1. Foundations</div>
+        <div class="text-slate-500 space-y-1 text-[11px]">
+          <div>• IP & OSI 7-Layer Model</div>
+          <div>• TCP vs UDP Handshakes</div>
+          <div>• Domain Name System (DNS)</div>
+          <div>• Latency vs Throughput Limits</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm">2. Scaling & Traffic</div>
+        <div class="text-slate-500 space-y-1 text-[11px]">
+          <div>• Vertical vs Horizontal Scaling</div>
+          <div>• Load Balancing (L4 / L7)</div>
+          <div>• Caching (Cache-Aside, Write-Through)</div>
+          <div>• Content Delivery Networks (CDN)</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm">3. Databases & Storage</div>
+        <div class="text-slate-500 space-y-1 text-[11px]">
+          <div>• SQL vs NoSQL Consistency</div>
+          <div>• Replication & Failover</div>
+          <div>• Sharding & Consistent Hashing</div>
+          <div>• CAP & PACELC Theorems</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm">4. Distributed Systems</div>
+        <div class="text-slate-500 space-y-1 text-[11px]">
+          <div>• Message Queues & Pub/Sub</div>
+          <div>• Monolith to Microservices</div>
+          <div>• Event-Driven Architecture</div>
+          <div>• CQRS & Event Sourcing</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm">5. Advanced Reliability</div>
+        <div class="text-slate-500 space-y-1 text-[11px]">
+          <div>• Circuit Breakers & Fallbacks</div>
+          <div>• Rate Limiting (Token Bucket)</div>
+          <div>• Service Discovery & Registries</div>
+          <div>• Disaster Recovery (RTO / RPO)</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="font-bold text-slate-900 dark:text-white text-sm">6. Case Studies</div>
+        <div class="text-slate-500 space-y-1 text-[11px]">
+          <div>• TinyURL (URL Shortener)</div>
+          <div>• WhatsApp (Scalable Chat)</div>
+          <div>• Twitter (Celebrity Fanout)</div>
+          <div>• Netflix (Video Transcoding)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== FINAL CTA & DOWNLOAD SECTION ==================== -->
+  <section id="download" class="py-20 sm:py-28 px-4 sm:px-8 max-w-4xl mx-auto text-center space-y-8">
+    <div class="space-y-3">
+      <span class="text-xs font-mono uppercase text-blue-600 dark:text-blue-400 font-semibold">Ready to Begin?</span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Master system design from first principles.
+      </h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+        Download the native Android APK. Free, offline-first, zero tracking, and designed for serious engineering learning.
+      </p>
+    </div>
+
+    <!-- Download Card -->
+    <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-6 max-w-lg mx-auto">
+      <div class="space-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-mono font-bold text-lg mx-auto shadow-sm">
+          SD
+        </div>
+        <h3 class="font-bold text-slate-900 dark:text-white text-lg">System Design Lab for Android</h3>
+        <p class="text-xs text-slate-500 font-mono">v1.0.0 (Build 1) • 36.6 MB APK</p>
+      </div>
+
+      <!-- Download Button -->
+      <a href="./app-debug.apk" download="SystemDesignLab.apk" class="w-full py-3.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-md flex items-center justify-center gap-2 group">
+        <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        <span>Download Native APK</span>
+      </a>
+
+      <!-- Compatibility Matrix -->
+      <div class="text-[11px] font-mono text-slate-500 dark:text-slate-400 space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800 text-left">
+        <div class="flex justify-between">
+          <span>Target Architecture:</span>
+          <span class="text-slate-800 dark:text-slate-200">arm64-v8a, armeabi-v7a, x86_64</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Minimum OS:</span>
+          <span class="text-slate-800 dark:text-slate-200">Android 8.0+ (Oreo / API 26+)</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Offline Storage:</span>
+          <span class="text-slate-800 dark:text-slate-200">SQLite FTS5 + Room DB</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Source Code:</span>
+          <span class="text-blue-600 dark:text-blue-400 hover:underline">
+            <a href="https://github.com/karanpratapsingh/system-design" target="_blank" rel="noopener">karanpratapsingh/system-design</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-8 px-4 sm:px-8 text-center text-xs text-slate-500 dark:text-slate-400 font-mono space-y-2">
+    <div>System Design Lab • Built with Native Android, Jetpack Compose, libGDX & Media3</div>
+    <div class="text-[11px] text-slate-400 dark:text-slate-600">Educational software designed for understanding, experimentation, and recall.</div>
+  </footer>
+
+
+  <!-- ==================== JAVASCRIPT ANIMATIONS & LOGIC ==================== -->
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    // Explanation Level Data
+    const levelContent = {
+      simple: `
+        <h5 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Simple Analogy: The Restaurant Host</h5>
+        <p>Imagine walking into a popular ramen restaurant with one chef. If 30 people order at once, the chef is overwhelmed and wait times exceed an hour.</p>
+        <p class="mt-2">A <strong>load balancer</strong> acts as the maître d' at the entrance. As guests arrive, the host distributes parties evenly among three available chefs: Chef 1, Chef 2, and Chef 3. Each chef works at optimal pace, and every diner receives their meal in minutes.</p>
+      `,
+      tech: `
+        <h5 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Technical Architecture: Layer 4 & Layer 7 Routing</h5>
+        <p>A load balancer functions as a reverse proxy positioned between client applications and a backend server pool. It terminates incoming client sockets and re-routes packets based on configured routing policies:</p>
+        <ul class="list-disc pl-5 space-y-1 mt-2">
+          <li><strong>Round-Robin:</strong> Cycles cyclically across instances regardless of resource consumption.</li>
+          <li><strong>Least Connections:</strong> Evaluates open TCP connection handles and routes to the least occupied instance.</li>
+          <li><strong>IP Hashing:</strong> Hashes the client IP address to ensure deterministic session stickiness without external distributed session stores.</li>
+        </ul>
+      `,
+      deep: `
+        <h5 class="font-bold text-slate-900 dark:text-white text-sm mb-1">Deep Dive: Kernel epoll, DPDK, and Active-Passive HA Pairs</h5>
+        <p>At extreme enterprise scale (100,000+ QPS), software proxies (NGINX, HAProxy, Envoy) leverage Linux <code>epoll</code> non-blocking event loops and <code>SO_REUSEPORT</code> socket sharing to mitigate context-switching overhead.</p>
+        <p class="mt-2">For raw Layer 4 performance, packet bypass frameworks such as DPDK (Data Plane Development Kit) or eBPF/XDP process frames directly inside network interface card (NIC) ring buffers, completely eliminating kernel-space memory copies.</p>
+        <p class="mt-2"><strong>High Availability Architecture:</strong> To prevent the load balancer itself from becoming a Single Point of Failure (SPOF), production deployments run active-passive pairs synchronized via VRRP (Virtual Router Redundancy Protocol) with shared floating Virtual IPs.</p>
+      `
+    };
+
+    function setLandingLevel(level) {
+      ['simple', 'tech', 'deep'].forEach(l => {
+        const tab = document.getElementById(`lvl-tab-${l}`);
+        if (l === level) {
+          tab.className = 'px-3 py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-semibold transition-all';
+        } else {
+          tab.className = 'px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all';
+        }
+      });
+      document.getElementById('landing-level-content').innerHTML = levelContent[level];
+    }
+
+    // ==================== HERO ARCHITECTURE ANIMATION CANVAS ====================
+    function initHeroAnimation() {
+      const canvas = document.getElementById('hero-architecture-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      let tick = 0;
+      const packets = [];
+      for (let i = 0; i < 24; i++) {
+        packets.push({
+          progress: Math.random(),
+          targetServer: Math.floor(Math.random() * 3),
+          cacheHit: Math.random() > 0.3
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const w = canvas.width;
+        const h = canvas.height;
+
+        // Node Coordinates
+        const clientX = 40, clientY = h / 2;
+        const lbX = w * 0.28, lbY = h / 2;
+        const serversX = w * 0.52;
+        const serverYs = [h * 0.25, h * 0.5, h * 0.75];
+        const cacheX = w * 0.76, cacheY = h * 0.35;
+        const dbX = w * 0.9, dbY = h * 0.7;
+
+        // Draw Connecting Wires
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1.2;
+
+        // Client -> LB
+        ctx.beginPath(); ctx.moveTo(clientX, clientY); ctx.lineTo(lbX, lbY); ctx.stroke();
+
+        // LB -> Servers
+        serverYs.forEach(sy => {
+          ctx.beginPath(); ctx.moveTo(lbX, lbY); ctx.lineTo(serversX, sy); ctx.stroke();
+          // Server -> Cache
+          ctx.beginPath(); ctx.moveTo(serversX, sy); ctx.lineTo(cacheX, cacheY); ctx.stroke();
+          // Cache -> DB
+          ctx.beginPath(); ctx.moveTo(cacheX, cacheY); ctx.lineTo(dbX, dbY); ctx.stroke();
+        });
+
+        // Draw Nodes
+        function drawNode(x, y, wNode, hNode, label, color) {
+          ctx.fillStyle = '#0F172A';
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1.5;
+          ctx.roundRect ? ctx.roundRect(x - wNode/2, y - hNode/2, wNode, hNode, 6) : ctx.rect(x - wNode/2, y - hNode/2, wNode, hNode);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#F8FAFC';
+          ctx.font = '10px Inter';
+          ctx.textAlign = 'center';
+          ctx.fillText(label, x, y + 3);
+        }
+
+        drawNode(clientX, clientY, 48, 24, 'Client', '#38BDF8');
+        drawNode(lbX, lbY, 32, 48, 'LB', '#818CF8');
+        drawNode(serversX, serverYs[0], 36, 22, 'S1', '#34D399');
+        drawNode(serversX, serverYs[1], 36, 22, 'S2', '#34D399');
+        drawNode(serversX, serverYs[2], 36, 22, 'S3', '#34D399');
+        drawNode(cacheX, cacheY, 48, 26, 'Redis', '#F59E0B');
+        drawNode(dbX, dbY, 48, 26, 'DB (SQL)', '#EC4899');
+
+        // Animate Request Packets
+        packets.forEach(p => {
+          p.progress += 0.012;
+          if (p.progress > 1) {
+            p.progress = 0;
+            p.targetServer = Math.floor(Math.random() * 3);
+            p.cacheHit = Math.random() > 0.3;
+          }
+
+          let px, py;
+          if (p.progress < 0.25) {
+            const t = p.progress / 0.25;
+            px = clientX + t * (lbX - clientX);
+            py = clientY;
+          } else if (p.progress < 0.5) {
+            const t = (p.progress - 0.25) / 0.25;
+            px = lbX + t * (serversX - lbX);
+            py = lbY + t * (serverYs[p.targetServer] - lbY);
+          } else if (p.progress < 0.75) {
+            const t = (p.progress - 0.5) / 0.25;
+            px = serversX + t * (cacheX - serversX);
+            py = serverYs[p.targetServer] + t * (cacheY - serverYs[p.targetServer]);
+          } else {
+            if (p.cacheHit) {
+              // Cache hit: returns early
+              const t = (p.progress - 0.75) / 0.25;
+              px = cacheX - t * (cacheX - serversX);
+              py = cacheY;
+            } else {
+              // Cache miss: travels to DB
+              const t = (p.progress - 0.75) / 0.25;
+              px = cacheX + t * (dbX - cacheX);
+              py = cacheY + t * (dbY - cacheY);
+            }
+          }
+
+          ctx.fillStyle = p.cacheHit ? '#38BDF8' : '#F59E0B';
+          ctx.beginPath();
+          ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // ==================== SECTION 4 LIVE SIMULATOR ====================
+    const simState = {
+      traffic: 6000,
+      nodes: 3,
+      nodeDead: false,
+      scenario: 'lb'
+    };
+
+    function setLandingSimScenario(sc) {
+      simState.scenario = sc;
+      ['lb', 'cache', 'rep', 'q'].forEach(s => {
+        const btn = document.getElementById(`l-sim-btn-${s}`);
+        if (s === sc) {
+          btn.className = 'px-3.5 py-1.5 rounded-lg bg-blue-600 text-white font-medium shadow-xs whitespace-nowrap';
+        } else {
+          btn.className = 'px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap';
+        }
+      });
+      updateLandingSim();
+    }
+
+    function updateLandingSim() {
+      simState.traffic = parseInt(document.getElementById('l-range-traffic').value);
+      simState.nodes = parseInt(document.getElementById('l-range-nodes').value);
+
+      document.getElementById('l-val-traffic').innerText = simState.traffic.toLocaleString();
+      document.getElementById('l-val-nodes').innerText = `${simState.nodes} Nodes`;
+      document.getElementById('l-metric-traffic').innerText = `${simState.traffic.toLocaleString()} QPS`;
+
+      const effectiveNodes = simState.nodeDead ? Math.max(1, simState.nodes - 1) : simState.nodes;
+      const capacity = effectiveNodes * 2500;
+      const cpu = Math.min(100, Math.round((simState.traffic / capacity) * 100));
+
+      let lat = 12;
+      let err = 0;
+      if (cpu > 75) {
+        lat = Math.round(12 + Math.pow((cpu - 75) * 1.6, 2));
+      }
+      if (cpu >= 100) {
+        err = (((simState.traffic - capacity) / simState.traffic) * 100).toFixed(1);
+      }
+
+      const latElem = document.getElementById('l-metric-latency');
+      latElem.innerText = `${lat} ms`;
+      latElem.className = lat > 100 ? 'font-bold text-base font-mono text-red-500 mt-1' : (lat > 40 ? 'font-bold text-base font-mono text-amber-500 mt-1' : 'font-bold text-base font-mono text-emerald-500 mt-1');
+
+      document.getElementById('l-metric-cpu').innerText = `${cpu}%`;
+      document.getElementById('l-metric-errors').innerText = `${err}%`;
+    }
+
+    function toggleLandingSimKill() {
+      simState.nodeDead = !simState.nodeDead;
+      const btn = document.getElementById('l-btn-kill');
+      const alertBox = document.getElementById('landing-sim-alert');
+
+      if (simState.nodeDead) {
+        btn.innerText = 'Recover Server 2';
+        btn.className = 'w-full py-2 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900 rounded-lg font-medium transition-colors';
+        alertBox.classList.remove('hidden');
+      } else {
+        btn.innerText = 'Kill Server 2 (Break)';
+        btn.className = 'w-full py-2 bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 rounded-lg font-medium transition-colors';
+        alertBox.classList.add('hidden');
+      }
+      updateLandingSim();
+    }
+
+    function initLandingSimCanvas() {
+      const canvas = document.getElementById('landing-sim-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const simPackets = [];
+      for (let i = 0; i < 20; i++) {
+        simPackets.push({
+          progress: Math.random(),
+          nodeIdx: Math.floor(Math.random() * simState.nodes)
+        });
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const w = canvas.width;
+        const h = canvas.height;
+
+        const numNodes = simState.nodes;
+        const nodeSpacing = (h - 40) / Math.max(1, numNodes - 1);
+        const serverX = w - 80;
+
+        // Draw LB
+        ctx.fillStyle = '#6366F1';
+        ctx.fillRect(80, h/2 - 25, 24, 50);
+        ctx.fillStyle = '#CBD5E1';
+        ctx.font = '10px monospace';
+        ctx.fillText('LB', 85, h/2 + 4);
+
+        // Draw Server Nodes
+        for (let i = 0; i < numNodes; i++) {
+          const ny = numNodes === 1 ? h/2 : 20 + i * nodeSpacing;
+          const isDead = simState.nodeDead && i === 1;
+
+          ctx.strokeStyle = isDead ? '#7F1D1D' : '#334155';
+          ctx.beginPath(); ctx.moveTo(104, h/2); ctx.lineTo(serverX, ny); ctx.stroke();
+
+          ctx.fillStyle = isDead ? '#EF4444' : '#10B981';
+          ctx.fillRect(serverX, ny - 12, 40, 24);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '10px monospace';
+          ctx.fillText(isDead ? 'DEAD' : `S${i+1}`, serverX + 8, ny + 3);
+        }
+
+        // Draw dynamic packets
+        simPackets.forEach(p => {
+          p.progress += 0.015 * (simState.traffic / 6000);
+          if (p.progress > 1) {
+            p.progress = 0;
+            p.nodeIdx = Math.floor(Math.random() * numNodes);
+          }
+
+          let px, py;
+          if (p.progress < 0.3) {
+            px = 20 + (p.progress / 0.3) * (80 - 20);
+            py = h/2;
+          } else {
+            const t = (p.progress - 0.3) / 0.7;
+            const targetY = numNodes === 1 ? h/2 : 20 + p.nodeIdx * nodeSpacing;
+            px = 104 + t * (serverX - 104);
+            py = h/2 + t * (targetY - h/2);
+          }
+
+          const isDeadTarget = simState.nodeDead && p.nodeIdx === 1 && p.progress > 0.3;
+          ctx.fillStyle = isDeadTarget ? '#EF4444' : '#38BDF8';
+          ctx.beginPath();
+          ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(render);
+      }
+      render();
+    }
+
+    // Initialize default components
+    window.addEventListener('DOMContentLoaded', () => {
+      setLandingLevel('simple');
+      initHeroAnimation();
+      initLandingSimCanvas();
+      updateLandingSim();
+    });
+  </script>
+</body>
+</html>

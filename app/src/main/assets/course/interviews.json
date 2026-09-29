@@ -1,0 +1,187 @@
+[
+  {
+    "id": "interview-url-shortener",
+    "title": "Design a URL Shortener (TinyURL)",
+    "difficulty": "Medium",
+    "traffic": "500 Million new URLs per month (100:1 read/write ratio)",
+    "storage": "500M * 500 bytes = 250 GB/month, 15 TB over 5 years",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Requirements Clarification",
+        "prompt": "Clarify functional and non-functional requirements. What must the system do, and what are its performance SLAs?",
+        "expectedDecisions": [
+          "Given URL generates short hash",
+          "Redirect with 301/302",
+          "High availability (99.99%)",
+          "Sub-10ms redirect latency"
+        ]
+      },
+      {
+        "stepNumber": 2,
+        "title": "Traffic & Capacity Estimations",
+        "prompt": "Calculate write QPS, read QPS, bandwidth, and cache memory required for 20% hot URLs (80-20 rule).",
+        "expectedDecisions": [
+          "Writes: ~200 QPS",
+          "Reads: ~20,000 QPS",
+          "Cache memory: ~34 GB RAM per day"
+        ]
+      },
+      {
+        "stepNumber": 3,
+        "title": "Key Generation & Data Storage",
+        "prompt": "How do you generate unique short keys without write collisions or DB race conditions?",
+        "expectedDecisions": [
+          "Pre-generate unique 7-char Base62 keys with Key Generation Service (KGS)",
+          "Store mapping in NoSQL Key-Value or partitioned SQL"
+        ]
+      },
+      {
+        "stepNumber": 4,
+        "title": "Caching & Latency Optimization",
+        "prompt": "Where do you place caches, and what eviction policy do you choose?",
+        "expectedDecisions": [
+          "Distributed Redis cache in front of DB",
+          "LRU (Least Recently Used) eviction",
+          "HTTP 302 vs 301 caching trade-off"
+        ]
+      },
+      {
+        "stepNumber": 5,
+        "title": "Scaling & Fault Tolerance",
+        "prompt": "How do you handle regional outages and database shard failures?",
+        "expectedDecisions": [
+          "Consistent hashing across DB shards",
+          "Multi-region read replicas with GeoDNS"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "interview-whatsapp",
+    "title": "Design a Scalable Chat Service (WhatsApp)",
+    "difficulty": "Hard",
+    "traffic": "2 Billion users, 100 Billion messages daily",
+    "storage": "10 PB message archive per year",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Requirements & Scope",
+        "prompt": "Define core chat requirements: 1-on-1 messaging, group chats, delivery status (sent, delivered, read), offline messaging.",
+        "expectedDecisions": [
+          "Real-time low latency delivery",
+          "End-to-end encryption",
+          "Push notifications for offline users"
+        ]
+      },
+      {
+        "stepNumber": 2,
+        "title": "Connection & Protocol Selection",
+        "prompt": "Which network protocol will you choose for maintaining millions of concurrent bi-directional connections?",
+        "expectedDecisions": [
+          "Persistent WebSockets or TCP connections",
+          "Connection gateway service with Epoll/Kqueue"
+        ]
+      },
+      {
+        "stepNumber": 3,
+        "title": "Message Routing & Presence",
+        "prompt": "How do you track which server holds the active connection for User B, and route User A's message to User B?",
+        "expectedDecisions": [
+          "Session Service backed by Redis cluster",
+          "Distributed message queue (Kafka/Pulsar) for temporary buffering"
+        ]
+      },
+      {
+        "stepNumber": 4,
+        "title": "Storage Architecture",
+        "prompt": "How do you store transient unread messages vs historical chat logs?",
+        "expectedDecisions": [
+          "Wide-column store (Apache Cassandra/ScyllaDB) partitioned by (chat_id, message_id)",
+          "Ephemeral queue for offline delivery"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "interview-twitter",
+    "title": "Design Twitter / X (News Feed System)",
+    "difficulty": "Hard",
+    "traffic": "300 Million DAU, 500 Million tweets/day, massive celebrity fanout",
+    "storage": "80 TB media + tweets per day",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Feed Generation Model: Fanout on Write vs Fanout on Read",
+        "prompt": "How do you handle the celebrity problem (e.g. user with 100M followers tweets)?",
+        "expectedDecisions": [
+          "Hybrid approach: Fanout-on-write (push) for normal users, Fanout-on-read (pull) for high-follower celebrities"
+        ]
+      },
+      {
+        "stepNumber": 2,
+        "title": "Timeline Caching",
+        "prompt": "How is a user's home timeline cached and served in <50ms?",
+        "expectedDecisions": [
+          "In-memory Redis timeline ring buffer (e.g. 800 recent tweet IDs per active user)",
+          "Hydrate tweet entities via multi-get cache"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "interview-netflix",
+    "title": "Design a Video Streaming Platform (Netflix)",
+    "difficulty": "Hard",
+    "traffic": "250 Million subscribers, 100 Million concurrent streams",
+    "storage": "Petabytes of multi-bitrate encoded video chunks",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Video Ingestion & Transcoding",
+        "prompt": "How do you process source video files into streamable formats across varying client bandwidths?",
+        "expectedDecisions": [
+          "Chunking video into 2-5 second segments",
+          "Transcoding DAG into HLS/DASH at multiple bitrates (Adaptive Bitrate Streaming)"
+        ]
+      },
+      {
+        "stepNumber": 2,
+        "title": "CDN Edge Delivery",
+        "prompt": "How do you ensure zero buffering and high throughput for global video playback?",
+        "expectedDecisions": [
+          "Custom Open Connect CDN appliances deployed at ISP internet exchange points (IXPs)",
+          "GeoDNS / BGP Anycast routing"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "interview-uber",
+    "title": "Design a Ride-Sharing Service (Uber)",
+    "difficulty": "Hard",
+    "traffic": "50 Million daily trips, 5 Million active drivers reporting GPS every 4 seconds",
+    "storage": "High-write geospatial location stream",
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Real-time Geospatial Indexing",
+        "prompt": "How do you index millions of continuously moving driver coordinates to quickly find nearest drivers?",
+        "expectedDecisions": [
+          "Geohash or Uber H3 hexagonal spatial index",
+          "In-memory geospatial cluster (Redis GEO or Google S2 / Quadtrees)"
+        ]
+      },
+      {
+        "stepNumber": 2,
+        "title": "Ride Matching & Dispatch",
+        "prompt": "How do you match a rider request to the optimal driver without race conditions?",
+        "expectedDecisions": [
+          "Ring buffer / Dispatch lock per driver",
+          "ETA computation via routing engine",
+          "WebSocket connection for driver accept/reject modal"
+        ]
+      }
+    ]
+  }
+]

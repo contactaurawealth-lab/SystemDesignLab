@@ -1,0 +1,58 @@
+{
+  "id": "nosql-databases",
+  "title": "NoSQL databases",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 16,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 8,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to nosql databases.",
+  "simpleExplanation": "NoSQL is a broad category that includes any database that doesn't use SQL as its primary data access language. These types of databases are also sometimes referred to as non-relational databases. Unlike in relational databases, data in a NoSQL database doesn't have to conform to a pre-defined schema. NoSQL databases follow [BASE consistency model](https://karanpratapsingh.com/courses/system-design/acid-and-base-consistency-models#base).\n\nBelow are different types of NoSQL databases:\n\n### Document\n\nA document database (also known as a document-oriented database or a document store) is a database that stores information in documents. They are general-purpose databases that serve a variety of use cases for both transactional and analytical applications.\n\n**Advantages**\n\n- Intuitive and flexible\n- Easy horizontal scaling\n- Schemaless\n\n**Disadvantages**\n\n- Schemaless\n- Non-relational\n\n**Examples**\n\n- [MongoDB](https://www.mongodb.com)\n- [Amazon DocumentDB](https://aws.amazon.com/documentdb)\n- [CouchDB](https://couchdb.apache.org)\n\n### Key-value\n\nOne of the simplest types of NoSQL databases, key-value databases save data as a group of key-value pairs made up of two data items each. They're also sometimes referred to as a key-value store.\n\n**Advantages**\n\n- Simple and performant\n- Highly scalable for high volumes of traffic\n- Session management\n- Optimized lookups\n\n**Disadvantages**\n\n- Basic CRUD\n- Values can't be filtered\n- Lacks indexing and scanning capabilities\n- Not optimized for complex queries\n\n**Examples**\n\n- [Redis](https://redis.io)\n- [Memcached](https://memcached.org)\n- [Amazon DynamoDB](https://aws.amazon.com/dynamodb)\n- [Aerospike](https://aerospike.com)\n\n### Graph\n\nA graph database is a NoSQL database that uses graph structures for semantic queries with nodes, edges, and properties to represent and store data instead of tables or documents.\n\nThe graph relates the data items in the store to a collection of nodes and edges, the edges representing the relationships between the nodes. The relationships allow data in the store to be linked together directly and, in many cases, retrieved with one operation.\n\n**Advantages**\n\n- Query speed\n- Agile and flexible\n- Explicit data representation\n\n**Disadvantages**\n\n- Complex\n- No standardized query language\n\n**Use cases**\n\n- Fraud detection\n- Recommendation engines\n- Social networks\n- Network mapping\n\n**Examples**\n\n- [Neo4j](https://neo4j.com)\n- [ArangoDB](https://www.arangodb.com)\n- [Amazon Neptune](https://aws.amazon.com/neptune)\n- [JanusGraph](https://janusgraph.org)\n\n### Time series\n\nA time-series database is a database optimized for time-stamped, or time series, data.\n\n**Advantages**\n\n- Fast insertion and retrieval\n- Efficient data storage\n\n**Use cases**\n\n- IoT data\n- Metrics analysis\n- Application monitoring\n- Understand financial trends\n\n**Examples**\n\n- [InfluxDB](https://www.influxdata.com)\n- [Apache Druid](https://druid.apache.org)\n\n### Wide column\n\nWide column databases, also known as wide column stores, are schema-agnostic. Data is stored in column families, rather than in rows and columns.\n\n**Advantages**\n\n- Highly scalable, can handle petabytes of data\n- Ideal for real-time big data applications\n\n**Disadvantages**\n\n- Expensive\n- Increased write time\n\n**Use cases**\n\n- Business analytics\n- Attribute-based data storage\n\n**Examples**\n\n- [BigTable](https://cloud.google.com/bigtable)\n- [Apache Cassandra](https://cassandra.apache.org)\n- [ScyllaDB](https://www.scylladb.com)\n\n### Multi-model\n\nMulti-model databases combine different database models (i.e. relational, graph, key-value, document, etc.) into a single, integrated backend. This means they can accommodate various data types, indexes, queries, and store data in more than one model.\n\n**Advantages**\n\n- Flexibility\n- Suitable for complex projects\n- Data consistent\n\n**Disadvantages**\n\n- Complex\n- Less mature\n\n**Examples**\n\n- [ArangoDB](https://www.arangodb.com)\n- [Azure Cosmos DB](https://azure.microsoft.com/en-in/services/cosmos-db)\n- [Couchbase](https://www.couchbase.com)",
+  "technicalExplanation": "NoSQL is a broad category that includes any database that doesn't use SQL as its primary data access language. These types of databases are also sometimes referred to as non-relational databases. Unlike in relational databases, data in a NoSQL database doesn't have to conform to a pre-defined schema. NoSQL databases follow [BASE consistency model](https://karanpratapsingh.com/courses/system-design/acid-and-base-consistency-models#base).\n\nBelow are different types of NoSQL databases:\n\n### Document\n\nA document database (also known as a document-oriented database or a document store) is a database that stores information in documents. They are general-purpose databases that serve a variety of use cases for both transactional and analytical applications.\n\n**Advantages**\n\n- Intuitive and flexible\n- Easy horizontal scaling\n- Schemaless\n\n**Disadvantages**\n\n- Schemaless\n- Non-relational\n\n**Examples**\n\n- [MongoDB](https://www.mongodb.com)\n- [Amazon DocumentDB](https://aws.amazon.com/documentdb)\n- [CouchDB](https://couchdb.apache.org)\n\n### Key-value\n\nOne of the simplest types of NoSQL databases, key-value databases save data as a group of key-value pairs made up of two data items each. They're also sometimes referred to as a key-value store.\n\n**Advantages**\n\n- Simple and performant\n- Highly scalable for high volumes of traffic\n- Session management\n- Optimized lookups\n\n**Disadvantages**\n\n- Basic CRUD\n- Values can't be filtered\n- Lacks indexing and scanning capabilities\n- Not optimized for complex queries\n\n**Examples**\n\n- [Redis](https://redis.io)\n- [Memcached](https://memcached.org)\n- [Amazon DynamoDB](https://aws.amazon.com/dynamodb)\n- [Aerospike](https://aerospike.com)\n\n### Graph\n\nA graph database is a NoSQL database that uses graph structures for semantic queries with nodes, edges, and properties to represent and store data instead of tables or documents.\n\nThe graph relates the data items in the store to a collection of nodes and edges, the edges representing the relationships between the nodes. The relationships allow data in the store to be linked together directly and, in many cases, retrieved with one operation.\n\n**Advantages**\n\n- Query speed\n- Agile and flexible\n- Explicit data representation\n\n**Disadvantages**\n\n- Complex\n- No standardized query language\n\n**Use cases**\n\n- Fraud detection\n- Recommendation engines\n- Social networks\n- Network mapping\n\n**Examples**\n\n- [Neo4j](https://neo4j.com)\n- [ArangoDB](https://www.arangodb.com)\n- [Amazon Neptune](https://aws.amazon.com/neptune)\n- [JanusGraph](https://janusgraph.org)\n\n### Time series\n\nA time-series database is a database optimized for time-stamped, or time series, data.\n\n**Advantages**\n\n- Fast insertion and retrieval\n- Efficient data storage\n\n**Use cases**\n\n- IoT data\n- Metrics analysis\n- Application monitoring\n- Understand financial trends\n\n**Examples**\n\n- [InfluxDB](https://www.influxdata.com)\n- [Apache Druid](https://druid.apache.org)\n\n### Wide column\n\nWide column databases, also known as wide column stores, are schema-agnostic. Data is stored in column families, rather than in rows and columns.\n\n**Advantages**\n\n- Highly scalable, can handle petabytes of data\n- Ideal for real-time big data applications\n\n**Disadvantages**\n\n- Expensive\n- Increased write time\n\n**Use cases**\n\n- Business analytics\n- Attribute-based data storage\n\n**Examples**\n\n- [BigTable](https://cloud.google.com/bigtable)\n- [Apache Cassandra](https://cassandra.apache.org)\n- [ScyllaDB](https://www.scylladb.com)\n\n### Multi-model\n\nMulti-model databases combine different database models (i.e. relational, graph, key-value, document, etc.) into a single, integrated backend. This means they can accommodate various data types, indexes, queries, and store data in more than one model.\n\n**Advantages**\n\n- Flexibility\n- Suitable for complex projects\n- Data consistent\n\n**Disadvantages**\n\n- Complex\n- Less mature\n\n**Examples**\n\n- [ArangoDB](https://www.arangodb.com)\n- [Azure Cosmos DB](https://azure.microsoft.com/en-in/services/cosmos-db)\n- [Couchbase](https://www.couchbase.com)",
+  "visualExplanation": "Requests flow through the NoSQL databases layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of nosql databases as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "nosql-databases",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "NoSQL databases",
+    "diagramFile": null
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of nosql databases.",
+  "relatedConcepts": [
+    "sql-databases",
+    "sql-vs-nosql-databases"
+  ],
+  "prerequisites": [
+    "sql-databases"
+  ],
+  "nextLessonId": "sql-vs-nosql-databases",
+  "interactiveQuestion": {
+    "id": "q-nosql-databases",
+    "question": "In production system design, what is the primary benefit of NoSQL databases?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of nosql databases.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of nosql databases. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-nosql-databases",
+    "title": "Production Troubleshooting: NoSQL databases",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to nosql databases. Solving the scalability and reliability bottlenecks inherent to nosql databases.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply NoSQL databases best practices: Understand the architectural trade-offs, access patterns, and failure modes of nosql databases., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of nosql databases.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

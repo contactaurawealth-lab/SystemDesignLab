@@ -1,0 +1,58 @@
+{
+  "id": "normalization-and-denormalization",
+  "title": "Normalization and Denormalization",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 20,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 12,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to normalization and denormalization.",
+  "simpleExplanation": "## Terms\n\nBefore we go any further, let's look at some commonly used terms in normalization and denormalization.\n\n### Keys\n\n**Primary key**: Column or group of columns that can be used to uniquely identify every row of the table.\n\n**Composite key**: A primary key made up of multiple columns.\n\n**Super key**: Set of all keys that can uniquely identify all the rows present in a table.\n\n**Candidate key**: Attributes that identify rows uniquely in a table.\n\n**Foreign key**: It is a reference to a primary key of another table.\n\n**Alternate key**: Keys that are not primary keys are known as alternate keys.\n\n**Surrogate key**: A system-generated value that uniquely identifies each entry in a table when no other column was able to hold properties of a primary key.\n\n### Dependencies\n\n**Partial dependency**: Occurs when the primary key determines some other attributes.\n\n**Functional dependency**: It is a relationship that exists between two attributes, typically between the primary key and non-key attribute within a table.\n\n**Transitive functional dependency**: Occurs when some non-key attribute determines some other attribute.\n\n### Anomalies\n\nDatabase anomaly happens when there is a flaw in the database due to incorrect planning or storing everything in a flat database. This is generally addressed by the process of normalization.\n\nThere are three types of database anomalies:\n\n**Insertion anomaly**: Occurs when we are not able to insert certain attributes in the database without the presence of other attributes.\n\n**Update anomaly**: Occurs in case of data redundancy and partial update. In other words, a correct update of the database needs other actions such as addition, deletion, or both.\n\n**Deletion anomaly**: Occurs where deletion of some data requires deletion of other data.\n\n**Example**\n\nLet's consider the following table which is not normalized:\n\n| ID  | Name   | Role              | Team |\n| --- | ------ | ----------------- | ---- |\n| 1   | Peter  | Software Engineer | A    |\n| 2   | Brian  | DevOps Engineer   | B    |\n| 3   | Hailey | Product Manager   | C    |\n| 4   | Hailey | Product Manager   | C    |\n| 5   | Steve  | Frontend Engineer | D    |\n\nLet's imagine, we hired a new person \"John\" but they might not be assigned a team immediately. This will cause an _insertion anomaly_ as the team attribute is not yet present.\n\nNext, let's say Hailey from Team C got promoted, to reflect that change in the database, we will need to update 2 rows to maintain consistency which can cause an _update anomaly_.\n\nFinally, we would like to remove Team B but to do that we will also need to remove additional information such as name and role, this is an example of a _deletion anomaly_.",
+  "technicalExplanation": "Normalization\n\nNormalization is the process of organizing data in a database. This includes creating tables and establishing relationships between those tables according to rules designed both to protect the data and to make the database more flexible by eliminating redundancy and inconsistent dependency.\n\n### Why do we need normalization?\n\nThe goal of normalization is to eliminate redundant data and ensure data is consistent. A fully normalized database allows its structure to be extended to accommodate new types of data without changing the existing structure too much. As a result, applications interacting with the database are minimally affected.\n\n### Normal forms\n\nNormal forms are a series of guidelines to ensure that the database is normalized. Let's discuss some essential normal forms:\n\n**1NF**\n\nFor a table to be in the first normal form (1NF), it should follow the following rules:\n\n- Repeating groups are not permitted.\n- Identify each set of related data with a primary key.\n- Set of related data should have a separate table.\n- Mixing data types in the same column is not permitted.\n\n**2NF**\n\nFor a table to be in the second normal form (2NF), it should follow the following rules:\n\n- Satisfies the first normal form (1NF).\n- Should not have any partial dependency.\n\n**3NF**\n\nFor a table to be in the third normal form (3NF), it should follow the following rules:\n\n- Satisfies the second normal form (2NF).\n- Transitive functional dependencies are not permitted.\n\n**BCNF**\n\nBoyce-Codd normal form (or BCNF) is a slightly stronger version of the third normal form (3NF) used to address certain types of anomalies not dealt with by 3NF as originally defined. Sometimes it is also known as the 3.5 normal form (3.5NF).\n\nFor a table to be in the Boyce-Codd normal form (BCNF), it should follow the following rules:\n\n- Satisfies the third normal form (3NF).\n- For every functional dependency X \u2192 Y, X should be the super key.\n\n_There are more normal forms such as 4NF, 5NF, and 6NF but we won't discuss them here. Check out this [amazing video](https://www.youtube.com/watch?v=GFQaEYEc8_8) that goes into detail._\n\nIn a relational database, a relation is often described as _\"normalized\"_ if it meets the third normal form. Most 3NF relations are free of insertion, update, and deletion anomalies.\n\nAs with many formal rules and specifications, real-world scenarios do not always allow for perfect compliance. If you decide to violate one of the first three rules of normalization, make sure that your application anticipates any problems that could occur, such as redundant data and inconsistent dependencies.\n\n### Advantages\n\nHere are some advantages of normalization:\n\n- Reduces data redundancy.\n- Better data design.\n- Increases data consistency.\n- Enforces referential integrity.\n\n### Disadvantages\n\nLet's look at some disadvantages of normalization:\n\n- Data design is complex.\n- Slower performance.\n- Maintenance overhead.\n- Require more joins.\n\n\n## Denormalization\n\nDenormalization is a database optimization technique in which we add redundant data to one or more tables. This can help us avoid costly joins in a relational database. It attempts to improve read performance at the expense of some write performance. Redundant copies of the data are written in multiple tables to avoid expensive joins.\n\nOnce data becomes distributed with techniques such as federation and sharding, managing joins across the network further increases complexity. Denormalization might circumvent the need for such complex joins.\n\n_Note: Denormalization does not mean reversing normalization._\n\n### Advantages\n\nLet's look at some advantages of denormalization:\n\n- Retrieving data is faster.\n- Writing queries is easier.\n- Reduction in number of tables.\n- Convenient to manage.\n\n### Disadvantages\n\nBelow are some disadvantages of denormalization:\n\n- Expensive inserts and updates.\n- Increases complexity of database design.\n- Increases data redundancy.\n- More chances of data inconsistency.",
+  "visualExplanation": "Requests flow through the Normalization and Denormalization layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of normalization and denormalization as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "normalization-and-denormalization",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Normalization and Denormalization",
+    "diagramFile": null
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization.",
+  "relatedConcepts": [
+    "indexes",
+    "acid-and-base-consistency-models"
+  ],
+  "prerequisites": [
+    "indexes"
+  ],
+  "nextLessonId": "acid-and-base-consistency-models",
+  "interactiveQuestion": {
+    "id": "q-normalization-and-denormalization",
+    "question": "In production system design, what is the primary benefit of Normalization and Denormalization?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-normalization-and-denormalization",
+    "title": "Production Troubleshooting: Normalization and Denormalization",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to normalization and denormalization. Solving the scalability and reliability bottlenecks inherent to normalization and denormalization.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Normalization and Denormalization best practices: Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

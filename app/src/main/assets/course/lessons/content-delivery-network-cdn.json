@@ -1,0 +1,58 @@
+{
+  "id": "content-delivery-network-cdn",
+  "title": "Content Delivery Network (CDN)",
+  "moduleId": "mod-networking",
+  "moduleName": "Networking & Scalability",
+  "order": 9,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 8,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to content delivery network (cdn).",
+  "simpleExplanation": "A content delivery network (CDN) is a geographically distributed group of servers that work together to provide fast delivery of internet content. Generally, static files such as HTML/CSS/JS, photos, and videos are served from CDN.\n\n![cdn-map](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/content-delivery-network/cdn-map.png)",
+  "technicalExplanation": "Why use a CDN?\n\nContent Delivery Network (CDN) increases content availability and redundancy while reducing bandwidth costs and improving security. Serving content from CDNs can significantly improve performance as users receive content from data centers close to them and our servers do not have to serve requests that the CDN fulfills.\n\n\n## How does a CDN work?\n\n![cdn](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/content-delivery-network/cdn.png)\n\nIn a CDN, the origin server contains the original versions of the content while the edge servers are numerous and distributed across various locations around the world.\n\nTo minimize the distance between the visitors and the website's server, a CDN stores a cached version of its content in multiple geographical locations known as edge locations. Each edge location contains several caching servers responsible for content delivery to visitors within its proximity.\n\nOnce the static assets are cached on all the CDN servers for a particular location, all subsequent website visitor requests for static assets will be delivered from these edge servers instead of the origin, thus reducing the origin load and improving scalability.\n\nFor example, when someone in the UK requests our website which might be hosted in the USA, they will be served from the closest edge location such as the London edge location. This is much quicker than having the visitor make a complete request to the origin server which will increase the latency.\n\n\n## Types\n\nCDNs are generally divided into two types:\n\n### Push CDNs\n\nPush CDNs receive new content whenever changes occur on the server. We take full responsibility for providing content, uploading directly to the CDN, and rewriting URLs to point to the CDN. We can configure when content expires and when it is updated. Content is uploaded only when it is new or changed, minimizing traffic, but maximizing storage.\n\nSites with a small amount of traffic or sites with content that isn't often updated work well with push CDNs. Content is placed on the CDNs once, instead of being re-pulled at regular intervals.\n\n### Pull CDNs\n\nIn a Pull CDN situation, the cache is updated based on request. When the client sends a request that requires static assets to be fetched from the CDN if the CDN doesn't have it, then it will fetch the newly updated assets from the origin server and populate its cache with this new asset, and then send this new cached asset to the user.\n\nContrary to the Push CDN, this requires less maintenance because cache updates on CDN nodes are performed based on requests from the client to the origin server. Sites with heavy traffic work well with pull CDNs, as traffic is spread out more evenly with only recently-requested content remaining on the CDN.\n\n\n## Disadvantages\n\nAs we all know good things come with extra costs, so let's discuss some disadvantages of CDNs:\n\n- **Extra charges**: It can be expensive to use a CDN, especially for high-traffic services.\n- **Restrictions**: Some organizations and countries have blocked the domains or IP addresses of popular CDNs.\n- **Location**: If most of our audience is located in a country where the CDN has no servers, the data on our website may have to travel further than without using any CDN.\n\n\n## Examples\n\nHere are some widely used CDNs:\n\n- [Amazon CloudFront](https://aws.amazon.com/cloudfront)\n- [Google Cloud CDN](https://cloud.google.com/cdn)\n- [Cloudflare CDN](https://www.cloudflare.com/cdn)\n- [Fastly](https://www.fastly.com/products/cdn)",
+  "visualExplanation": "Requests flow through the Content Delivery Network (CDN) layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of content delivery network (cdn) as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "cdn",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Content Delivery Network (CDN)",
+    "diagramFile": "cdn.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn).",
+  "relatedConcepts": [
+    "caching",
+    "proxy"
+  ],
+  "prerequisites": [
+    "caching"
+  ],
+  "nextLessonId": "proxy",
+  "interactiveQuestion": {
+    "id": "q-content-delivery-network-cdn",
+    "question": "In production system design, what is the primary benefit of Content Delivery Network (CDN)?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn).",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn). Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-content-delivery-network-cdn",
+    "title": "Production Troubleshooting: Content Delivery Network (CDN)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to content delivery network (cdn). Solving the scalability and reliability bottlenecks inherent to content delivery network (cdn).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Content Delivery Network (CDN) best practices: Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

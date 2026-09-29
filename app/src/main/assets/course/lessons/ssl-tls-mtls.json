@@ -1,0 +1,58 @@
+{
+  "id": "ssl-tls-mtls",
+  "title": "SSL, TLS, mTLS",
+  "moduleId": "mod-advanced",
+  "moduleName": "Advanced Concepts & Reliability",
+  "order": 50,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to ssl, tls, mtls.",
+  "simpleExplanation": "Let's briefly discuss some important communication security protocols such as SSL, TLS, and mTLS. I would say that from a _\"big picture\"_ system design perspective, this topic is not very important but still good to know about.",
+  "technicalExplanation": "SSL\n\nSSL stands for Secure Sockets Layer, and it refers to a protocol for encrypting and securing communications that take place on the internet. It was first developed in 1995 but since has been deprecated in favor of TLS (Transport Layer Security).\n\n### Why is it called an SSL certificate if it is deprecated?\n\nMost major certificate providers still refer to certificates as SSL certificates, which is why the naming convention persists.\n\n### Why was SSL so important?\n\nOriginally, data on the web was transmitted in plaintext that anyone could read if they intercepted the message. SSL was created to correct this problem and protect user privacy. By encrypting any data that goes between the user and a web server, SSL also stops certain kinds of cyber attacks by preventing attackers from tampering with data in transit.\n\n\n## TLS\n\nTransport Layer Security, or TLS, is a widely adopted security protocol designed to facilitate privacy and data security for communications over the internet. TLS evolved from a previous encryption protocol called Secure Sockets Layer (SSL). A primary use case of TLS is encrypting the communication between web applications and servers.\n\nThere are three main components to what the TLS protocol accomplishes:\n\n- **Encryption**: hides the data being transferred from third parties.\n- **Authentication**: ensures that the parties exchanging information are who they claim to be.\n- **Integrity**: verifies that the data has not been forged or tampered with.\n\n\n## mTLS\n\nMutual TLS, or mTLS, is a method for mutual authentication. mTLS ensures that the parties at each end of a network connection are who they claim to be by verifying that they both have the correct private key. The information within their respective TLS certificates provides additional verification.\n\n### Why use mTLS?\n\nmTLS helps ensure that the traffic is secure and trusted in both directions between a client and server. This provides an additional layer of security for users who log in to an organization's network or applications. It also verifies connections with client devices that do not follow a login process, such as Internet of Things (IoT) devices.\n\nNowadays, mTLS is commonly used by microservices or distributed systems in a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model) to verify each other.",
+  "visualExplanation": "Requests flow through the SSL, TLS, mTLS layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of ssl, tls, mtls as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "tcp-udp",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "SSL, TLS, mTLS",
+    "diagramFile": "tcp-udp.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls.",
+  "relatedConcepts": [
+    "single-sign-on-sso",
+    "system-design-interviews"
+  ],
+  "prerequisites": [
+    "single-sign-on-sso"
+  ],
+  "nextLessonId": "system-design-interviews",
+  "interactiveQuestion": {
+    "id": "q-ssl-tls-mtls",
+    "question": "In production system design, what is the primary benefit of SSL, TLS, mTLS?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-ssl-tls-mtls",
+    "title": "Production Troubleshooting: SSL, TLS, mTLS",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to ssl, tls, mtls. Solving the scalability and reliability bottlenecks inherent to ssl, tls, mtls.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SSL, TLS, mTLS best practices: Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

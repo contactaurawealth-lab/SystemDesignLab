@@ -1,0 +1,58 @@
+{
+  "id": "sql-databases",
+  "title": "SQL databases",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 15,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to sql databases.",
+  "simpleExplanation": "A SQL (or relational) database is a collection of data items with pre-defined relationships between them. These items are organized as a set of tables with columns and rows. Tables are used to hold information about the objects to be represented in the database. Each column in a table holds a certain kind of data and a field stores the actual value of an attribute. The rows in the table represent a collection of related values of one object or entity.\n\nEach row in a table could be marked with a unique identifier called a primary key, and rows among multiple tables can be made related using foreign keys. This data can be accessed in many different ways without re-organizing the database tables themselves. SQL databases usually follow the [ACID consistency model](https://karanpratapsingh.com/courses/system-design/acid-and-base-consistency-models#acid).",
+  "technicalExplanation": "Materialized views\n\nA materialized view is a pre-computed data set derived from a query specification and stored for later use. Because the data is pre-computed, querying a materialized view is faster than executing a query against the base table of the view. This performance difference can be significant when a query is run frequently or is sufficiently complex.\n\nIt also enables data subsetting and improves the performance of complex queries that run on large data sets which reduces network loads. There are other uses of materialized views, but they are mostly used for performance and replication.\n\n\n## N+1 query problem\n\nThe N+1 query problem happens when the data access layer executes N additional SQL statements to fetch the same data that could have been retrieved when executing the primary SQL query. The larger the value of N, the more queries will be executed, the larger the performance impact.\n\nThis is commonly seen in GraphQL and ORM (Object-Relational Mapping) tools and can be addressed by optimizing the SQL query or using a dataloader that batches consecutive requests and makes a single data request under the hood.\n\n\n## Advantages\n\nLet's look at some advantages of using relational databases:\n\n- Simple and accurate\n- Accessibility\n- Data consistency\n- Flexibility\n\n\n## Disadvantages\n\nBelow are the disadvantages of relational databases:\n\n- Expensive to maintain\n- Difficult schema evolution\n- Performance hits (join, denormalization, etc.)\n- Difficult to scale due to poor horizontal scalability\n\n\n## Examples\n\nHere are some commonly used relational databases:\n\n- [PostgreSQL](https://www.postgresql.org)\n- [MySQL](https://www.mysql.com)\n- [MariaDB](https://mariadb.org)\n- [Amazon Aurora](https://aws.amazon.com/rds/aurora)",
+  "visualExplanation": "Requests flow through the SQL databases layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of sql databases as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "sql-databases",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "SQL databases",
+    "diagramFile": null
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of sql databases.",
+  "relatedConcepts": [
+    "databases-and-dbms",
+    "nosql-databases"
+  ],
+  "prerequisites": [
+    "databases-and-dbms"
+  ],
+  "nextLessonId": "nosql-databases",
+  "interactiveQuestion": {
+    "id": "q-sql-databases",
+    "question": "In production system design, what is the primary benefit of SQL databases?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of sql databases.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of sql databases. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-sql-databases",
+    "title": "Production Troubleshooting: SQL databases",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to sql databases. Solving the scalability and reliability bottlenecks inherent to sql databases.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply SQL databases best practices: Understand the architectural trade-offs, access patterns, and failure modes of sql databases., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of sql databases.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

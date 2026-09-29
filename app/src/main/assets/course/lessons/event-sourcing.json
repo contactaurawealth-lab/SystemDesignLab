@@ -1,0 +1,58 @@
+{
+  "id": "event-sourcing",
+  "title": "Event Sourcing",
+  "moduleId": "mod-distributed",
+  "moduleName": "Distributed Systems & Messaging",
+  "order": 36,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 6,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to event sourcing.",
+  "simpleExplanation": "Instead of storing just the current state of the data in a domain, use an append-only store to record the full series of actions taken on that data. The store acts as the system of record and can be used to materialize the domain objects.\n\n![event-sourcing](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/event-sourcing/event-sourcing.png)\n\nThis can simplify tasks in complex domains, by avoiding the need to synchronize the data model and the business domain, while improving performance, scalability, and responsiveness. It can also provide consistency for transactional data, and maintain full audit trails and history that can enable compensating actions.",
+  "technicalExplanation": "Event sourcing vs Event-Driven Architecture (EDA)\n\nEvent sourcing is seemingly constantly being confused with [Event-driven Architecture (EDA)](https://karanpratapsingh.com/courses/system-design/event-driven-architecture). Event-driven architecture is about using events to communicate between service boundaries. Generally, leveraging a message broker to publish and consume events asynchronously within other boundaries.\n\nWhereas, event sourcing is about using events as a state, which is a different approach to storing data. Rather than storing the current state, we're instead going to be storing events. Also, event sourcing is one of the several patterns to implement an event-driven architecture.\n\n\n## Advantages\n\nLet's discuss some advantages of using event sourcing:\n\n- Excellent for real-time data reporting.\n- Great for fail-safety, data can be reconstituted from the event store.\n- Extremely flexible, any type of message can be stored.\n- Preferred way of achieving audit logs functionality for high compliance systems.\n\n\n## Disadvantages\n\nFollowing are the disadvantages of event sourcing:\n\n- Requires an extremely efficient network infrastructure.\n- Requires a reliable way to control message formats, such as a schema registry.\n- Different events will contain different payloads.",
+  "visualExplanation": "Requests flow through the Event Sourcing layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of event sourcing as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "event-sourcing",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Event Sourcing",
+    "diagramFile": "event-sourcing.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of event sourcing.",
+  "relatedConcepts": [
+    "event-driven-architecture-eda",
+    "command-and-query-responsibility-segregation-cqrs"
+  ],
+  "prerequisites": [
+    "event-driven-architecture-eda"
+  ],
+  "nextLessonId": "command-and-query-responsibility-segregation-cqrs",
+  "interactiveQuestion": {
+    "id": "q-event-sourcing",
+    "question": "In production system design, what is the primary benefit of Event Sourcing?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of event sourcing.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of event sourcing. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-event-sourcing",
+    "title": "Production Troubleshooting: Event Sourcing",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to event sourcing. Solving the scalability and reliability bottlenecks inherent to event sourcing.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Event Sourcing best practices: Understand the architectural trade-offs, access patterns, and failure modes of event sourcing., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of event sourcing.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

@@ -1,0 +1,506 @@
+[
+  {
+    "id": "what-is-system-design",
+    "name": "What is system design?",
+    "moduleId": "mod-foundations",
+    "summary": "Before we start this course, let's talk about what even is system design.\n\nSystem design is the process of defining the architecture, interfaces, and data\nfor a system that satisfies specific requirem...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of what is system design?.",
+    "difficulty": "Beginner",
+    "diagramId": "what-is-system-design"
+  },
+  {
+    "id": "ip",
+    "name": "IP",
+    "moduleId": "mod-foundations",
+    "summary": "An IP address is a unique address that identifies a device on the internet or a local network. IP stands for _\"Internet Protocol\"_, which is the set of rules governing the format of data sent via the ...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of ip.",
+    "difficulty": "Beginner",
+    "diagramId": "osi"
+  },
+  {
+    "id": "osi-model",
+    "name": "OSI Model",
+    "moduleId": "mod-foundations",
+    "summary": "The OSI Model is a logical and conceptual model that defines network communication used by systems open to interconnection and communication with other systems. The Open System Interconnection (OSI Mo...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of osi model.",
+    "difficulty": "Beginner",
+    "diagramId": "osi"
+  },
+  {
+    "id": "tcp-and-udp",
+    "name": "TCP and UDP",
+    "moduleId": "mod-foundations",
+    "summary": "## TCP\n\nTransmission Control Protocol (TCP) is connection-oriented, meaning once a connection has been established, data can be transmitted in both directions. TCP has built-in systems to check for er...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of tcp and udp.",
+    "difficulty": "Beginner",
+    "diagramId": "tcp-udp"
+  },
+  {
+    "id": "domain-name-system-dns",
+    "name": "Domain Name System (DNS)",
+    "moduleId": "mod-foundations",
+    "summary": "Earlier we learned about IP addresses that enable every machine to connect with other machines. But as we know humans are more comfortable with names than numbers. It's easier to remember a name like ...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of domain name system (dns).",
+    "difficulty": "Beginner",
+    "diagramId": "domain-name-system"
+  },
+  {
+    "id": "load-balancing",
+    "name": "Load Balancing",
+    "moduleId": "mod-networking",
+    "summary": "Load balancing lets us distribute incoming network traffic across multiple resources ensuring high availability and reliability by sending requests only to resources that are online. This provides the...",
+    "keyTakeaway": "Distributing traffic across multiple server instances avoids single points of failure and prevents server overload.",
+    "difficulty": "Beginner",
+    "diagramId": "load-balancing"
+  },
+  {
+    "id": "clustering",
+    "name": "Clustering",
+    "moduleId": "mod-networking",
+    "summary": "At a high level, a computer cluster is a group of two or more computers, or nodes, that run in parallel to achieve a common goal. This allows workloads consisting of a high number of individual, paral...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of clustering.",
+    "difficulty": "Intermediate",
+    "diagramId": "clustering"
+  },
+  {
+    "id": "caching",
+    "name": "Caching",
+    "moduleId": "mod-networking",
+    "summary": "_\"There are only two hard things in Computer Science: cache invalidation and naming things.\" - Phil Karlton_\n\n![caching](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/stat...",
+    "keyTakeaway": "Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU).",
+    "difficulty": "Intermediate",
+    "diagramId": "caching"
+  },
+  {
+    "id": "content-delivery-network-cdn",
+    "name": "Content Delivery Network (CDN)",
+    "moduleId": "mod-networking",
+    "summary": "A content delivery network (CDN) is a geographically distributed group of servers that work together to provide fast delivery of internet content. Generally, static files such as HTML/CSS/JS, photos, ...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of content delivery network (cdn).",
+    "difficulty": "Intermediate",
+    "diagramId": "cdn"
+  },
+  {
+    "id": "proxy",
+    "name": "Proxy",
+    "moduleId": "mod-networking",
+    "summary": "A proxy server is an intermediary piece of hardware/software sitting between the client and the backend server. It receives requests from clients and relays them to the origin servers. Typically, prox...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of proxy.",
+    "difficulty": "Intermediate",
+    "diagramId": "proxy"
+  },
+  {
+    "id": "availability",
+    "name": "Availability",
+    "moduleId": "mod-networking",
+    "summary": "Availability is the time a system remains operational to perform its required function in a specific period. It is a simple measure of the percentage of time that a system, service, or machine remains...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of availability.",
+    "difficulty": "Intermediate",
+    "diagramId": "availability"
+  },
+  {
+    "id": "scalability",
+    "name": "Scalability",
+    "moduleId": "mod-networking",
+    "summary": "Scalability is the measure of how well a system responds to changes by adding or removing resources to meet demands.\n\n![scalability](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of scalability.",
+    "difficulty": "Intermediate",
+    "diagramId": "scaling"
+  },
+  {
+    "id": "storage",
+    "name": "Storage",
+    "moduleId": "mod-networking",
+    "summary": "Storage is a mechanism that enables a system to retain data, either temporarily or permanently. This topic is mostly skipped over in the context of system design, however, it is important to have a ba...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of storage.",
+    "difficulty": "Intermediate",
+    "diagramId": "storage"
+  },
+  {
+    "id": "databases-and-dbms",
+    "name": "Databases and DBMS",
+    "moduleId": "mod-databases",
+    "summary": "## What is a Database?\n\nA database is an organized collection of structured information, or data, typically stored electronically in a computer system. A database is usually controlled by a Database M...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of databases and dbms.",
+    "difficulty": "Intermediate",
+    "diagramId": "databases-and-dbms"
+  },
+  {
+    "id": "sql-databases",
+    "name": "SQL databases",
+    "moduleId": "mod-databases",
+    "summary": "A SQL (or relational) database is a collection of data items with pre-defined relationships between them. These items are organized as a set of tables with columns and rows. Tables are used to hold in...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of sql databases.",
+    "difficulty": "Intermediate",
+    "diagramId": "sql-databases"
+  },
+  {
+    "id": "nosql-databases",
+    "name": "NoSQL databases",
+    "moduleId": "mod-databases",
+    "summary": "NoSQL is a broad category that includes any database that doesn't use SQL as its primary data access language. These types of databases are also sometimes referred to as non-relational databases. Unli...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of nosql databases.",
+    "difficulty": "Intermediate",
+    "diagramId": "nosql-databases"
+  },
+  {
+    "id": "sql-vs-nosql-databases",
+    "name": "SQL vs NoSQL databases",
+    "moduleId": "mod-databases",
+    "summary": "In the world of databases, there are two main types of solutions, SQL (relational) and NoSQL (non-relational) databases. Both of them differ in the way they were built, the kind of information they st...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of sql vs nosql databases.",
+    "difficulty": "Intermediate",
+    "diagramId": "db-dbms"
+  },
+  {
+    "id": "database-replication",
+    "name": "Database Replication",
+    "moduleId": "mod-databases",
+    "summary": "Replication is a process that involves sharing information to ensure consistency between redundant resources such as multiple databases, to improve reliability, fault-tolerance, or accessibility.",
+    "keyTakeaway": "Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover.",
+    "difficulty": "Intermediate",
+    "diagramId": "database-replication"
+  },
+  {
+    "id": "indexes",
+    "name": "Indexes",
+    "moduleId": "mod-databases",
+    "summary": "Indexes are well known when it comes to databases, they are used to improve the speed of data retrieval operations on the data store. An index makes the trade-offs of increased storage overhead, and s...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of indexes.",
+    "difficulty": "Intermediate",
+    "diagramId": "indexes"
+  },
+  {
+    "id": "normalization-and-denormalization",
+    "name": "Normalization and Denormalization",
+    "moduleId": "mod-databases",
+    "summary": "## Terms\n\nBefore we go any further, let's look at some commonly used terms in normalization and denormalization.\n\n### Keys\n\n**Primary key**: Column or group of columns that can be used to uniquely ide...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of normalization and denormalization.",
+    "difficulty": "Intermediate",
+    "diagramId": "normalization-and-denormalization"
+  },
+  {
+    "id": "acid-and-base-consistency-models",
+    "name": "ACID and BASE consistency models",
+    "moduleId": "mod-databases",
+    "summary": "Let's discuss the ACID and BASE consistency models.",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of acid and base consistency models.",
+    "difficulty": "Intermediate",
+    "diagramId": "transactions"
+  },
+  {
+    "id": "cap-theorem",
+    "name": "CAP Theorem",
+    "moduleId": "mod-databases",
+    "summary": "CAP theorem states that a distributed system can deliver only two of the three desired characteristics Consistency, Availability, and Partition tolerance (CAP).\n\n![cap-theorem](https://raw.githubuserc...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of cap theorem.",
+    "difficulty": "Intermediate",
+    "diagramId": "cap"
+  },
+  {
+    "id": "pacelc-theorem",
+    "name": "PACELC Theorem",
+    "moduleId": "mod-databases",
+    "summary": "The PACELC theorem is an extension of the CAP theorem. The CAP theorem states that in the case of network partitioning (P) in a distributed system, one has to choose between Availability (A) and Consi...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of pacelc theorem.",
+    "difficulty": "Intermediate",
+    "diagramId": "pacelc"
+  },
+  {
+    "id": "transactions",
+    "name": "Transactions",
+    "moduleId": "mod-databases",
+    "summary": "A transaction is a series of database operations that are considered to be a _\"single unit of work\"_. The operations in a transaction either all succeed, or they all fail. In this way, the notion of a...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of transactions.",
+    "difficulty": "Intermediate",
+    "diagramId": "transactions"
+  },
+  {
+    "id": "distributed-transactions",
+    "name": "Distributed Transactions",
+    "moduleId": "mod-databases",
+    "summary": "A distributed transaction is a set of operations on data that is performed across two or more databases. It is typically coordinated across separate nodes connected by a network, but may also span mul...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of distributed transactions.",
+    "difficulty": "Intermediate",
+    "diagramId": "distributed-transactions"
+  },
+  {
+    "id": "sharding",
+    "name": "Sharding",
+    "moduleId": "mod-databases",
+    "summary": "Before we discuss sharding, let's talk about data partitioning:",
+    "keyTakeaway": "Partition database tables horizontally across distinct physical nodes based on a partition key.",
+    "difficulty": "Intermediate",
+    "diagramId": "sharding"
+  },
+  {
+    "id": "consistent-hashing",
+    "name": "Consistent Hashing",
+    "moduleId": "mod-databases",
+    "summary": "Let's first understand the problem we're trying to solve.",
+    "keyTakeaway": "Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1.",
+    "difficulty": "Intermediate",
+    "diagramId": "consistent-hashing"
+  },
+  {
+    "id": "database-federation",
+    "name": "Database Federation",
+    "moduleId": "mod-databases",
+    "summary": "Federation (or functional partitioning) splits up databases by function. The federation architecture makes several distinct physical databases appear as one logical database to end-users.\n\nAll of the ...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of database federation.",
+    "difficulty": "Intermediate",
+    "diagramId": "federated-database"
+  },
+  {
+    "id": "n-tier-architecture",
+    "name": "N-tier architecture",
+    "moduleId": "mod-distributed",
+    "summary": "N-tier architecture divides an application into logical layers and physical tiers. Layers are a way to separate responsibilities and manage dependencies. Each layer has a specific responsibility. A hi...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of n-tier architecture.",
+    "difficulty": "Intermediate",
+    "diagramId": "n-tier-architecture"
+  },
+  {
+    "id": "message-brokers",
+    "name": "Message Brokers",
+    "moduleId": "mod-distributed",
+    "summary": "A message broker is a software that enables applications, systems, and services to communicate with each other and exchange information. The message broker does this by translating messages between fo...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of message brokers.",
+    "difficulty": "Intermediate",
+    "diagramId": "message-brokers"
+  },
+  {
+    "id": "message-queues",
+    "name": "Message Queues",
+    "moduleId": "mod-distributed",
+    "summary": "A message queue is a form of service-to-service communication that facilitates asynchronous communication. It asynchronously receives messages from producers and sends them to consumers.\n\nQueues are u...",
+    "keyTakeaway": "Decouple producers from consumers to buffer traffic surges and protect downstream services with backpressure.",
+    "difficulty": "Advanced",
+    "diagramId": "message-queues"
+  },
+  {
+    "id": "publish-subscribe",
+    "name": "Publish-Subscribe",
+    "moduleId": "mod-distributed",
+    "summary": "Similar to a message queue, publish-subscribe is also a form of service-to-service communication that facilitates asynchronous communication. In a pub/sub model, any message published to a topic is pu...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of publish-subscribe.",
+    "difficulty": "Advanced",
+    "diagramId": "pubsub"
+  },
+  {
+    "id": "enterprise-service-bus-esb",
+    "name": "Enterprise Service Bus (ESB)",
+    "moduleId": "mod-distributed",
+    "summary": "An Enterprise Service Bus (ESB) is an architectural pattern whereby a centralized software component performs integrations between applications. It performs transformations of data models, handles con...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of enterprise service bus (esb).",
+    "difficulty": "Advanced",
+    "diagramId": "enterprise-service-bus"
+  },
+  {
+    "id": "monoliths-and-microservices",
+    "name": "Monoliths and Microservices",
+    "moduleId": "mod-distributed",
+    "summary": "## Monoliths\n\nA monolith is a self-contained and independent application. It is built as a single unit and is responsible for not just a particular task, but can perform every step needed to satisfy a...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of monoliths and microservices.",
+    "difficulty": "Advanced",
+    "diagramId": "monoliths-microservices"
+  },
+  {
+    "id": "event-driven-architecture-eda",
+    "name": "Event-Driven Architecture (EDA)",
+    "moduleId": "mod-distributed",
+    "summary": "Event-Driven Architecture (EDA) is about using events as a way to communicate within a system. Generally, leveraging a message broker to publish and consume events asynchronously. The publisher is una...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda).",
+    "difficulty": "Advanced",
+    "diagramId": "event-driven-architecture"
+  },
+  {
+    "id": "event-sourcing",
+    "name": "Event Sourcing",
+    "moduleId": "mod-distributed",
+    "summary": "Instead of storing just the current state of the data in a domain, use an append-only store to record the full series of actions taken on that data. The store acts as the system of record and can be u...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of event sourcing.",
+    "difficulty": "Advanced",
+    "diagramId": "event-sourcing"
+  },
+  {
+    "id": "command-and-query-responsibility-segregation-cqrs",
+    "name": "Command and Query Responsibility Segregation (CQRS)",
+    "moduleId": "mod-distributed",
+    "summary": "Command Query Responsibility Segregation (CQRS) is an architectural pattern that divides a system's actions into commands and queries. It was first described by [Greg Young](https://twitter.com/gregyo...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of command and query responsibility segregation (cqrs).",
+    "difficulty": "Advanced",
+    "diagramId": "cqrs"
+  },
+  {
+    "id": "api-gateway",
+    "name": "API Gateway",
+    "moduleId": "mod-distributed",
+    "summary": "The API Gateway is an API management tool that sits between a client and a collection of backend services. It is a single entry point into a system that encapsulates the internal system architecture a...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of api gateway.",
+    "difficulty": "Advanced",
+    "diagramId": "api-gateway"
+  },
+  {
+    "id": "rest-graphql-grpc",
+    "name": "REST, GraphQL, gRPC",
+    "moduleId": "mod-distributed",
+    "summary": "A good API design is always a crucial part of any system. But it is also important to pick the right API technology. So, in this tutorial, we will briefly discuss different API technologies such as RE...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of rest, graphql, grpc.",
+    "difficulty": "Advanced",
+    "diagramId": "rest-graphql-grpc"
+  },
+  {
+    "id": "long-polling-websockets-server-sent-events-sse",
+    "name": "Long polling, WebSockets, Server-Sent Events (SSE)",
+    "moduleId": "mod-distributed",
+    "summary": "Web applications were initially developed around a client-server model, where the web client is always the initiator of transactions like requesting data from the server. Thus, there was no mechanism ...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse).",
+    "difficulty": "Advanced",
+    "diagramId": "lp-ws-sse"
+  },
+  {
+    "id": "geohashing-and-quadtrees",
+    "name": "Geohashing and Quadtrees",
+    "moduleId": "mod-advanced",
+    "summary": "## Geohashing\n\nGeohashing is a [geocoding](https://en.wikipedia.org/wiki/Address_geocoding) method used to encode geographic coordinates such as latitude and longitude into short alphanumeric strings....",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of geohashing and quadtrees.",
+    "difficulty": "Advanced",
+    "diagramId": "geohashing-quadtrees"
+  },
+  {
+    "id": "circuit-breaker",
+    "name": "Circuit breaker",
+    "moduleId": "mod-advanced",
+    "summary": "The circuit breaker is a design pattern used to detect failures and encapsulates the logic of preventing a failure from constantly recurring during maintenance, temporary external system failure, or u...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker.",
+    "difficulty": "Advanced",
+    "diagramId": "circuit-breaker"
+  },
+  {
+    "id": "rate-limiting",
+    "name": "Rate Limiting",
+    "moduleId": "mod-advanced",
+    "summary": "Rate limiting refers to preventing the frequency of an operation from exceeding a defined limit. In large-scale systems, rate limiting is commonly used to protect underlying services and resources. Ra...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of rate limiting.",
+    "difficulty": "Advanced",
+    "diagramId": "rate-limiting"
+  },
+  {
+    "id": "service-discovery",
+    "name": "Service Discovery",
+    "moduleId": "mod-advanced",
+    "summary": "Service discovery is the detection of services within a computer network. Service Discovery Protocol (SDP) is a networking standard that accomplishes the detection of networks by identifying resources...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of service discovery.",
+    "difficulty": "Advanced",
+    "diagramId": "service-discovery"
+  },
+  {
+    "id": "sla-slo-sli",
+    "name": "SLA, SLO, SLI",
+    "moduleId": "mod-advanced",
+    "summary": "Let's briefly discuss SLA, SLO, and SLI. These are mostly related to the business and site reliability side of things but good to know nonetheless.",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of sla, slo, sli.",
+    "difficulty": "Advanced",
+    "diagramId": "sla-slo-sli"
+  },
+  {
+    "id": "disaster-recovery",
+    "name": "Disaster recovery",
+    "moduleId": "mod-advanced",
+    "summary": "Disaster recovery (DR) is a process of regaining access and functionality of the infrastructure after events like a natural disaster, cyber attack, or even business disruptions.\n\nDisaster recovery rel...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of disaster recovery.",
+    "difficulty": "Advanced",
+    "diagramId": "disaster-recovery"
+  },
+  {
+    "id": "virtual-machines-vms-and-containers",
+    "name": "Virtual Machines (VMs) and Containers",
+    "moduleId": "mod-advanced",
+    "summary": "Before we discuss virtualization vs containerization, let's learn what are virtual machines (VMs) and Containers.",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers.",
+    "difficulty": "Advanced",
+    "diagramId": "virtualization-containerization"
+  },
+  {
+    "id": "oauth-20-and-openid-connect-oidc",
+    "name": "OAuth 2.0 and OpenID Connect (OIDC)",
+    "moduleId": "mod-advanced",
+    "summary": "## OAuth 2.0\n\nOAuth 2.0, which stands for Open Authorization, is a standard designed to provide consented access to resources on behalf of the user, without ever sharing the user's credentials. OAuth ...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of oauth 2.0 and openid connect (oidc).",
+    "difficulty": "Advanced",
+    "diagramId": "oauth-openid-connect"
+  },
+  {
+    "id": "single-sign-on-sso",
+    "name": "Single Sign-On (SSO)",
+    "moduleId": "mod-advanced",
+    "summary": "Single Sign-On (SSO) is an authentication process in which a user is provided access to multiple applications or websites by using only a single set of login credentials. This prevents the need for th...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of single sign-on (sso).",
+    "difficulty": "Advanced",
+    "diagramId": "sso"
+  },
+  {
+    "id": "ssl-tls-mtls",
+    "name": "SSL, TLS, mTLS",
+    "moduleId": "mod-advanced",
+    "summary": "Let's briefly discuss some important communication security protocols such as SSL, TLS, and mTLS. I would say that from a _\"big picture\"_ system design perspective, this topic is not very important bu...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of ssl, tls, mtls.",
+    "difficulty": "Advanced",
+    "diagramId": "tcp-udp"
+  },
+  {
+    "id": "system-design-interviews",
+    "name": "System Design Interviews",
+    "moduleId": "mod-case-studies",
+    "summary": "System design is a very extensive topic and system design interviews are designed to evaluate your capability to produce technical solutions to abstract problems, as such, they're not designed for a s...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of system design interviews.",
+    "difficulty": "Advanced",
+    "diagramId": "system-design-interviews"
+  },
+  {
+    "id": "url-shortener",
+    "name": "URL Shortener",
+    "moduleId": "mod-case-studies",
+    "summary": "Let's design a URL shortener, similar to services like [Bitly](https://bitly.com), [TinyURL](https://tinyurl.com/app).",
+    "keyTakeaway": "Use Base62 encoding on unique 64-bit IDs generated by a Key Generation Service (KGS) or snowflake algorithm, backed by distributed cache.",
+    "difficulty": "Advanced",
+    "diagramId": "url-shortener"
+  },
+  {
+    "id": "whatsapp",
+    "name": "WhatsApp",
+    "moduleId": "mod-case-studies",
+    "summary": "Let's design a [WhatsApp](https://whatsapp.com) like instant messaging service, similar to services like [Facebook Messenger](https://www.messenger.com), and [WeChat](https://www.wechat.com).",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of whatsapp.",
+    "difficulty": "Advanced",
+    "diagramId": "whatsapp"
+  },
+  {
+    "id": "twitter",
+    "name": "Twitter",
+    "moduleId": "mod-case-studies",
+    "summary": "Let's design a [Twitter](https://twitter.com) like social media service, similar to services like [Facebook](https://facebook.com), [Instagram](https://instagram.com), etc.",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of twitter.",
+    "difficulty": "Advanced",
+    "diagramId": "twitter"
+  },
+  {
+    "id": "netflix",
+    "name": "Netflix",
+    "moduleId": "mod-case-studies",
+    "summary": "Let's design a [Netflix](https://netflix.com) like video streaming service, similar to services like [Amazon Prime Video](https://www.primevideo.com), [Disney Plus](https://www.disneyplus.com), [Hulu]...",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of netflix.",
+    "difficulty": "Advanced",
+    "diagramId": "netflix"
+  },
+  {
+    "id": "uber",
+    "name": "Uber",
+    "moduleId": "mod-case-studies",
+    "summary": "Let's design an [Uber](https://uber.com) like ride-hailing service, similar to services like [Lyft](https://www.lyft.com), [OLA Cabs](https://www.olacabs.com), etc.",
+    "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of uber.",
+    "difficulty": "Advanced",
+    "diagramId": "uber"
+  }
+]

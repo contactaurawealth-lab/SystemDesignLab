@@ -1,0 +1,58 @@
+[
+  {
+    "id": "ach-first-lesson",
+    "title": "First Lesson",
+    "description": "Complete your first interactive system design lesson.",
+    "xpReward": 25,
+    "icon": "school"
+  },
+  {
+    "id": "ach-first-sim",
+    "title": "First Simulation",
+    "description": "Run and manipulate your first 3D architecture simulation.",
+    "xpReward": 50,
+    "icon": "view_in_ar"
+  },
+  {
+    "id": "ach-first-architecture",
+    "title": "First Architecture",
+    "description": "Successfully build a working system in Build Mode.",
+    "xpReward": 75,
+    "icon": "account_tree"
+  },
+  {
+    "id": "ach-7-day-streak",
+    "title": "7-Day Streak",
+    "description": "Study system design for 7 consecutive days.",
+    "xpReward": 100,
+    "icon": "local_fire_department"
+  },
+  {
+    "id": "ach-bug-hunter",
+    "title": "Bug Hunter",
+    "description": "Identify the bottleneck and fix 5 architectural exercise problems.",
+    "xpReward": 60,
+    "icon": "bug_report"
+  },
+  {
+    "id": "ach-scaling-thinker",
+    "title": "Scaling Thinker",
+    "description": "Scale a simulated system past 50,000 requests per second.",
+    "xpReward": 80,
+    "icon": "trending_up"
+  },
+  {
+    "id": "ach-architecture-builder",
+    "title": "Architecture Builder",
+    "description": "Assemble a resilient 4-tier microservice architecture.",
+    "xpReward": 120,
+    "icon": "domain"
+  },
+  {
+    "id": "ach-interview-ready",
+    "title": "Interview Ready",
+    "description": "Complete all step-by-step System Design Interview scenarios.",
+    "xpReward": 200,
+    "icon": "verified"
+  }
+]

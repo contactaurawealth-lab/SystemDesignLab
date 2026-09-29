@@ -1,0 +1,58 @@
+{
+  "id": "virtual-machines-vms-and-containers",
+  "title": "Virtual Machines (VMs) and Containers",
+  "moduleId": "mod-advanced",
+  "moduleName": "Advanced Concepts & Reliability",
+  "order": 47,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 8,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to virtual machines (vms) and containers.",
+  "simpleExplanation": "Before we discuss virtualization vs containerization, let's learn what are virtual machines (VMs) and Containers.",
+  "technicalExplanation": "Virtual Machines (VM)\n\nA Virtual Machine (VM) is a virtual environment that functions as a virtual computer system with its own CPU, memory, network interface, and storage, created on a physical hardware system. A software called a hypervisor separates the machine's resources from the hardware and provisions them appropriately so they can be used by the VM.\n\nVMs are isolated from the rest of the system, and multiple VMs can exist on a single piece of hardware, like a server. They can be moved between host servers depending on the demand or to use resources more efficiently.\n\n### What is a Hypervisor?\n\nA Hypervisor sometimes called a Virtual Machine Monitor (VMM), isolates the operating system and resources from the virtual machines and enables the creation and management of those VMs. The hypervisor treats resources like CPU, memory, and storage as a pool of resources that can be easily reallocated between existing guests or new virtual machines.\n\n### Why use a Virtual Machine?\n\nServer consolidation is a top reason to use VMs. Most operating system and application deployments only use a small amount of the physical resources available. By virtualizing our servers, we can place many virtual servers onto each physical server to improve hardware utilization. This keeps us from needing to purchase additional physical resources.\n\nA VM provides an environment that is isolated from the rest of a system, so whatever is running inside a VM won't interfere with anything else running on the host hardware. Because VMs are isolated, they are a good option for testing new applications or setting up a production environment. We can also run a single-purpose VM to support a specific use case.\n\n\n## Containers\n\nA container is a standard unit of software that packages up code and all its dependencies such as specific versions of runtimes and libraries so that the application runs quickly and reliably from one computing environment to another. Containers offer a logical packaging mechanism in which applications can be abstracted from the environment in which they actually run. This decoupling allows container-based applications to be deployed easily and consistently, regardless of the target environment.\n\n### Why do we need containers?\n\nLet's discuss some advantages of using containers:\n\n**Separation of responsibility**\n\nContainerization provides a clear separation of responsibility, as developers focus on application logic and dependencies, while operations teams can focus on deployment and management.\n\n**Workload portability**\n\nContainers can run virtually anywhere, greatly easing development and deployment.\n\n**Application isolation**\n\nContainers virtualize CPU, memory, storage, and network resources at the operating system level, providing developers with a view of the OS logically isolated from other applications.\n\n**Agile development**\n\nContainers allow developers to move much more quickly by avoiding concerns about dependencies and environments.\n\n**Efficient operations**\n\nContainers are lightweight and allow us to use just the computing resources we need.\n\n\n## Virtualization vs Containerization\n\n![virtualization-vs-containerization](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/virtual-machines-and-containers/virtualization-vs-containerization.png)\n\nIn traditional virtualization, a hypervisor virtualizes physical hardware. The result is that each virtual machine contains a guest OS, a virtual copy of the hardware that the OS requires to run, and an application and its associated libraries and dependencies.\n\nInstead of virtualizing the underlying hardware, containers virtualize the operating system so each container contains only the application and its dependencies making them much more lightweight than VMs. Containers also share the OS kernel and use a fraction of the memory VMs require.",
+  "visualExplanation": "Requests flow through the Virtual Machines (VMs) and Containers layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of virtual machines (vms) and containers as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "virtualization-containerization",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Virtual Machines (VMs) and Containers",
+    "diagramFile": "virtualization-containerization.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers.",
+  "relatedConcepts": [
+    "disaster-recovery",
+    "oauth-20-and-openid-connect-oidc"
+  ],
+  "prerequisites": [
+    "disaster-recovery"
+  ],
+  "nextLessonId": "oauth-20-and-openid-connect-oidc",
+  "interactiveQuestion": {
+    "id": "q-virtual-machines-vms-and-containers",
+    "question": "In production system design, what is the primary benefit of Virtual Machines (VMs) and Containers?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-virtual-machines-vms-and-containers",
+    "title": "Production Troubleshooting: Virtual Machines (VMs) and Containers",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to virtual machines (vms) and containers. Solving the scalability and reliability bottlenecks inherent to virtual machines (vms) and containers.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Virtual Machines (VMs) and Containers best practices: Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of virtual machines (vms) and containers.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

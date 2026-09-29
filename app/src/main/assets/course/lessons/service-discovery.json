@@ -1,0 +1,58 @@
+{
+  "id": "service-discovery",
+  "title": "Service Discovery",
+  "moduleId": "mod-advanced",
+  "moduleName": "Advanced Concepts & Reliability",
+  "order": 44,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to service discovery.",
+  "simpleExplanation": "Service discovery is the detection of services within a computer network. Service Discovery Protocol (SDP) is a networking standard that accomplishes the detection of networks by identifying resources.",
+  "technicalExplanation": "Why do we need Service Discovery?\n\nIn a monolithic application, services invoke one another through language-level methods or procedure calls. However, modern microservices-based applications typically run in virtualized or containerized environments where the number of instances of a service and their locations change dynamically. Consequently, we need a mechanism that enables the clients of service to make requests to a dynamically changing set of ephemeral service instances.\n\n\n## Implementations\n\nThere are two main service discovery patterns:\n\n### Client-side discovery\n\n![client-side-service-discovery](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/service-discovery/client-side-service-discovery.png)\n\nIn this approach, the client obtains the location of another service by querying a service registry which is responsible for managing and storing the network locations of all the services.\n\n### Server-side discovery\n\n![server-side-service-discovery](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/service-discovery/server-side-service-discovery.png)\n\nIn this approach, we use an intermediate component such as a load balancer. The client makes a request to the service via a load balancer which then forwards the request to an available service instance.\n\n\n## Service Registry\n\nA service registry is basically a database containing the network locations of service instances to which the clients can reach out. A Service Registry must be highly available and up-to-date.\n\n\n## Service Registration\n\nWe also need a way to obtain service information, often known as service registration. Let's look at two possible service registration approaches:\n\n### Self-Registration\n\nWhen using the self-registration model, a service instance is responsible for registering and de-registering itself in the Service Registry. In addition, if necessary, a service instance sends heartbeat\u00a0requests to keep its registration alive.\n\n### Third-party Registration\n\nThe registry keeps track of changes to running instances by polling the deployment environment or subscribing to events. When it detects a newly available service instance, it records it in its database. The Service Registry also de-registers terminated service instances.\n\n\n## Service mesh\n\nService-to-service communication is essential in a distributed application but routing this communication, both within and across application clusters, becomes increasingly complex as the number of services grows. Service mesh enables managed, observable, and secure communication between individual services. It works with a service discovery protocol to detect services. [Istio](https://istio.io/latest/about/service-mesh) and [envoy](https://www.envoyproxy.io) are some of the most commonly used service mesh technologies.\n\n\n## Examples\n\nHere are some commonly used service discovery infrastructure tools:\n\n- [etcd](https://etcd.io)\n- [Consul](https://www.consul.io)\n- [Apache Thrift](https://thrift.apache.org)\n- [Apache Zookeeper](https://zookeeper.apache.org)",
+  "visualExplanation": "Requests flow through the Service Discovery layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of service discovery as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "service-discovery",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Service Discovery",
+    "diagramFile": "service-discovery.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of service discovery.",
+  "relatedConcepts": [
+    "rate-limiting",
+    "sla-slo-sli"
+  ],
+  "prerequisites": [
+    "rate-limiting"
+  ],
+  "nextLessonId": "sla-slo-sli",
+  "interactiveQuestion": {
+    "id": "q-service-discovery",
+    "question": "In production system design, what is the primary benefit of Service Discovery?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of service discovery.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of service discovery. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-service-discovery",
+    "title": "Production Troubleshooting: Service Discovery",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to service discovery. Solving the scalability and reliability bottlenecks inherent to service discovery.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Service Discovery best practices: Understand the architectural trade-offs, access patterns, and failure modes of service discovery., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of service discovery.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

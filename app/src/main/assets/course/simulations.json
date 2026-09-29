@@ -1,0 +1,94 @@
+[
+  {
+    "id": "sim-load-balancer",
+    "title": "3D Load Balancing Simulation",
+    "category": "Traffic & Networking",
+    "description": "Observe a single server collapse under traffic, introduce an active Load Balancer, scale worker instances, and monitor live latency and CPU distribution.",
+    "initialTraffic": 500,
+    "maxTraffic": 50000,
+    "initialServers": 1,
+    "minServers": 1,
+    "maxServers": 8,
+    "learningPoints": [
+      "Single points of failure cause system outages under spikes.",
+      "Round-robin and Least-Connection distribution balance workload.",
+      "Adding nodes linearly expands concurrent request capacity."
+    ]
+  },
+  {
+    "id": "sim-caching",
+    "title": "3D Cache & Database Simulation",
+    "category": "Storage & Latency",
+    "description": "Simulate client queries traversing memory cache (Redis) vs disk database. Tweak cache size, TTL, and witness cache hits reduce DB load by 95%.",
+    "initialTraffic": 1000,
+    "maxTraffic": 100000,
+    "initialCacheSize": 100,
+    "initialTtl": 60,
+    "learningPoints": [
+      "Cache hits return data in sub-millisecond RAM latency.",
+      "Cache misses force expensive disk queries and risk cache stampedes.",
+      "Eviction policies (LRU) protect cache capacity limits."
+    ]
+  },
+  {
+    "id": "sim-db-replication",
+    "title": "3D Database Replication & Failover",
+    "category": "Reliability & HA",
+    "description": "Animate primary-replica replication logs. Trigger primary hardware failure, handle the split-brain hazard, and promote a replica to primary.",
+    "initialReplicas": 2,
+    "replicationMode": "asynchronous",
+    "learningPoints": [
+      "Replication provides read-scaling and high availability.",
+      "Asynchronous replication introduces replication lag and stale reads.",
+      "Automated failover must prevent split-brain using quorum."
+    ]
+  },
+  {
+    "id": "sim-message-queue",
+    "title": "3D Message Queue & Backpressure",
+    "category": "Distributed Messaging",
+    "description": "Buffer bursty producer traffic in a distributed message queue. Scale worker pools to eliminate queue depth lag and enforce backpressure.",
+    "initialTraffic": 2000,
+    "initialWorkers": 2,
+    "maxWorkers": 12,
+    "learningPoints": [
+      "Queues decouple throughput mismatch between producers and consumers.",
+      "Backpressure protects downstream databases from collapsing.",
+      "Dead-letter queues safely quarantine poison pill payloads."
+    ]
+  },
+  {
+    "id": "sim-sharding",
+    "title": "3D Database Sharding",
+    "category": "Data Partitioning",
+    "description": "Horizontally partition a multi-terabyte dataset across 4 physical database shards. Observe hash distribution and hot shard mitigation.",
+    "shardCount": 4,
+    "partitioningAlgorithm": "consistent-hash",
+    "learningPoints": [
+      "Sharding breaks vertical hardware ceiling for petabyte datasets.",
+      "Good shard keys evenly distribute read and write throughput.",
+      "Cross-shard joins are costly and should be avoided in schema design."
+    ]
+  },
+  {
+    "id": "sim-failure-injection",
+    "title": "3D Chaos & Failure Simulator",
+    "category": "Resilience",
+    "description": "Simulate real-world cloud failures: kill random servers, inject 500ms packet loss, partition a network, and verify circuit breaker fail-safes.",
+    "learningPoints": [
+      "Design for failure: assume any server or network link will die.",
+      "Circuit breakers prevent cascading domino failures across microservices.",
+      "Graceful degradation maintains core user functionality during outages."
+    ]
+  },
+  {
+    "id": "sim-architecture-playground",
+    "title": "Build Mode: Architecture Playground",
+    "category": "Interactive Sandbox",
+    "description": "Drag, connect, and configure Client, Load Balancer, API Gateway, Cache, Database, and Queue. Run real-time traffic to test latency, throughput, and bottlenecks.",
+    "learningPoints": [
+      "Every architectural decision involves latency, cost, and complexity trade-offs.",
+      "Identify bottlenecks before deploying code to production."
+    ]
+  }
+]

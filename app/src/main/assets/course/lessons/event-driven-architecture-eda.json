@@ -1,0 +1,58 @@
+{
+  "id": "event-driven-architecture-eda",
+  "title": "Event-Driven Architecture (EDA)",
+  "moduleId": "mod-distributed",
+  "moduleName": "Distributed Systems & Messaging",
+  "order": 35,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 6,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to event-driven architecture (eda).",
+  "simpleExplanation": "Event-Driven Architecture (EDA) is about using events as a way to communicate within a system. Generally, leveraging a message broker to publish and consume events asynchronously. The publisher is unaware of who is consuming an event and the consumers are unaware of each other. Event-Driven Architecture is simply a way of achieving loose coupling between services within a system.",
+  "technicalExplanation": "What is an event?\n\nAn event is a data point that represents state changes in a system. It doesn't specify what should happen and how the change should modify the system, it only notifies the system of a particular state change. When a user makes an action, they trigger an event.\n\n\n## Components\n\nEvent-driven architectures have three key components:\n\n- **Event producers**: Publishes an event to the router.\n- **Event routers**: Filters and pushes the events to consumers.\n- **Event consumers**: Uses events to reflect changes in the system.\n\n![event-driven-architecture](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/event-driven-architecture/event-driven-architecture.png)\n\n_Note: Dots in the diagram represents different events in the system._\n\n\n## Patterns\n\nThere are several ways to implement the event-driven architecture, and which method we use depends on the use case but here are some common examples:\n\n- [Sagas](https://karanpratapsingh.com/courses/system-design/distributed-transactions#sagas)\n- [Publish-Subscribe](https://karanpratapsingh.com/courses/system-design/publish-subscribe)\n- [Event Sourcing](https://karanpratapsingh.com/courses/system-design/event-sourcing)\n- [Command and Query Responsibility Segregation (CQRS)](https://karanpratapsingh.com/courses/system-design/command-and-query-responsibility-segregation)\n\n_Note: Each of these methods is discussed separately._\n\n\n## Advantages\n\nLet's discuss some advantages:\n\n- Decoupled producers and consumers.\n- Highly scalable and distributed.\n- Easy to add new consumers.\n- Improves agility.\n\n\n## Challenges\n\nHere are some challenges of event-drive architecture:\n\n- Guaranteed delivery.\n- Error handling is difficult.\n- Event-driven systems are complex in general.\n- Exactly once, in-order processing of events.\n\n\n## Use cases\n\nBelow are some common use cases where event-driven architectures are beneficial:\n\n- Metadata and metrics.\n- Server and security logs.\n- Integrating heterogeneous systems.\n- Fanout and parallel processing.\n\n\n## Examples\n\nHere are some widely used technologies for implementing event-driven architectures:\n\n- [NATS](https://nats.io)\n- [Apache Kafka](https://kafka.apache.org)\n- [Amazon EventBridge](https://aws.amazon.com/eventbridge)\n- [Amazon SNS](https://aws.amazon.com/sns)\n- [Google PubSub](https://cloud.google.com/pubsub)",
+  "visualExplanation": "Requests flow through the Event-Driven Architecture (EDA) layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of event-driven architecture (eda) as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "event-driven-architecture",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Event-Driven Architecture (EDA)",
+    "diagramFile": "event-driven-architecture.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda).",
+  "relatedConcepts": [
+    "monoliths-and-microservices",
+    "event-sourcing"
+  ],
+  "prerequisites": [
+    "monoliths-and-microservices"
+  ],
+  "nextLessonId": "event-sourcing",
+  "interactiveQuestion": {
+    "id": "q-event-driven-architecture-eda",
+    "question": "In production system design, what is the primary benefit of Event-Driven Architecture (EDA)?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda).",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda). Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-event-driven-architecture-eda",
+    "title": "Production Troubleshooting: Event-Driven Architecture (EDA)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to event-driven architecture (eda). Solving the scalability and reliability bottlenecks inherent to event-driven architecture (eda).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Event-Driven Architecture (EDA) best practices: Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of event-driven architecture (eda).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

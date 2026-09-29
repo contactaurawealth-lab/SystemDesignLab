@@ -1,0 +1,839 @@
+{
+  "nodes": [
+    {
+      "id": "what-is-system-design",
+      "label": "What is system design?",
+      "moduleId": "mod-foundations",
+      "order": 1,
+      "difficulty": "Beginner",
+      "prerequisites": []
+    },
+    {
+      "id": "ip",
+      "label": "IP",
+      "moduleId": "mod-foundations",
+      "order": 2,
+      "difficulty": "Beginner",
+      "prerequisites": [
+        "what-is-system-design"
+      ]
+    },
+    {
+      "id": "osi-model",
+      "label": "OSI Model",
+      "moduleId": "mod-foundations",
+      "order": 3,
+      "difficulty": "Beginner",
+      "prerequisites": [
+        "ip"
+      ]
+    },
+    {
+      "id": "tcp-and-udp",
+      "label": "TCP and UDP",
+      "moduleId": "mod-foundations",
+      "order": 4,
+      "difficulty": "Beginner",
+      "prerequisites": [
+        "osi-model"
+      ]
+    },
+    {
+      "id": "domain-name-system-dns",
+      "label": "Domain Name System (DNS)",
+      "moduleId": "mod-foundations",
+      "order": 5,
+      "difficulty": "Beginner",
+      "prerequisites": [
+        "tcp-and-udp"
+      ]
+    },
+    {
+      "id": "load-balancing",
+      "label": "Load Balancing",
+      "moduleId": "mod-networking",
+      "order": 6,
+      "difficulty": "Beginner",
+      "prerequisites": [
+        "domain-name-system-dns"
+      ]
+    },
+    {
+      "id": "clustering",
+      "label": "Clustering",
+      "moduleId": "mod-networking",
+      "order": 7,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "load-balancing"
+      ]
+    },
+    {
+      "id": "caching",
+      "label": "Caching",
+      "moduleId": "mod-networking",
+      "order": 8,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "clustering"
+      ]
+    },
+    {
+      "id": "content-delivery-network-cdn",
+      "label": "Content Delivery Network (CDN)",
+      "moduleId": "mod-networking",
+      "order": 9,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "caching"
+      ]
+    },
+    {
+      "id": "proxy",
+      "label": "Proxy",
+      "moduleId": "mod-networking",
+      "order": 10,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "content-delivery-network-cdn"
+      ]
+    },
+    {
+      "id": "availability",
+      "label": "Availability",
+      "moduleId": "mod-networking",
+      "order": 11,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "proxy"
+      ]
+    },
+    {
+      "id": "scalability",
+      "label": "Scalability",
+      "moduleId": "mod-networking",
+      "order": 12,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "availability"
+      ]
+    },
+    {
+      "id": "storage",
+      "label": "Storage",
+      "moduleId": "mod-networking",
+      "order": 13,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "scalability"
+      ]
+    },
+    {
+      "id": "databases-and-dbms",
+      "label": "Databases and DBMS",
+      "moduleId": "mod-databases",
+      "order": 14,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "storage"
+      ]
+    },
+    {
+      "id": "sql-databases",
+      "label": "SQL databases",
+      "moduleId": "mod-databases",
+      "order": 15,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "databases-and-dbms"
+      ]
+    },
+    {
+      "id": "nosql-databases",
+      "label": "NoSQL databases",
+      "moduleId": "mod-databases",
+      "order": 16,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "sql-databases"
+      ]
+    },
+    {
+      "id": "sql-vs-nosql-databases",
+      "label": "SQL vs NoSQL databases",
+      "moduleId": "mod-databases",
+      "order": 17,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "nosql-databases"
+      ]
+    },
+    {
+      "id": "database-replication",
+      "label": "Database Replication",
+      "moduleId": "mod-databases",
+      "order": 18,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "sql-vs-nosql-databases"
+      ]
+    },
+    {
+      "id": "indexes",
+      "label": "Indexes",
+      "moduleId": "mod-databases",
+      "order": 19,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "database-replication"
+      ]
+    },
+    {
+      "id": "normalization-and-denormalization",
+      "label": "Normalization and Denormalization",
+      "moduleId": "mod-databases",
+      "order": 20,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "indexes"
+      ]
+    },
+    {
+      "id": "acid-and-base-consistency-models",
+      "label": "ACID and BASE consistency models",
+      "moduleId": "mod-databases",
+      "order": 21,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "normalization-and-denormalization"
+      ]
+    },
+    {
+      "id": "cap-theorem",
+      "label": "CAP Theorem",
+      "moduleId": "mod-databases",
+      "order": 22,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "acid-and-base-consistency-models"
+      ]
+    },
+    {
+      "id": "pacelc-theorem",
+      "label": "PACELC Theorem",
+      "moduleId": "mod-databases",
+      "order": 23,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "cap-theorem"
+      ]
+    },
+    {
+      "id": "transactions",
+      "label": "Transactions",
+      "moduleId": "mod-databases",
+      "order": 24,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "pacelc-theorem"
+      ]
+    },
+    {
+      "id": "distributed-transactions",
+      "label": "Distributed Transactions",
+      "moduleId": "mod-databases",
+      "order": 25,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "transactions"
+      ]
+    },
+    {
+      "id": "sharding",
+      "label": "Sharding",
+      "moduleId": "mod-databases",
+      "order": 26,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "distributed-transactions"
+      ]
+    },
+    {
+      "id": "consistent-hashing",
+      "label": "Consistent Hashing",
+      "moduleId": "mod-databases",
+      "order": 27,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "sharding"
+      ]
+    },
+    {
+      "id": "database-federation",
+      "label": "Database Federation",
+      "moduleId": "mod-databases",
+      "order": 28,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "consistent-hashing"
+      ]
+    },
+    {
+      "id": "n-tier-architecture",
+      "label": "N-tier architecture",
+      "moduleId": "mod-distributed",
+      "order": 29,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "database-federation"
+      ]
+    },
+    {
+      "id": "message-brokers",
+      "label": "Message Brokers",
+      "moduleId": "mod-distributed",
+      "order": 30,
+      "difficulty": "Intermediate",
+      "prerequisites": [
+        "n-tier-architecture"
+      ]
+    },
+    {
+      "id": "message-queues",
+      "label": "Message Queues",
+      "moduleId": "mod-distributed",
+      "order": 31,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "message-brokers"
+      ]
+    },
+    {
+      "id": "publish-subscribe",
+      "label": "Publish-Subscribe",
+      "moduleId": "mod-distributed",
+      "order": 32,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "message-queues"
+      ]
+    },
+    {
+      "id": "enterprise-service-bus-esb",
+      "label": "Enterprise Service Bus (ESB)",
+      "moduleId": "mod-distributed",
+      "order": 33,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "publish-subscribe"
+      ]
+    },
+    {
+      "id": "monoliths-and-microservices",
+      "label": "Monoliths and Microservices",
+      "moduleId": "mod-distributed",
+      "order": 34,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "enterprise-service-bus-esb"
+      ]
+    },
+    {
+      "id": "event-driven-architecture-eda",
+      "label": "Event-Driven Architecture (EDA)",
+      "moduleId": "mod-distributed",
+      "order": 35,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "monoliths-and-microservices"
+      ]
+    },
+    {
+      "id": "event-sourcing",
+      "label": "Event Sourcing",
+      "moduleId": "mod-distributed",
+      "order": 36,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "event-driven-architecture-eda"
+      ]
+    },
+    {
+      "id": "command-and-query-responsibility-segregation-cqrs",
+      "label": "Command and Query Responsibility Segregation (CQRS)",
+      "moduleId": "mod-distributed",
+      "order": 37,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "event-sourcing"
+      ]
+    },
+    {
+      "id": "api-gateway",
+      "label": "API Gateway",
+      "moduleId": "mod-distributed",
+      "order": 38,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "command-and-query-responsibility-segregation-cqrs"
+      ]
+    },
+    {
+      "id": "rest-graphql-grpc",
+      "label": "REST, GraphQL, gRPC",
+      "moduleId": "mod-distributed",
+      "order": 39,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "api-gateway"
+      ]
+    },
+    {
+      "id": "long-polling-websockets-server-sent-events-sse",
+      "label": "Long polling, WebSockets, Server-Sent Events (SSE)",
+      "moduleId": "mod-distributed",
+      "order": 40,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "rest-graphql-grpc"
+      ]
+    },
+    {
+      "id": "geohashing-and-quadtrees",
+      "label": "Geohashing and Quadtrees",
+      "moduleId": "mod-advanced",
+      "order": 41,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "long-polling-websockets-server-sent-events-sse"
+      ]
+    },
+    {
+      "id": "circuit-breaker",
+      "label": "Circuit breaker",
+      "moduleId": "mod-advanced",
+      "order": 42,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "geohashing-and-quadtrees"
+      ]
+    },
+    {
+      "id": "rate-limiting",
+      "label": "Rate Limiting",
+      "moduleId": "mod-advanced",
+      "order": 43,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "circuit-breaker"
+      ]
+    },
+    {
+      "id": "service-discovery",
+      "label": "Service Discovery",
+      "moduleId": "mod-advanced",
+      "order": 44,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "rate-limiting"
+      ]
+    },
+    {
+      "id": "sla-slo-sli",
+      "label": "SLA, SLO, SLI",
+      "moduleId": "mod-advanced",
+      "order": 45,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "service-discovery"
+      ]
+    },
+    {
+      "id": "disaster-recovery",
+      "label": "Disaster recovery",
+      "moduleId": "mod-advanced",
+      "order": 46,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "sla-slo-sli"
+      ]
+    },
+    {
+      "id": "virtual-machines-vms-and-containers",
+      "label": "Virtual Machines (VMs) and Containers",
+      "moduleId": "mod-advanced",
+      "order": 47,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "disaster-recovery"
+      ]
+    },
+    {
+      "id": "oauth-20-and-openid-connect-oidc",
+      "label": "OAuth 2.0 and OpenID Connect (OIDC)",
+      "moduleId": "mod-advanced",
+      "order": 48,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "virtual-machines-vms-and-containers"
+      ]
+    },
+    {
+      "id": "single-sign-on-sso",
+      "label": "Single Sign-On (SSO)",
+      "moduleId": "mod-advanced",
+      "order": 49,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "oauth-20-and-openid-connect-oidc"
+      ]
+    },
+    {
+      "id": "ssl-tls-mtls",
+      "label": "SSL, TLS, mTLS",
+      "moduleId": "mod-advanced",
+      "order": 50,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "single-sign-on-sso"
+      ]
+    },
+    {
+      "id": "system-design-interviews",
+      "label": "System Design Interviews",
+      "moduleId": "mod-case-studies",
+      "order": 51,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "ssl-tls-mtls"
+      ]
+    },
+    {
+      "id": "url-shortener",
+      "label": "URL Shortener",
+      "moduleId": "mod-case-studies",
+      "order": 52,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "system-design-interviews"
+      ]
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "moduleId": "mod-case-studies",
+      "order": 53,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "url-shortener"
+      ]
+    },
+    {
+      "id": "twitter",
+      "label": "Twitter",
+      "moduleId": "mod-case-studies",
+      "order": 54,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "whatsapp"
+      ]
+    },
+    {
+      "id": "netflix",
+      "label": "Netflix",
+      "moduleId": "mod-case-studies",
+      "order": 55,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "twitter"
+      ]
+    },
+    {
+      "id": "uber",
+      "label": "Uber",
+      "moduleId": "mod-case-studies",
+      "order": 56,
+      "difficulty": "Advanced",
+      "prerequisites": [
+        "netflix"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "what-is-system-design",
+      "to": "ip",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "ip",
+      "to": "osi-model",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "osi-model",
+      "to": "tcp-and-udp",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "tcp-and-udp",
+      "to": "domain-name-system-dns",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "domain-name-system-dns",
+      "to": "load-balancing",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "load-balancing",
+      "to": "clustering",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "clustering",
+      "to": "caching",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "caching",
+      "to": "content-delivery-network-cdn",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "content-delivery-network-cdn",
+      "to": "proxy",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "proxy",
+      "to": "availability",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "availability",
+      "to": "scalability",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "scalability",
+      "to": "storage",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "storage",
+      "to": "databases-and-dbms",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "databases-and-dbms",
+      "to": "sql-databases",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "sql-databases",
+      "to": "nosql-databases",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "nosql-databases",
+      "to": "sql-vs-nosql-databases",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "sql-vs-nosql-databases",
+      "to": "database-replication",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "database-replication",
+      "to": "indexes",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "indexes",
+      "to": "normalization-and-denormalization",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "normalization-and-denormalization",
+      "to": "acid-and-base-consistency-models",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "acid-and-base-consistency-models",
+      "to": "cap-theorem",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "pacelc-theorem",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "pacelc-theorem",
+      "to": "transactions",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "transactions",
+      "to": "distributed-transactions",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "distributed-transactions",
+      "to": "sharding",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "sharding",
+      "to": "consistent-hashing",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "database-federation",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "database-federation",
+      "to": "n-tier-architecture",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "n-tier-architecture",
+      "to": "message-brokers",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "message-brokers",
+      "to": "message-queues",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "message-queues",
+      "to": "publish-subscribe",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "publish-subscribe",
+      "to": "enterprise-service-bus-esb",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "enterprise-service-bus-esb",
+      "to": "monoliths-and-microservices",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "monoliths-and-microservices",
+      "to": "event-driven-architecture-eda",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "event-driven-architecture-eda",
+      "to": "event-sourcing",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "event-sourcing",
+      "to": "command-and-query-responsibility-segregation-cqrs",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "command-and-query-responsibility-segregation-cqrs",
+      "to": "api-gateway",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "api-gateway",
+      "to": "rest-graphql-grpc",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "rest-graphql-grpc",
+      "to": "long-polling-websockets-server-sent-events-sse",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "long-polling-websockets-server-sent-events-sse",
+      "to": "geohashing-and-quadtrees",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "geohashing-and-quadtrees",
+      "to": "circuit-breaker",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "circuit-breaker",
+      "to": "rate-limiting",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "rate-limiting",
+      "to": "service-discovery",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "service-discovery",
+      "to": "sla-slo-sli",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "sla-slo-sli",
+      "to": "disaster-recovery",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "disaster-recovery",
+      "to": "virtual-machines-vms-and-containers",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "virtual-machines-vms-and-containers",
+      "to": "oauth-20-and-openid-connect-oidc",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "oauth-20-and-openid-connect-oidc",
+      "to": "single-sign-on-sso",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "single-sign-on-sso",
+      "to": "ssl-tls-mtls",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "ssl-tls-mtls",
+      "to": "system-design-interviews",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "system-design-interviews",
+      "to": "url-shortener",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "url-shortener",
+      "to": "whatsapp",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "whatsapp",
+      "to": "twitter",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "twitter",
+      "to": "netflix",
+      "relationship": "leads_to"
+    },
+    {
+      "from": "netflix",
+      "to": "uber",
+      "relationship": "leads_to"
+    }
+  ]
+}

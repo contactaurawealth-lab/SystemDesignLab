@@ -1,0 +1,58 @@
+{
+  "id": "api-gateway",
+  "title": "API Gateway",
+  "moduleId": "mod-distributed",
+  "moduleName": "Distributed Systems & Messaging",
+  "order": 38,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to api gateway.",
+  "simpleExplanation": "The API Gateway is an API management tool that sits between a client and a collection of backend services. It is a single entry point into a system that encapsulates the internal system architecture and provides an API that is tailored to each client. It also has other responsibilities such as authentication, monitoring, load balancing, caching, throttling, logging, etc.\n\n![api-gateway](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/api-gateway/api-gateway.png)",
+  "technicalExplanation": "Why do we need an API Gateway?\n\nThe granularity of APIs provided by microservices is often different than what a client needs. Microservices typically provide fine-grained APIs, which means that clients need to interact with multiple services. Hence, an API gateway can provide a single entry point for all clients with some additional features and better management.\n\n\n## Features\n\nBelow are some desired features of an API Gateway:\n\n- Authentication and Authorization\n- [Service discovery](https://karanpratapsingh.com/courses/system-design/service-discovery)\n- [Reverse Proxy](https://karanpratapsingh.com/courses/system-design/proxy#reverse-proxy)\n- [Caching](https://karanpratapsingh.com/courses/system-design/caching)\n- Security\n- Retry and [Circuit breaking](https://karanpratapsingh.com/courses/system-design/circuit-breaker)\n- [Load balancing](https://karanpratapsingh.com/courses/system-design/load-balancing)\n- Logging, Tracing\n- API composition\n- [Rate limiting](https://karanpratapsingh.com/courses/system-design/rate-limiting) and throttling\n- Versioning\n- Routing\n- IP whitelisting or blacklisting\n\n\n## Advantages\n\nLet's look at some advantages of using an API Gateway:\n\n- Encapsulates the internal structure of an API.\n- Provides a centralized view of the API.\n- Simplifies the client code.\n- Monitoring, analytics, tracing, and other such features.\n\n\n## Disadvantages\n\nHere are some possible disadvantages of an API Gateway:\n\n- Possible single point of failure.\n- Might impact performance.\n- Can become a bottleneck if not scaled properly.\n- Configuration can be challenging.\n\n\n## Backend For Frontend (BFF) pattern\n\nIn the Backend For Frontend (BFF) pattern, we create separate backend services to be consumed by specific frontend applications or interfaces. This pattern is useful when we want to avoid customizing a single backend for multiple interfaces. This pattern was first described by [Sam Newman](https://samnewman.io).\n\nAlso, sometimes the output of data returned by the microservices to the front end is not in the exact format or filtered as needed by the front end. To solve this issue, the frontend should have some logic to reformat the data, and therefore, we can use BFF to shift some of this logic to the intermediate layer.\n\n![backend-for-frontend](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/api-gateway/backend-for-frontend.png)\n\nThe primary function of the backend for the frontend pattern is to get the required data from the appropriate service, format the data, and sent it to the frontend.\n\n_[GraphQL](https://karanpratapsingh.com/courses/system-design/rest-graphql-grpc#graphql) performs really well as a backend for frontend (BFF)._\n\n### When to use this pattern?\n\nWe should consider using a Backend For Frontend (BFF) pattern when:\n\n- A shared or general purpose backend service must be maintained with significant development overhead.\n- We want to optimize the backend for the requirements of a specific client.\n- Customizations are made to a general-purpose backend to accommodate multiple interfaces.\n\n\n## Examples\n\nFollowing are some widely used gateways technologies:\n\n- [Amazon API Gateway](https://aws.amazon.com/api-gateway)\n- [Apigee API Gateway](https://cloud.google.com/apigee)\n- [Azure API Gateway](https://azure.microsoft.com/en-in/services/api-management)\n- [Kong API Gateway](https://konghq.com/kong)",
+  "visualExplanation": "Requests flow through the API Gateway layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of api gateway as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "api-gateway",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "API Gateway",
+    "diagramFile": "api-gateway.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of api gateway.",
+  "relatedConcepts": [
+    "command-and-query-responsibility-segregation-cqrs",
+    "rest-graphql-grpc"
+  ],
+  "prerequisites": [
+    "command-and-query-responsibility-segregation-cqrs"
+  ],
+  "nextLessonId": "rest-graphql-grpc",
+  "interactiveQuestion": {
+    "id": "q-api-gateway",
+    "question": "In production system design, what is the primary benefit of API Gateway?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of api gateway.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of api gateway. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-api-gateway",
+    "title": "Production Troubleshooting: API Gateway",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to api gateway. Solving the scalability and reliability bottlenecks inherent to api gateway.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply API Gateway best practices: Understand the architectural trade-offs, access patterns, and failure modes of api gateway., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of api gateway.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

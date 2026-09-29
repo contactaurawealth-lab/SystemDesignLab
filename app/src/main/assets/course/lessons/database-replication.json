@@ -1,0 +1,58 @@
+{
+  "id": "database-replication",
+  "title": "Database Replication",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 18,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 7,
+  "problem": "If your primary database disk fails or catches fire, your entire company loses all data and goes offline.",
+  "simpleExplanation": "Replication is a process that involves sharing information to ensure consistency between redundant resources such as multiple databases, to improve reliability, fault-tolerance, or accessibility.",
+  "technicalExplanation": "Master-Slave Replication\n\nThe master serves reads and writes, replicating writes to one or more slaves, which serve only reads. Slaves can also replicate additional slaves in a tree-like fashion. If the master goes offline, the system can continue to operate in read-only mode until a slave is promoted to a master or a new master is provisioned.\n\n![master-slave-replication](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/database-replication/master-slave-replication.png)\n\n### Advantages\n\n- Backups of the entire database have relatively no impact on the master.\n- Applications can read from the slave(s) without impacting the master.\n- Slaves can be taken offline and synced back to the master without any downtime.\n\n### Disadvantages\n\n- Replication adds more hardware and additional complexity.\n- Downtime and possibly loss of data when a master fails.\n- All writes also have to be made to the master in a master-slave architecture.\n- The more read slaves, the more we have to replicate, which will increase replication lag.\n\n\n## Master-Master Replication\n\nBoth masters serve reads/writes and coordinate with each other. If either master goes down, the system can continue to operate with both reads and writes.\n\n![master-master-replication](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/database-replication/master-master-replication.png)\n\n### Advantages\n\n- Applications can read from both masters.\n- Distributes write load across both master nodes.\n- Simple, automatic, and quick failover.\n\n### Disadvantages\n\n- Not as simple as master-slave to configure and deploy.\n- Either loosely consistent or have increased write latency due to synchronization.\n- Conflict resolution comes into play as more write nodes are added and as latency increases.\n\n\n## Synchronous vs Asynchronous replication\n\nThe primary difference between synchronous and asynchronous replication is how the data is written to the replica. In synchronous replication, data is written to primary storage and the replica simultaneously. As such, the primary copy and the replica should always remain synchronized.\n\nIn contrast, asynchronous replication copies the data to the replica after the data is already written to the primary storage. Although the replication process may occur in near-real-time, it is more common for replication to occur on a scheduled basis and it is more cost-effective.",
+  "visualExplanation": "Requests flow through the Database Replication layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Like a master accountant writing transactions in the main ledger, and two assistants continuously copying each entry into backup ledgers in separate vaults.",
+  "architectureDiagramId": "database-replication",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Database Replication",
+    "diagramFile": "database-replication.excalidraw"
+  },
+  "commonMistakes": "Replication lag causing users to read stale data immediately after a write (read-your-own-writes hazard); split-brain on network partitions.",
+  "tradeOffs": "High read scalability and fault tolerance at the cost of replication lag and consistency trade-offs (sync vs async).",
+  "keyTakeaway": "Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover.",
+  "relatedConcepts": [
+    "sql-vs-nosql-databases",
+    "indexes"
+  ],
+  "prerequisites": [
+    "sql-vs-nosql-databases"
+  ],
+  "nextLessonId": "indexes",
+  "interactiveQuestion": {
+    "id": "q-database-replication",
+    "question": "In production system design, what is the primary benefit of Database Replication?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover. Common pitfall to avoid: Replication lag causing users to read stale data immediately after a write (read-your-own-writes hazard); split-brain on network partitions."
+  },
+  "exercise": {
+    "id": "ex-database-replication",
+    "title": "Production Troubleshooting: Database Replication",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to database replication. If your primary database disk fails or catches fire, your entire company loses all data and goes offline.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Database Replication best practices: Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover., taking into account High read scalability and fault tolerance at the cost of replication lag and consistency trade-offs (sync vs async)..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Primary handles writes and syncs to replicas; replicas serve read traffic and stand ready for automated failover.. Remember: High read scalability and fault tolerance at the cost of replication lag and consistency trade-offs (sync vs async)."
+  }
+}

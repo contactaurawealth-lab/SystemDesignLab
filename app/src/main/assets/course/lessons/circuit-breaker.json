@@ -1,0 +1,58 @@
+{
+  "id": "circuit-breaker",
+  "title": "Circuit breaker",
+  "moduleId": "mod-advanced",
+  "moduleName": "Advanced Concepts & Reliability",
+  "order": 42,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 6,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to circuit breaker.",
+  "simpleExplanation": "The circuit breaker is a design pattern used to detect failures and encapsulates the logic of preventing a failure from constantly recurring during maintenance, temporary external system failure, or unexpected system difficulties.\n\n![circuit-breaker](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/circuit-breaker/circuit-breaker.png)\n\nThe basic idea behind the circuit breaker is very simple. We wrap a protected function call in a circuit breaker object, which monitors for failures. Once the failures reach a certain threshold, the circuit breaker trips, and all further calls to the circuit breaker return with an error, without the protected call being made at all. Usually, we'll also want some kind of monitor alert if the circuit breaker trips.",
+  "technicalExplanation": "Why do we need circuit breaking?\n\nIt's common for software systems to make remote calls to software running in different processes, probably on different machines across a network. One of the big differences between in-memory calls and remote calls is that remote calls can fail, or hang without a response until some timeout limit is reached. What's worse is if we have many callers on an unresponsive supplier, then we can run out of critical resources leading to cascading failures across multiple systems.\n\n\n## States\n\nLet's discuss circuit breaker states:\n\n### Closed\n\nWhen everything is normal, the circuit breakers remain closed, and all the requests pass through to the services as normal. If the number of failures increases beyond the threshold, the circuit breaker trips and goes into an open state.\n\n### Open\n\nIn this state circuit breaker returns an error immediately without even invoking the services. The Circuit breakers move into the half-open state after a certain timeout period elapses. Usually, it will have a monitoring system where the timeout will be specified.\n\n### Half-open\n\nIn this state, the circuit breaker allows a limited number of requests from the service to pass through and invoke the operation. If the requests are successful, then the circuit breaker will go to the closed state. However, if the requests continue to fail, then it goes back to the open state.",
+  "visualExplanation": "Requests flow through the Circuit breaker layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of circuit breaker as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "circuit-breaker",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Circuit breaker",
+    "diagramFile": "circuit-breaker.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker.",
+  "relatedConcepts": [
+    "geohashing-and-quadtrees",
+    "rate-limiting"
+  ],
+  "prerequisites": [
+    "geohashing-and-quadtrees"
+  ],
+  "nextLessonId": "rate-limiting",
+  "interactiveQuestion": {
+    "id": "q-circuit-breaker",
+    "question": "In production system design, what is the primary benefit of Circuit breaker?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-circuit-breaker",
+    "title": "Production Troubleshooting: Circuit breaker",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to circuit breaker. Solving the scalability and reliability bottlenecks inherent to circuit breaker.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Circuit breaker best practices: Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of circuit breaker.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

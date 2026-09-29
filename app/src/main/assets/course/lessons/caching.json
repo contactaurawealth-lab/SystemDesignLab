@@ -1,0 +1,58 @@
+{
+  "id": "caching",
+  "title": "Caching",
+  "moduleId": "mod-networking",
+  "moduleName": "Networking & Scalability",
+  "order": 8,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 13,
+  "problem": "Disks and databases are orders of magnitude slower than memory. Repeated identical queries choke the database.",
+  "simpleExplanation": "_\"There are only two hard things in Computer Science: cache invalidation and naming things.\" - Phil Karlton_\n\n![caching](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/caching/caching.png)\n\nA cache's primary purpose is to increase data retrieval performance by reducing the need to access the underlying slower storage layer. Trading off capacity for speed, a cache typically stores a subset of data transiently, in contrast to databases whose data is usually complete and durable.\n\nCaches take advantage of the locality of reference principle _\"recently requested data is likely to be requested again\"._",
+  "technicalExplanation": "Caching and Memory\n\nLike a computer's memory, a cache is a compact, fast-performing memory that stores data in a hierarchy of levels, starting at level one, and progressing from there sequentially. They are labeled as L1, L2, L3, and so on. A cache also gets written if requested, such as when there has been an update and new content needs to be saved to the cache, replacing the older content that was saved.\n\nNo matter whether the cache is read or written, it's done one block at a time. Each block also has a tag that includes the location where the data was stored in the cache. When data is requested from the cache, a search occurs through the tags to find the specific content that's needed in level one (L1) of the memory. If the correct data isn't found, more searches are conducted in L2.\n\nIf the data isn't found there, searches are continued in L3, then L4, and so on until it has been found, then, it's read and loaded. If the data isn't found in the cache at all, then it's written into it for quick retrieval the next time.\n\n\n## Cache hit and Cache miss\n\n### Cache hit\n\nA cache hit describes the situation where content is successfully served from the cache. The tags are searched in the memory rapidly, and when the data is found and read, it's considered a cache hit.\n\n**Cold, Warm, and Hot Caches**\n\nA cache hit can also be described as cold, warm, or hot. In each of these, the speed at which the data is read is described.\n\nA hot cache is an instance where data was read from the memory at the _fastest_ possible rate. This happens when the data is retrieved from L1.\n\nA cold cache is the _slowest_ possible rate for data to be read, though, it's still successful so it's still considered a cache hit. The data is just found lower in the memory hierarchy such as in L3, or lower.\n\nA warm cache is used to describe data that's found in L2 or L3. It's not as fast as a hot cache, but it's still faster than a cold cache. Generally, calling a cache warm is used to express that it's slower and closer to a cold cache than a hot one.\n\n### Cache miss\n\nA cache miss refers to the instance when the memory is searched, and the data isn't found. When this happens, the content is transferred and written into the cache.\n\n\n## Cache Invalidation\n\nCache invalidation is a process where the computer system declares the cache entries as invalid and removes or replaces them. If the data is modified, it should be invalidated in the cache, if not, this can cause inconsistent application behavior. There are three kinds of caching systems:\n\n### Write-through cache\n\n![write-through-cache](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/caching/write-through-cache.png)\n\nData is written into the cache and the corresponding database simultaneously.\n\n**Pro**: Fast retrieval, complete data consistency between cache and storage.\n\n**Con**: Higher latency for write operations.\n\n### Write-around cache\n\n![write-around-cache](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/caching/write-around-cache.png)\n\nWhere write directly goes to the database or permanent storage, bypassing the cache.\n\n**Pro**: This may reduce latency.\n\n**Con**: It increases cache misses because the cache system has to read the information from the database in case of a cache miss. As a result, this can lead to higher read latency in the case of applications that write and re-read the information quickly. Reads happen from slower back-end storage and experience higher latency.\n\n### Write-back cache\n\n![write-back-cache](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/caching/write-back-cache.png)\n\nWhere the write is only done to the caching layer and the write is confirmed as soon as the write to the cache completes. The cache then asynchronously syncs this write to the database.\n\n**Pro**: This would lead to reduced latency and high throughput for write-intensive applications.\n\n**Con**: There is a risk of data loss in case the caching layer crashes. We can improve this by having more than one replica acknowledging the write in the cache.\n\n\n## Eviction policies\n\nFollowing are some of the most common cache eviction policies:\n\n- **First In First Out (FIFO)**: The cache evicts the first block accessed first without any regard to how often or how many times it was accessed before.\n- **Last In First Out (LIFO)**: The cache evicts the block accessed most recently first without any regard to how often or how many times it was accessed before.\n- **Least Recently Used (LRU)**: Discards the least recently used items first.\n- **Most Recently Used (MRU)**: Discards, in contrast to LRU, the most recently used items first.\n- **Least Frequently Used (LFU)**: Counts how often an item is needed. Those that are used least often are discarded first.\n- **Random Replacement (RR)**: Randomly selects a candidate item and discards it to make space when necessary.\n\n\n## Distributed Cache\n\n![distributed-cache](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/caching/distributed-cache.png)\n\nA distributed cache is a system that pools together the random-access memory (RAM) of multiple networked computers into a single in-memory data store used as a data cache to provide fast access to data. While most caches are traditionally in one physical server or hardware component, a distributed cache can grow beyond the memory limits of a single computer by linking together multiple computers.\n\n\n## Global Cache\n\n![global-cache](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/caching/global-cache.png)\n\nAs the name suggests, we will have a single shared cache that all the application nodes will use. When the requested data is not found in the global cache, it's the responsibility of the cache to find out the missing piece of data from the underlying data store.\n\n\n## Use cases\n\nCaching can have many real-world use cases such as:\n\n- Database Caching\n- Content Delivery Network (CDN)\n- Domain Name System (DNS) Caching\n- API Caching\n\n**When not to use caching?**\n\nLet's also look at some scenarios where we should not use cache:\n\n- Caching isn't helpful when it takes just as long to access the cache as it does to access the primary data store.\n- Caching doesn't work as well when requests have low repetition (higher randomness), because caching performance comes from repeated memory access patterns.\n- Caching isn't helpful when the data changes frequently, as the cached version gets out of sync, and the primary data store must be accessed every time.\n\n_It's important to note that a cache should not be used as permanent data storage. They are almost always implemented in volatile memory because it is faster, and thus should be considered transient._\n\n\n## Advantages\n\nBelow are some advantages of caching:\n\n- Improves performance\n- Reduce latency\n- Reduce load on the database\n- Reduce network cost\n- Increase Read Throughput\n\n\n## Examples\n\nHere are some commonly used technologies for caching:\n\n- [Redis](https://redis.io)\n- [Memcached](https://memcached.org)\n- [Amazon Elasticache](https://aws.amazon.com/elasticache)\n- [Aerospike](https://aerospike.com)",
+  "visualExplanation": "Requests flow through the Caching layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Like keeping the books you are actively studying on your desk instead of walking to the university library archive across town for every single page.",
+  "architectureDiagramId": "caching",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Caching",
+    "diagramFile": "caching.excalidraw"
+  },
+  "commonMistakes": "Not setting TTLs leading to stale data or out-of-memory crashes; cache stampede during cold restarts.",
+  "tradeOffs": "High read throughput and low latency at the cost of eventual consistency, cache invalidation complexity, and RAM cost.",
+  "keyTakeaway": "Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU).",
+  "relatedConcepts": [
+    "clustering",
+    "content-delivery-network-cdn"
+  ],
+  "prerequisites": [
+    "clustering"
+  ],
+  "nextLessonId": "content-delivery-network-cdn",
+  "interactiveQuestion": {
+    "id": "q-caching",
+    "question": "In production system design, what is the primary benefit of Caching?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU).",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU). Common pitfall to avoid: Not setting TTLs leading to stale data or out-of-memory crashes; cache stampede during cold restarts."
+  },
+  "exercise": {
+    "id": "ex-caching",
+    "title": "Production Troubleshooting: Caching",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to caching. Disks and databases are orders of magnitude slower than memory. Repeated identical queries choke the database.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Caching best practices: Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU)., taking into account High read throughput and low latency at the cost of eventual consistency, cache invalidation complexity, and RAM cost..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Keep hot data in fast volatile RAM (Redis/Memcached) with appropriate eviction policies (LRU/LFU).. Remember: High read throughput and low latency at the cost of eventual consistency, cache invalidation complexity, and RAM cost."
+  }
+}

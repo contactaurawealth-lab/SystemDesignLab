@@ -1,0 +1,172 @@
+[
+  {
+    "id": "audio-ch-01",
+    "chapterNumber": 1,
+    "title": "Foundations & The Network Layer",
+    "subtitle": "IP, OSI 7-Layer Model, TCP vs UDP, and Domain Name System",
+    "durationSeconds": 480,
+    "audioFileName": "chapter_01.wav",
+    "audioAssetPath": "course/audio/chapter_01.wav",
+    "visualSyncPoints": [
+      {
+        "timestampSeconds": 0,
+        "conceptId": "what-is-system-design",
+        "caption": "The core philosophy of system design"
+      },
+      {
+        "timestampSeconds": 90,
+        "conceptId": "ip",
+        "caption": "Understanding IP routing and address spaces"
+      },
+      {
+        "timestampSeconds": 210,
+        "conceptId": "osi-model",
+        "caption": "Traversing the OSI 7-layer architecture"
+      },
+      {
+        "timestampSeconds": 330,
+        "conceptId": "tcp-and-udp",
+        "caption": "TCP reliability vs UDP throughput"
+      },
+      {
+        "timestampSeconds": 410,
+        "conceptId": "domain-name-system-dns",
+        "caption": "DNS resolution and hierarchical lookups"
+      }
+    ],
+    "narration": "Welcome to System Design Lab. Today we begin our journey at the bedrock of modern distributed computing: the network layer. Every distributed system begins with a packet moving across physical boundaries. In this chapter, we explore IP addressing, the classic OSI seven-layer model, the critical trade-offs between TCP handshakes and UDP datagrams, and how the Domain Name System directs internet traffic with authoritative name servers and recursive resolvers."
+  },
+  {
+    "id": "audio-ch-02",
+    "chapterNumber": 2,
+    "title": "Scaling Traffic: Load Balancing & Caching",
+    "subtitle": "Reverse Proxies, Consistent Hashing, and Multi-Tier Caching",
+    "durationSeconds": 540,
+    "audioFileName": "chapter_02.wav",
+    "audioAssetPath": "course/audio/chapter_02.wav",
+    "visualSyncPoints": [
+      {
+        "timestampSeconds": 0,
+        "conceptId": "load-balancing",
+        "caption": "Layer 4 vs Layer 7 load balancing algorithms"
+      },
+      {
+        "timestampSeconds": 130,
+        "conceptId": "caching",
+        "caption": "Cache-aside, write-through, and LRU eviction"
+      },
+      {
+        "timestampSeconds": 270,
+        "conceptId": "content-delivery-network-cdn",
+        "caption": "CDN edge caching and static asset distribution"
+      },
+      {
+        "timestampSeconds": 400,
+        "conceptId": "consistent-hashing",
+        "caption": "Preventing cache stampedes with consistent hash rings"
+      }
+    ],
+    "narration": "In chapter two, we tackle the first hurdle of high-growth applications: surviving massive traffic surges. When a single server exhausts its CPU and socket limits, how do we scale? We introduce Layer 4 and Layer 7 load balancers, evaluate Round Robin, Least Connections, and IP Hash algorithms. We then dive into caching architectures, contrasting Cache-Aside with Write-Through strategies, and examine how consistent hashing protects distributed caches from devastating stampedes when cluster nodes fluctuate."
+  },
+  {
+    "id": "audio-ch-03",
+    "chapterNumber": 3,
+    "title": "Databases, Consistency & Storage",
+    "subtitle": "SQL vs NoSQL, Replication, Sharding, CAP and PACELC",
+    "durationSeconds": 600,
+    "audioFileName": "chapter_03.wav",
+    "audioAssetPath": "course/audio/chapter_03.wav",
+    "visualSyncPoints": [
+      {
+        "timestampSeconds": 0,
+        "conceptId": "sql-vs-nosql-databases",
+        "caption": "Relational constraints vs distributed key-value agility"
+      },
+      {
+        "timestampSeconds": 140,
+        "conceptId": "database-replication",
+        "caption": "Sync vs async replication and failover consensus"
+      },
+      {
+        "timestampSeconds": 280,
+        "conceptId": "cap-theorem",
+        "caption": "The fundamental physics of CAP and PACELC"
+      },
+      {
+        "timestampSeconds": 440,
+        "conceptId": "sharding",
+        "caption": "Horizontal partitioning and cross-shard trade-offs"
+      }
+    ],
+    "narration": "Data is the lifeblood and heaviest burden of any architecture. In chapter three, we dissect databases and distributed storage. We compare the strict ACID guarantees of relational databases with the horizontal flexibility of NoSQL document, wide-column, and graph engines. We uncover the realities of database replication, replication lag, and the immutable trade-offs codified by Eric Brewer's CAP theorem and Daniel Abadi's PACELC theorem."
+  },
+  {
+    "id": "audio-ch-04",
+    "chapterNumber": 4,
+    "title": "Asynchronous Systems & Message Queues",
+    "subtitle": "Decoupling Microservices with Queues, Pub/Sub, and Event Sourcing",
+    "durationSeconds": 520,
+    "audioFileName": "chapter_04.wav",
+    "audioAssetPath": "course/audio/chapter_04.wav",
+    "visualSyncPoints": [
+      {
+        "timestampSeconds": 0,
+        "conceptId": "message-queues",
+        "caption": "Point-to-point queues and backpressure management"
+      },
+      {
+        "timestampSeconds": 150,
+        "conceptId": "publish-subscribe",
+        "caption": "Fanout messaging and consumer group partitioning"
+      },
+      {
+        "timestampSeconds": 310,
+        "conceptId": "event-driven-architecture-eda",
+        "caption": "Loose coupling through asynchronous domain events"
+      },
+      {
+        "timestampSeconds": 420,
+        "conceptId": "circuit-breaker",
+        "caption": "Protecting against cascading failure with circuit breakers"
+      }
+    ],
+    "narration": "Synchronous HTTP calls create fragile, tightly coupled architectures. In this chapter, we discover the power of asynchronous message passing. We explore point-to-point message queues for work distribution and publish-subscribe topics for one-to-many event notification. Learn how consumer groups scale processing, how backpressure prevents downstream database meltdown, and how circuit breakers isolate faults to stop cascading system outages."
+  },
+  {
+    "id": "audio-ch-05",
+    "chapterNumber": 5,
+    "title": "Architecting Real-World Systems",
+    "subtitle": "Case Studies: TinyURL, WhatsApp, Twitter, and Netflix",
+    "durationSeconds": 620,
+    "audioFileName": "chapter_05.wav",
+    "audioAssetPath": "course/audio/chapter_05.wav",
+    "visualSyncPoints": [
+      {
+        "timestampSeconds": 0,
+        "conceptId": "system-design-interviews",
+        "caption": "The 6-step system design interview blueprint"
+      },
+      {
+        "timestampSeconds": 120,
+        "conceptId": "url-shortener",
+        "caption": "Key generation services and sub-10ms redirect latency"
+      },
+      {
+        "timestampSeconds": 260,
+        "conceptId": "whatsapp",
+        "caption": "Real-time socket persistence and wide-column message storage"
+      },
+      {
+        "timestampSeconds": 410,
+        "conceptId": "twitter",
+        "caption": "Solving the celebrity fanout problem in social feeds"
+      },
+      {
+        "timestampSeconds": 520,
+        "conceptId": "netflix",
+        "caption": "Transcoding pipelines and global CDN edge delivery"
+      }
+    ],
+    "narration": "In our final chapter, we synthesize all concepts into production architectures. We walk through the exact six-step framework required in top-tier system design interviews. Then we deconstruct four iconic architectures: the pre-generation hash ring of TinyURL, the persistent connection gateway of WhatsApp, the hybrid fanout engine of Twitter, and the global edge distribution mesh of Netflix."
+  }
+]

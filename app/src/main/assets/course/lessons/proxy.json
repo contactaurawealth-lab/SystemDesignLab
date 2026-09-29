@@ -1,0 +1,58 @@
+{
+  "id": "proxy",
+  "title": "Proxy",
+  "moduleId": "mod-networking",
+  "moduleName": "Networking & Scalability",
+  "order": 10,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 7,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to proxy.",
+  "simpleExplanation": "A proxy server is an intermediary piece of hardware/software sitting between the client and the backend server. It receives requests from clients and relays them to the origin servers. Typically, proxies are used to filter requests, log requests, or sometimes transform requests (by adding/removing headers, encrypting/decrypting, or compression).",
+  "technicalExplanation": "Types\n\nThere are two types of proxies:\n\n### Forward Proxy\n\nA forward proxy, often called a proxy, proxy server, or web proxy is a server that sits in front of a group of client machines. When those computers make requests to sites and services on the internet, the proxy server intercepts those requests and then communicates with web servers on behalf of those clients, like a middleman.\n\n![forward-proxy](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/proxy/forward-proxy.png)\n\n**Advantages**\n\nHere are some advantages of a forward proxy:\n\n- Block access to certain content\n- Allows access to [geo-restricted](https://en.wikipedia.org/wiki/Geo-blocking) content\n- Provides anonymity\n- Avoid other browsing restrictions\n\nAlthough proxies provide the benefits of anonymity, they can still track our personal information. Setup and maintenance of a proxy server can be costly and requires configurations.\n\n### Reverse Proxy\n\nA reverse proxy is a server that sits in front of one or more web servers, intercepting requests from clients. When clients send requests to the origin server of a website, those requests are intercepted by the reverse proxy server.\n\nThe difference between a forward and reverse proxy is subtle but important. A simplified way to sum it up would be to say that a forward proxy sits in front of a client and ensures that no origin server ever communicates directly with that specific client. On the other hand, a reverse proxy sits in front of an origin server and ensures that no client ever communicates directly with that origin server.\n\n![reverse-proxy](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/proxy/reverse-proxy.png)\n\nIntroducing reverse proxy results in increased complexity. A single reverse proxy is a single point of failure, configuring multiple reverse proxies (i.e. a failover) further increases complexity.\n\n**Advantages**\n\nHere are some advantages of using a reverse proxy:\n\n- Improved security\n- Caching\n- SSL encryption\n- Load balancing\n- Scalability and flexibility\n\n\n## Load balancer vs Reverse Proxy\n\nWait, isn't reverse proxy similar to a load balancer? Well, no as a load balancer is useful when we have multiple servers. Often, load balancers route traffic to a set of servers serving the same function, while reverse proxies can be useful even with just one web server or application server. A reverse proxy can also act as a load balancer but not the other way around.\n\n\n## Examples\n\nBelow are some commonly used proxy technologies:\n\n- [Nginx](https://www.nginx.com)\n- [HAProxy](http://www.haproxy.org)\n- [Traefik](https://doc.traefik.io/traefik)\n- [Envoy](https://www.envoyproxy.io)",
+  "visualExplanation": "Requests flow through the Proxy layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of proxy as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "proxy",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Proxy",
+    "diagramFile": "proxy.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of proxy.",
+  "relatedConcepts": [
+    "content-delivery-network-cdn",
+    "availability"
+  ],
+  "prerequisites": [
+    "content-delivery-network-cdn"
+  ],
+  "nextLessonId": "availability",
+  "interactiveQuestion": {
+    "id": "q-proxy",
+    "question": "In production system design, what is the primary benefit of Proxy?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of proxy.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of proxy. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-proxy",
+    "title": "Production Troubleshooting: Proxy",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to proxy. Solving the scalability and reliability bottlenecks inherent to proxy.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Proxy best practices: Understand the architectural trade-offs, access patterns, and failure modes of proxy., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of proxy.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "mod-foundations",
+    "title": "System Design Foundations",
+    "description": "Master core networking primitives, protocol layers, and the architectural mindset.",
+    "icon": "foundation",
+    "order": 1,
+    "color": "#2563eb"
+  },
+  {
+    "id": "mod-networking",
+    "title": "Networking & Scalability",
+    "description": "Load balancers, caching hierarchies, CDNs, reverse proxies, and scaling tiers.",
+    "icon": "network",
+    "order": 2,
+    "color": "#059669"
+  },
+  {
+    "id": "mod-databases",
+    "title": "Databases & Storage",
+    "description": "SQL vs NoSQL, replication, sharding, indexes, CAP theorem, and distributed consistency.",
+    "icon": "database",
+    "order": 3,
+    "color": "#7c3aed"
+  },
+  {
+    "id": "mod-distributed",
+    "title": "Distributed Systems & Messaging",
+    "description": "Message queues, pub/sub brokers, microservices, event sourcing, CQRS, and API gateways.",
+    "icon": "hub",
+    "order": 4,
+    "color": "#d97706"
+  },
+  {
+    "id": "mod-advanced",
+    "title": "Advanced Concepts & Reliability",
+    "description": "Circuit breakers, rate limiting, service discovery, disaster recovery, quadtrees, and auth.",
+    "icon": "security",
+    "order": 5,
+    "color": "#dc2626"
+  },
+  {
+    "id": "mod-case-studies",
+    "title": "Interviews & Real-World Systems",
+    "description": "Step-by-step interview framework and deep dives into URL Shortener, WhatsApp, Twitter, Netflix, and Uber.",
+    "icon": "architecture",
+    "order": 6,
+    "color": "#0284c7"
+  }
+]

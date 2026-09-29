@@ -1,0 +1,58 @@
+{
+  "id": "clustering",
+  "title": "Clustering",
+  "moduleId": "mod-networking",
+  "moduleName": "Networking & Scalability",
+  "order": 7,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 9,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to clustering.",
+  "simpleExplanation": "At a high level, a computer cluster is a group of two or more computers, or nodes, that run in parallel to achieve a common goal. This allows workloads consisting of a high number of individual, parallelizable tasks to be distributed among the nodes in the cluster. As a result, these tasks can leverage the combined memory and processing power of each computer to increase overall performance.\n\nTo build a computer cluster, the individual nodes should be connected to a network to enable internode communication. The software can then be used to join the nodes together and form a cluster. It may have a shared storage device and/or local storage on each node.\n\n![cluster](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/clustering/cluster.png)\n\nTypically, at least one node is designated as the leader node and acts as the entry point to the cluster. The leader node may be responsible for delegating incoming work to the other nodes and, if necessary, aggregating the results and returning a response to the user.\n\nIdeally, a cluster functions as if it were a single system. A user accessing the cluster should not need to know whether the system is a cluster or an individual machine. Furthermore, a cluster should be designed to minimize latency and prevent bottlenecks in node-to-node communication.",
+  "technicalExplanation": "Types\n\nComputer clusters can generally be categorized into three types:\n\n- Highly available or fail-over\n- Load balancing\n- High-performance computing\n\n\n## Configurations\n\nThe two most commonly used high availability (HA) clustering configurations are active-active and active-passive.\n\n### Active-Active\n\n![active-active](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/clustering/active-active.png)\n\nAn active-active cluster is typically made up of at least two nodes, both actively running the same kind of service simultaneously. The main purpose of an active-active cluster is to achieve load balancing. A load balancer distributes workloads across all nodes to prevent any single node from getting overloaded. Because there are more nodes available to serve, there will also be an improvement in throughput and response times.\n\n### Active-Passive\n\n![active-passive](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-I/clustering/active-passive.png)\n\nLike the active-active cluster configuration, an active-passive cluster also consists of at least two nodes. However, as the name _active-passive_ implies, not all nodes are going to be active. For example, in the case of two nodes, if the first node is already active, then the second node must be passive or on standby.\n\n\n## Advantages\n\nFour key advantages of cluster computing are as follows:\n\n- High availability\n- Scalability\n- Performance\n- Cost-effective\n\n\n## Load balancing vs Clustering\n\nLoad balancing shares some common traits with clustering, but they are different processes. Clustering provides redundancy and boosts capacity and availability. Servers in a cluster are aware of each other and work together toward a common purpose. But with load balancing, servers are not aware of each other. Instead, they react to the requests they receive from the load balancer.\n\nWe can employ load balancing in conjunction with clustering, but it also is applicable in cases involving independent servers that share a common purpose such as to run a website, business application, web service, or some other IT resource.\n\n\n## Challenges\n\nThe most obvious challenge clustering presents is the increased complexity of installation and maintenance. An operating system, the application, and its dependencies must each be installed and updated on every node.\n\nThis becomes even more complicated if the nodes in the cluster are not homogeneous. Resource utilization for each node must also be closely monitored, and logs should be aggregated to ensure that the software is behaving correctly.\n\nAdditionally, storage becomes more difficult to manage, a shared storage device must prevent nodes from overwriting one another and distributed data stores have to be kept in sync.\n\n\n## Examples\n\nClustering is commonly used in the industry, and often many technologies offer some sort of clustering mode. For example:\n\n- Containers (e.g. [Kubernetes](https://kubernetes.io), [Amazon ECS](https://aws.amazon.com/ecs))\n- Databases (e.g. [Cassandra](https://cassandra.apache.org/_/index.html), [MongoDB](https://www.mongodb.com))\n- Cache (e.g. [Redis](https://redis.io/docs/manual/scaling))",
+  "visualExplanation": "Requests flow through the Clustering layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of clustering as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "clustering",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Clustering",
+    "diagramFile": "clustering.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of clustering.",
+  "relatedConcepts": [
+    "load-balancing",
+    "caching"
+  ],
+  "prerequisites": [
+    "load-balancing"
+  ],
+  "nextLessonId": "caching",
+  "interactiveQuestion": {
+    "id": "q-clustering",
+    "question": "In production system design, what is the primary benefit of Clustering?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of clustering.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of clustering. Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-clustering",
+    "title": "Production Troubleshooting: Clustering",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to clustering. Solving the scalability and reliability bottlenecks inherent to clustering.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Clustering best practices: Understand the architectural trade-offs, access patterns, and failure modes of clustering., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of clustering.. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "consistent-hashing",
+  "title": "Consistent Hashing",
+  "moduleId": "mod-databases",
+  "moduleName": "Databases & Storage",
+  "order": 27,
+  "difficulty": "Intermediate",
+  "estimatedMinutes": 11,
+  "problem": "Standard modulo hashing (hash(key) % N) invalidates almost all cached keys whenever a server is added or removed, causing a cache stampede.",
+  "simpleExplanation": "Let's first understand the problem we're trying to solve.",
+  "technicalExplanation": "Why do we need this?\n\nIn traditional hashing-based distribution methods, we use a hash function to hash our partition keys (i.e. request ID or IP). Then if we use the modulo against the total number of nodes (server or databases). This will give us the node where we want to route our request.\n\n![simple-hashing](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/consistent-hashing/simple-hashing.png)\n\n$$\n\\begin{align*}\n& Hash(key_1) \\to H_1 \\bmod N = Node_0 \\\\\n& Hash(key_2) \\to H_2 \\bmod N = Node_1 \\\\\n& Hash(key_3) \\to H_3 \\bmod N = Node_2 \\\\\n& ... \\\\\n& Hash(key_n) \\to H_n \\bmod N = Node_{n-1}\n\\end{align*}\n$$\n\nWhere,\n\n`key`: Request ID or IP.\n\n`H`: Hash function result.\n\n`N`: Total number of nodes.\n\n`Node`: The node where the request will be routed.\n\nThe problem with this is if we add or remove a node, it will cause `N` to change, meaning our mapping strategy will break as the same requests will now map to a different server. As a consequence, the majority of requests will need to be redistributed which is very inefficient.\n\nWe want to uniformly distribute requests among different nodes such that we should be able to add or remove nodes with minimal effort. Hence, we need a distribution scheme that does not depend directly on the number of nodes (or servers), so that, when adding or removing nodes, the number of keys that need to be relocated is minimized.\n\nConsistent hashing solves this horizontal scalability problem by ensuring that every time we scale up or down, we do not have to re-arrange all the keys or touch all the servers.\n\nNow that we understand the problem, let's discuss consistent hashing in detail.\n\n\n## How does it work\n\nConsistent Hashing is a distributed hashing scheme that operates independently of the number of nodes in a distributed hash table by assigning them a position on an abstract circle, or hash ring. This allows servers and objects to scale without affecting the overall system.\n\n![consistent-hashing](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/consistent-hashing/consistent-hashing.png)\n\nUsing consistent hashing, only `K/N` data would require re-distributing.\n\n$$\nR = K/N\n$$\n\nWhere,\n\n`R`: Data that would require re-distribution.\n\n`K`: Number of partition keys.\n\n`N`: Number of nodes.\n\nThe output of the hash function is a range let's say `0...m-1` which we can represent on our hash ring. We hash the requests and distribute them on the ring depending on what the output was. Similarly, we also hash the node and distribute them on the same ring as well.\n\n$$\n\\begin{align*}\n& Hash(key_1) = P_1 \\\\\n& Hash(key_2) = P_2 \\\\\n& Hash(key_3) = P_3 \\\\\n& ... \\\\\n& Hash(key_n) = P_{m-1}\n\\end{align*}\n$$\n\nWhere,\n\n`key`: Request/Node ID or IP.\n\n`P`: Position on the hash ring.\n\n`m`: Total range of the hash ring.\n\nNow, when the request comes in we can simply route it to the closest node in a clockwise (can be counterclockwise as well) manner. This means that if a new node is added or removed, we can use the nearest node and only a _fraction_ of the requests need to be re-routed.\n\nIn theory, consistent hashing should distribute the load evenly however it doesn't happen in practice. Usually, the load distribution is uneven and one server may end up handling the majority of the request becoming a _hotspot_, essentially a bottleneck for the system. We can fix this by adding extra nodes but that can be expensive.\n\nLet's see how we can address these issues.\n\n\n## Virtual Nodes\n\nIn order to ensure a more evenly distributed load, we can introduce the idea of a virtual node, sometimes also referred to as a VNode.\n\nInstead of assigning a single position to a node, the hash range is divided into multiple smaller ranges, and each physical node is assigned several of these smaller ranges. Each of these subranges is considered a VNode. Hence, virtual nodes are basically existing physical nodes mapped multiple times across the hash ring to minimize changes to a node's assigned range.\n\n![virtual-nodes](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-II/consistent-hashing/virtual-nodes.png)\n\nFor this, we can use `k` number of hash functions.\n\n$$\n\\begin{align*}\n& Hash_1(key_1) = P_1 \\\\\n& Hash_2(key_2) = P_2 \\\\\n& Hash_3(key_3) = P_3 \\\\\n& . . . \\\\\n& Hash_k(key_n) = P_{m-1}\n\\end{align*}\n$$\n\nWhere,\n\n`key`: Request/Node ID or IP.\n\n`k`: Number of hash functions.\n\n`P`: Position on the hash ring.\n\n`m`: Total range of the hash ring.\n\nAs VNodes help spread the load more evenly across the physical nodes on the cluster by dividing the hash ranges into smaller subranges, this speeds up the re-balancing process after adding or removing nodes. This also helps us reduce the probability of hotspots.\n\n\n## Data Replication\n\nTo ensure high availability and durability, consistent hashing replicates each data item on multiple `N` nodes in the system where the value `N` is equivalent to the _replication factor_.\n\nThe replication factor is the number of nodes that will receive the copy of the same data. In eventually consistent systems, this is done asynchronously.\n\n\n## Advantages\n\nLet's look at some advantages of consistent hashing:\n\n- Makes rapid scaling up and down more predictable.\n- Facilitates partitioning and replication across nodes.\n- Enables scalability and availability.\n- Reduces hotspots.\n\n\n## Disadvantages\n\nBelow are some disadvantages of consistent hashing:\n\n- Increases complexity.\n- Cascading failures.\n- Load distribution can still be uneven.\n- Key management can be expensive when nodes transiently fail.\n\n\n## Examples\n\nLet's look at some examples where consistent hashing is used:\n\n- Data partitioning in [Apache Cassandra](https://cassandra.apache.org).\n- Load distribution across multiple storage hosts in [Amazon DynamoDB](https://aws.amazon.com/dynamodb).",
+  "visualExplanation": "Requests flow through the Consistent Hashing layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Like arranging servers around a 360-degree circular roulette wheel and mapping keys to the next server clockwise.",
+  "architectureDiagramId": "consistent-hashing",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Consistent Hashing",
+    "diagramFile": "consistent-hashing.excalidraw"
+  },
+  "commonMistakes": "Non-uniform key distribution without virtual nodes; cascading failures if a node fails without replica virtual points.",
+  "tradeOffs": "Minimal key migration during topology changes at the cost of virtual node management and ring lookup complexity.",
+  "keyTakeaway": "Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1.",
+  "relatedConcepts": [
+    "sharding",
+    "database-federation"
+  ],
+  "prerequisites": [
+    "sharding"
+  ],
+  "nextLessonId": "database-federation",
+  "interactiveQuestion": {
+    "id": "q-consistent-hashing",
+    "question": "In production system design, what is the primary benefit of Consistent Hashing?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1.",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1. Common pitfall to avoid: Non-uniform key distribution without virtual nodes; cascading failures if a node fails without replica virtual points."
+  },
+  "exercise": {
+    "id": "ex-consistent-hashing",
+    "title": "Production Troubleshooting: Consistent Hashing",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to consistent hashing. Standard modulo hashing (hash(key) % N) invalidates almost all cached keys whenever a server is added or removed, causing a cache stampede.",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Consistent Hashing best practices: Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1., taking into account Minimal key migration during topology changes at the cost of virtual node management and ring lookup complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Consistent hashing minimizes key redistribution to k/N when scaling cache nodes from N to N+1.. Remember: Minimal key migration during topology changes at the cost of virtual node management and ring lookup complexity."
+  }
+}

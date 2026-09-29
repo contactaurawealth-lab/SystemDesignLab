@@ -1,0 +1,58 @@
+{
+  "id": "long-polling-websockets-server-sent-events-sse",
+  "title": "Long polling, WebSockets, Server-Sent Events (SSE)",
+  "moduleId": "mod-distributed",
+  "moduleName": "Distributed Systems & Messaging",
+  "order": 40,
+  "difficulty": "Advanced",
+  "estimatedMinutes": 10,
+  "problem": "Solving the scalability and reliability bottlenecks inherent to long polling, websockets, server-sent events (sse).",
+  "simpleExplanation": "Web applications were initially developed around a client-server model, where the web client is always the initiator of transactions like requesting data from the server. Thus, there was no mechanism for the server to independently send, or push, data to the client without the client first making a request. Let's discuss some approaches to overcome this problem.",
+  "technicalExplanation": "Long polling\n\nHTTP Long polling is a technique used to push information to a client as soon as possible from the server. As a result, the server does not have to wait for the client to send a request.\n\nIn Long polling, the server does not close the connection once it receives a request from the client. Instead, the server responds only if any new message is available or a timeout threshold is reached.\n\n![long-polling](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/long-polling-websockets-server-sent-events/long-polling.png)\n\nOnce the client receives a response, it immediately sends a new request to the server to have a new pending connection to send data to the client, and the operation is repeated. With this approach, the server emulates a real-time server push feature.\n\n### Working\n\nLet's understand how long polling works:\n\n1. The client makes an initial request and waits for a response.\n2. The server receives the request and delays sending anything until an update is available.\n3. Once an update is available, the response is sent to the client.\n4. The client receives the response and makes a new request immediately or after some defined interval to establish a connection again.\n\n### Advantages\n\nHere are some advantages of long polling:\n\n- Easy to implement, good for small-scale projects.\n- Nearly universally supported.\n\n### Disadvantages\n\nA major downside of long polling is that it is usually not scalable. Below are some of the other reasons:\n\n- Creates a new connection each time, which can be intensive on the server.\n- Reliable message ordering can be an issue for multiple requests.\n- Increased latency as the server needs to wait for a new request.\n\n\n## WebSockets\n\nWebSocket provides full-duplex communication channels over a single TCP connection. It is a persistent connection between a client and a server that both parties can use to start sending data at any time.\n\nThe client establishes a WebSocket connection through a process known as the WebSocket handshake. If the process succeeds, then the server and client can exchange data in both directions at any time. The WebSocket protocol enables the communication between a client and a server with lower overheads, facilitating real-time data transfer from and to the server.\n\n![websockets](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/long-polling-websockets-server-sent-events/websockets.png)\n\nThis is made possible by providing a standardized way for the server to send content to the client without being asked and allowing for messages to be passed back and forth while keeping the connection open.\n\n### Working\n\nLet's understand how WebSockets work:\n\n1. The client initiates a WebSocket handshake process by sending a request.\n2. The request also contains an [HTTP Upgrade](https://en.wikipedia.org/wiki/HTTP/1.1_Upgrade_header) header that allows the request to switch to the WebSocket protocol (`ws://`).\n3. The server sends a response to the client, acknowledging the WebSocket handshake request.\n4. A WebSocket connection will be opened once the client receives a successful handshake response.\n5. Now the client and server can start sending data in both directions allowing real-time communication.\n6. The connection is closed once the server or the client decides to close the connection.\n\n### Advantages\n\nBelow are some advantages of WebSockets:\n\n- Full-duplex asynchronous messaging.\n- Better origin-based security model.\n- Lightweight for both client and server.\n\n### Disadvantages\n\nLet's discuss some disadvantages of WebSockets:\n\n- Terminated connections aren't automatically recovered.\n- Older browsers don't support WebSockets (becoming less relevant).\n\n\n## Server-Sent Events (SSE)\n\nServer-Sent Events (SSE) is a way of establishing long-term communication between client and server that enables the server to proactively push data to the client.\n\n![server-sent-events](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-III/long-polling-websockets-server-sent-events/server-sent-events.png)\n\nIt is unidirectional, meaning once the client sends the request it can only receive the responses without the ability to send new requests over the same connection.\n\n### Working\n\nLet's understand how server-sent events work:\n\n1. The client makes a request to the server.\n2. The connection between client and server is established and it remains open.\n3. The server sends responses or events to the client when new data is available.\n\n### Advantages\n\n- Simple to implement and use for both client and server.\n- Supported by most browsers.\n- No trouble with firewalls.\n\n### Disadvantages\n\n- Unidirectional nature can be limiting.\n- Limitation for the maximum number of open connections.\n- Does not support binary data.",
+  "visualExplanation": "Requests flow through the Long polling, WebSockets, Server-Sent Events (SSE) layer. Observe how input is evaluated, transformed, and routed without overloading downstream resources.",
+  "realWorldAnalogy": "Think of long polling, websockets, server-sent events (sse) as an organized assembly line where specialized stations collaborate efficiently.",
+  "architectureDiagramId": "lp-ws-sse",
+  "repoReference": {
+    "filePath": "README.md",
+    "sectionHeading": "Long polling, WebSockets, Server-Sent Events (SSE)",
+    "diagramFile": "lp-ws-sse.excalidraw"
+  },
+  "commonMistakes": "Misconfiguring timeouts, omitting telemetry, or coupling components tightly.",
+  "tradeOffs": "Balancing throughput, latency, consistency, and operational complexity.",
+  "keyTakeaway": "Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse).",
+  "relatedConcepts": [
+    "rest-graphql-grpc",
+    "geohashing-and-quadtrees"
+  ],
+  "prerequisites": [
+    "rest-graphql-grpc"
+  ],
+  "nextLessonId": "geohashing-and-quadtrees",
+  "interactiveQuestion": {
+    "id": "q-long-polling-websockets-server-sent-events-sse",
+    "question": "In production system design, what is the primary benefit of Long polling, WebSockets, Server-Sent Events (SSE)?",
+    "options": [
+      "It eliminates the need for any database indexing or caching.",
+      "Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse).",
+      "It guarantees 100% zero-latency execution across all WAN clients.",
+      "It allows replacing all microservices with a single SQLite file."
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse). Common pitfall to avoid: Misconfiguring timeouts, omitting telemetry, or coupling components tightly."
+  },
+  "exercise": {
+    "id": "ex-long-polling-websockets-server-sent-events-sse",
+    "title": "Production Troubleshooting: Long polling, WebSockets, Server-Sent Events (SSE)",
+    "type": "scenario",
+    "scenario": "You are a Staff Infrastructure Engineer. Your production dashboard reports severe degradation related to long polling, websockets, server-sent events (sse). Solving the scalability and reliability bottlenecks inherent to long polling, websockets, server-sent events (sse).",
+    "question": "Which architectural change directly mitigates this bottleneck?",
+    "options": [
+      "Apply Long polling, WebSockets, Server-Sent Events (SSE) best practices: Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse)., taking into account Balancing throughput, latency, consistency, and operational complexity..",
+      "Temporarily reboot all servers and disable TLS encryption.",
+      "Remove the component entirely and route all traffic to disk.",
+      "Increase client retry frequency to 10 milliseconds without backoff."
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "Correct! Understand the architectural trade-offs, access patterns, and failure modes of long polling, websockets, server-sent events (sse).. Remember: Balancing throughput, latency, consistency, and operational complexity."
+  }
+}
