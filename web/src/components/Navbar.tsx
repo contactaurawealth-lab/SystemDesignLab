@@ -79,7 +79,13 @@ export default function Navbar() {
         {/* Right: Actions */}
         <div className="hidden sm:flex items-center gap-3">
           <a
-            href="https://github.com/karanpratapsingh/system-design"
+            href="/prototype.html"
+            className="flex items-center gap-1.5 text-[13px] text-blue-600 bg-blue-50/80 hover:bg-blue-100 font-medium px-3 py-1.5 rounded-md border border-blue-200/80 transition-colors"
+          >
+            <span>Interactive Prototype</span>
+          </a>
+          <a
+            href="https://github.com/contactaurawealth-lab/SystemDesignLab"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-[13px] text-ink-secondary hover:text-ink px-3 py-1.5 rounded-md hover:bg-surface transition-colors"
@@ -156,13 +162,19 @@ export default function Navbar() {
           </nav>
           <div className="pt-3 border-t border-hairline flex flex-col gap-2.5">
             <a
-              href="https://github.com/karanpratapsingh/system-design"
+              href="/prototype.html"
+              className="flex items-center justify-center gap-2 text-[13.5px] font-medium text-blue-600 bg-blue-50/80 border border-blue-200/80 py-2.5 rounded shadow-sm"
+            >
+              <span>🚀 Launch Interactive Prototype</span>
+            </a>
+            <a
+              href="https://github.com/contactaurawealth-lab/SystemDesignLab"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-1.5 text-[13px] text-ink-secondary py-2 rounded border border-hairline hover:bg-surface"
             >
               <Github className="w-3.5 h-3.5" />
-              <span>karanpratapsingh/system-design</span>
+              <span>GitHub Repository & Release</span>
             </a>
             <a
               href="/downloads/system-design-lab.apk"

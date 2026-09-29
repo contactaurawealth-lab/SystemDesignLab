@@ -301,10 +301,10 @@ export default function HeroArchitecture() {
         {/* Hero CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-16">
           <a
-            href="#simulate"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[14.5px] font-medium text-white bg-ink hover:bg-black px-6 py-3 rounded-lg transition-all shadow-sm hover:shadow-md group"
+            href="/prototype.html"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[14.5px] font-medium text-white bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-all shadow-sm hover:shadow-md group"
           >
-            <span>Explore the Lab</span>
+            <span>Launch Live Prototype</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>
           <a
@@ -314,7 +314,13 @@ export default function HeroArchitecture() {
           >
             <ArrowDownToLine className="w-4 h-4 text-ink-secondary" />
             <span>Download Android App</span>
-            <span className="text-xs text-ink-muted font-mono">(35 MB)</span>
+            <span className="text-xs text-ink-muted font-mono">(36.6 MB APK)</span>
+          </a>
+          <a
+            href="#simulate"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[14.5px] font-medium text-ink-secondary hover:text-ink px-4 py-3 rounded-lg transition-all"
+          >
+            <span>Explore Tour</span>
           </a>
         </div>
 

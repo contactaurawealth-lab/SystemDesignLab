@@ -27,15 +27,21 @@ export default function Footer() {
         </div>
 
         {/* Right: Quick Links */}
-        <div className="flex items-center gap-6 font-mono text-ink-secondary">
+        <div className="flex flex-wrap items-center justify-center gap-6 font-mono text-ink-secondary">
           <a
-            href="https://github.com/karanpratapsingh/system-design"
+            href="/prototype.html"
+            className="hover:text-blue-600 transition-colors font-medium text-blue-600"
+          >
+            <span>Live Prototype</span>
+          </a>
+          <a
+            href="https://github.com/contactaurawealth-lab/SystemDesignLab"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-ink transition-colors flex items-center gap-1.5"
           >
             <Github className="w-3.5 h-3.5" />
-            <span>GitHub</span>
+            <span>GitHub v1.0.0</span>
           </a>
           <a
             href="/downloads/system-design-lab.apk"

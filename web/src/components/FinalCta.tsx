@@ -27,23 +27,31 @@ export default function FinalCta() {
         {/* Action CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-8">
           <a
-            href="/downloads/system-design-lab.apk"
-            download="system-design-lab.apk"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-[14.5px] font-medium text-white bg-ink hover:bg-black px-7 py-3.5 rounded-lg transition-all shadow-sm hover:shadow group"
+            href="/prototype.html"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-[14.5px] font-medium text-white bg-blue-600 hover:bg-blue-700 px-7 py-3.5 rounded-lg transition-all shadow-sm hover:shadow group"
           >
-            <ArrowDownToLine className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
-            <span>Download Android App (APK)</span>
-            <span className="text-xs text-white/70 font-mono">(35 MB)</span>
+            <span>Launch Live Prototype</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>
 
           <a
-            href="https://github.com/karanpratapsingh/system-design"
+            href="/downloads/system-design-lab.apk"
+            download="system-design-lab.apk"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-[14.5px] font-medium text-ink bg-white hover:bg-surface border border-hairline px-6 py-3.5 rounded-lg transition-all shadow-xs"
+          >
+            <ArrowDownToLine className="w-4 h-4" />
+            <span>Download Android APK</span>
+            <span className="text-xs text-ink-muted font-mono">(36.6 MB)</span>
+          </a>
+
+          <a
+            href="https://github.com/contactaurawealth-lab/SystemDesignLab"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[14.5px] font-medium text-ink bg-white hover:bg-surface border border-hairline px-6 py-3.5 rounded-lg transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[14.5px] font-medium text-ink-secondary hover:text-ink px-5 py-3.5 rounded-lg transition-all"
           >
             <Github className="w-4 h-4" />
-            <span>View Source Repository</span>
+            <span>GitHub v1.0.0</span>
           </a>
         </div>
 
